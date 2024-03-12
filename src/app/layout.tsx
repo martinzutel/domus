@@ -23,9 +23,6 @@ export default function RootLayout({
       </head>
       <body className="bg-stone-950">
         {children}
-        <p className=" text-white" 
-        style={{ fontFamily: 'Poppins' }}>pollo</p>
-
        
       </body>
     </html>
