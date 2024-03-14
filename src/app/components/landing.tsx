@@ -15,10 +15,9 @@ export default function Landing() {
       </p>
 
       <div> 
-        <button className='text-white'>log in</button>
-        <button className='text-white'>get started</button>
+        <button className='text-black font-semibold text-lg bg-white  pt-[0.11rem] pb-[0.25rem]  px-[0.6rem] rounded-full mr-[0.7rem]'>log in</button>
+        <button className='text-black font-semibold text-lg bg-white  pt-[0.11rem] pb-[0.25rem]  px-[0.6rem] rounded-full'>get started</button>
       </div>
-     
 
     </div>
   )
