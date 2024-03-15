@@ -21,7 +21,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-stone-950">
+      <body className="bg-black">
+        
         {children}
        
       </body>
