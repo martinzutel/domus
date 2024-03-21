@@ -14,11 +14,11 @@
               </button>
 
               <button className=' text-secondarycolor font-bold'> 
-                contact
+                about
               </button>
 
               <button className=' text-secondarycolor font-bold'> 
-                about
+                contact
               </button>
 
               
