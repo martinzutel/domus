@@ -50,7 +50,7 @@ const YourPage = () => {
   ];
 
   return (
-    <div className="flex flex-row gap-8 flex-wrap justify-center">
+    <div className="flex flex-row flex-wrap justify-center bg-black h-screen ">
       {mockData.map((item, index) => (
         <CardComponent
           key={index}
