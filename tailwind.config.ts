@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        maincolor: 'rgb(158, 154, 154)',
-        secondarycolor: 'rgb(12, 12, 12)',
+        maincolor: 'rgb(0, 0, 0)',
+        secondarycolor: 'rgb(255, 255, 255)',
+
+
+
+        //maincolor: 'rgb(158, 154, 154)',
+        //secondarycolor: 'rgb(12, 12, 12)',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -19,6 +24,7 @@ const config: Config = {
       },
       fontFamily: {
         'poppins': ['Poppins'],
+        'sofia-pro': ['sofia-pro'],
       },
     },
   },
