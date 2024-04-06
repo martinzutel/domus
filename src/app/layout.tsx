@@ -24,7 +24,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/pqq7ecm.css"></link>
         
       </head>
-      <body className="bg-maincolor">
+      <body className="bg-maincolor !scroll-smooth overflow-x-hidden">
         
         {children}
        

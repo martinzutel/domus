@@ -1,58 +1,45 @@
-    "use client";
-    import React from 'react'
 
-    import Link from 'next/link';
+ import React from 'react'
 
-    export default function Landing() {
-      return (
-        <main className=' h-[120rem]'>
-          <nav className="z-[999] fixed top-0 w-full">
-            <div className= 'w-full h-[2.5rem] flex items-center justify-center bg-maincolor bg-opacity-80 backdrop-blur-[0.5rem] space-x-[3rem]  py-9'>
+import ServicesSection from './sections/services';
 
-              <button className='text-secondarycolor font-bold font-sofia-pro'> 
-                services
-              </button>
+import MainContent from './sections/maincontent';
 
-              <button className=' text-secondarycolor font-bold font-sofia-pro'> 
-                about
-              </button>
+import AboutSection from './sections/about';
 
-              <button className=' text-secondarycolor font-bold font-sofia-pro'> 
-                contact
-              </button>
+export default function Landing() {
+  return (
 
-              
-            </div>
-          </nav>
-        
+    <main>
+    
+      <nav className="z-[999] fixed top-0 w-full">
+        <div className= 'w-full h-4 flex items-center justify-center bg-maincolor bg-opacity-80 backdrop-blur-sm space-x-7 py-6'>
 
-          <div className='flex items-center justify-center h-screen flex-col' >
+          <button className= 'text-secondarycolor font-sofia-pro text'> 
+            services
+          </button>
 
-            <p className='text-secondarycolor text-[18rem] font-thin leading-[20rem] font-sofia-pro' > 
-              domus
-            </p> 
-          
-            <p className='text-secondarycolor text-[2.3rem] mb-[2rem] font-sofia-pro'>
-              a simple solution for a very complex problem.
-            </p>
-          
-            <div> 
+          <button className= 'text-secondarycolor font-sofia-pro '> 
+            about
+          </button>
 
-              <Link href="/login" className='border-solid border-white border-2 text-white  text-lg bg-maincolor b  pt-[0.28rem] pb-[0.47rem]  px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro'>
-                log in
-              </Link> 
-              
-              <Link href="/get-started"  className='border-solid border-white border-2 text-white  text-lg bg-maincolor b  pt-[0.28rem] pb-[0.47rem]  px-[0.8rem] rounded-full mr-[0.7rem] font-sofia-pro '>
-                get started
-              </Link>
+          <button className= 'text-secondarycolor font-sofia-pro '> 
+            contact
+          </button>
 
-             
+        </div>
+      </nav>
+    
 
-             
+      <MainContent/>
+      
+      <ServicesSection/>
 
-            </div>
+      <AboutSection/>
 
-          </div>
-        </main>
-      )
-    }
+
+
+
+    </main>
+  )
+}

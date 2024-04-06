@@ -8,7 +8,7 @@ type CardComponentProps = {
 
 const CardComponent: React.FC<CardComponentProps> = ({ title, description, image }) => {
   return (
-    <div className="h-[20rem] w-[16rem] bg-black rounded-[1rem] overflow-hidden grid grid-rows-[8rem,1fr]">
+    <div className="h-[20rem] w-[16rem] bg-maincolor rounded-[1rem] border-2 border-white  overflow-hidden grid grid-rows-[8rem,1fr]">
       <div className="top-0 w-full bg-slate-500 relative">
         <Image src={image} layout="fill" objectFit="cover" objectPosition="center" quality={100} alt="hero"/>
       </div>
