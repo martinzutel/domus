@@ -13,8 +13,8 @@ const CardComponent: React.FC<CardComponentProps> = ({ title, description, image
         <Image src={image} layout="fill" objectFit="cover" objectPosition="center" quality={100} alt="hero"/>
       </div>
       <div className="w-full bg-zinc-900 p-[1.3rem]">
-        <p className="text-white font-bold text-[1.5rem] leading-[1.2rem] font-poppins mb-[1rem]">{title}</p>
-        <p className="text-white text-[0.8rem] font-poppin line-clamp-6">{description}</p>
+        <p className="text-white font-bold text-[1.5rem] leading-[1.2rem] font-sofia-pro mb-[1rem]">{title}</p>
+        <p className="text-white text-[0.8rem] font-sofia-pro line-clamp-6">{description}</p>
       </div>
     </div>
   );
