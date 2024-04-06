@@ -50,7 +50,7 @@ const YourPage = () => {
   ];
 
   return (
-    <div className="grid gap-x-2 gap-y-8 grid-cols-6 content-start justify-items-center bg-maincolor h-screen px-20 py-20">
+    <div className="grid gap-x-20 gap-y-8 grid-cols-4 content-start justify-items-center bg-maincolor h-screen px-20 py-20">
       {mockData.map((item, index) => (
         <CardComponent
           key={index}
