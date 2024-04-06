@@ -5,7 +5,7 @@ export default function Home() {
       <main>
         <div className="flex items-center justify-center h-screen">
 
-          <div className="  h-[20rem] w-[16rem] bg-black rounded-[1rem] overflow-hidden grid grid-rows-[8rem,1fr] space-x-5">
+          <div className="  h-[20rem] w-[16rem] bg-black rounded-[1rem] overflow-hidden grid grid-rows-[8rem,1fr]">
 
             <div className=' top-0 w-full  bg-slate-500 relative '>
 
