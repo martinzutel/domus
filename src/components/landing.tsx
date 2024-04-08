@@ -37,9 +37,6 @@ export default function Landing() {
 
       <AboutSection/>
 
-
-
-
     </main>
   )
 }
