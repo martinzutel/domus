@@ -1,7 +1,7 @@
 import CardComponent from "@/components/cardcomponent";
 
 const YourPage = () => {
-  // Simulated data
+  
   const mockData = [
     {
       title: "nacho vigi",
