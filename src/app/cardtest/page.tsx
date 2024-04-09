@@ -61,7 +61,7 @@ const YourPage = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1040px] justify-start items-start">
+      <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1040px] justify-center">
         {mockData.map((item, index) => (
           <CardComponent
             key={index}
@@ -71,7 +71,7 @@ const YourPage = () => {
           />
         ))}
       </div>
-    </div>
+    </div> 
   );
 };
 
