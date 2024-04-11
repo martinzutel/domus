@@ -1,67 +1,67 @@
 import CardComponent from "@/components/cardcomponent";
 
-const YourPage = () => {
+const CardGrid = () => {
   
   const mockData = [
     {
       title: "nacho vigi",
       description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg", 
     },
     {
       title: "gal gadot",
       description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg",
     },
 
     {
       title: "nacho vigi",
       description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg", 
     },
     {
       title: "gal gadot",
       description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg", 
     },
 
     {
       title: "nacho vigi",
       description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg",
     },
     {
       title: "gal gadot",
       description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg", 
     },
 
     {
       title: "nacho vigi",
       description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg", 
     },
     {
       title: "gal gadot",
       description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg",
     },
     {
       title: "nacho vigi",
       description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg",
     },
     {
       title: "gal gadot",
       description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", // Replace this with your image URL
+      image: "/images/puppys.jpg",
     },
-    // Add more objects as needed
+   
   ];
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1040px] justify-center">
+      <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1040px] justify-center mt-[120px]">
         {mockData.map((item, index) => (
           <CardComponent
             key={index}
@@ -75,4 +75,4 @@ const YourPage = () => {
   );
 };
 
-export default YourPage;
+export default CardGrid;
