@@ -4,12 +4,20 @@ const Intro = () => {
   
 
   return (
-    <div className="h-[750px] w-full bg-black flex content-start">
+    <div className="h-[600px] w-full bg-black flex items-center justify-start px-[200px]">
         
-        <p className="text-white">
-            vbruahua
-        </p>
+       <div className=" h-[600px] w-[750px]">
+            <p className="font-sofia-pro font-thin text-9xl text-white mb-[50px]">
+                modus
+            </p>
+            <p className="font-sofia-pro font-bold text text-5xl text-white">
+                encontra tu lugar, tu hogar, tu espacio, tu lugar en el mundo  encontra tu lugar, tu hogar, tu espacio, tu lugar en el mundo  encontra tu lugar, tu hogar, tu espacio, tu lugar en el mundo 
+            </p>
+       </div>
+
+       <div>
         
+       </div>
     </div>
   );
 };
