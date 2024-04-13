@@ -4,9 +4,9 @@ const Intro = () => {
   
 
   return (
-    <div className="h-[600px] w-full bg-black flex items-center justify-start px-[200px]">
+    <div className="h-[600px] w-full bg-maincolor flex items-center justify-start px-[200px]">
         
-       <div className=" h-[600px] w-[750px]">
+       <div className=" h-[650px] w-[750px] pt-[100px]">
             <p className="font-sofia-pro font-thin text-9xl text-white mb-[50px]">
                 modus
             </p>
