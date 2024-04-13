@@ -7,8 +7,10 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = ({ children }) => {
 
+    
     return ( 
-        <div className='fixed z-10  w-full h-[80px] flex items-center justify-center bg-maincolor bg-opacity-80 backdrop-blur-sm '>
+        
+        <div className='z-10  w-full h-[80px] flex items-center justify-center bg-maincolor bg-opacity-80 top-0 backdrop-blur-sm sticky'>
             {children}
         </div>
     )
