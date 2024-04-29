@@ -22,7 +22,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ title, description, image
           </div>
           
 
-          <Link href="/login" className='border-solid   text-darkgre font-black bg-coolred  text-lg pt-[0.28rem] pb-[0.47rem]  px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro'>
+          <Link href="/login" className='border-solid   text-darkgre font-black bg-coolred  text-lg pt-[0.28rem] pb-[0.47rem]  px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'>
             book
           </Link> 
         </div>
