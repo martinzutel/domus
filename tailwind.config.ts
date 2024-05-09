@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         maincolor: 'rgb(26, 26, 26)',
         secondarycolor: 'rgb(246, 244, 244)',
-        darkgre: 'rgb(44, 44, 44)',
+        darkgre: 'rgb(54, 54, 54)',
         coolred: 'rgb(255 58, 56)',
         coolredhl: 'rgb(255, 74, 72)',
         coolreddrk: 'rgb(230, 48, 46)',
