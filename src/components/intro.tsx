@@ -2,19 +2,13 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import LoginRegisterPopup  from '@/components/popup'; 
-
-interface SignInButtonProps {
-  showPopup: boolean;
-  togglePopup: () => void;
-}
+import ParentComponent from './signin/parent';
 
 const Intro: React.FC = () => {
-  
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const togglePopup = () => {
-    setShowPopup(!showPopup);
+    setShowPopup(true); 
   };
 
   return (
@@ -43,26 +37,13 @@ const Intro: React.FC = () => {
         </div>
       </div>
 
-      <div className="block">
-        <div className="flex justify-center content-center">
-          <SignInButton showPopup={showPopup} togglePopup={togglePopup} />
-        </div>
-      </div>
+      <ParentComponent /> 
 
-      {showPopup && <LoginRegisterPopup togglePopup={false} />}
+     
     </div>
   );
 };
 
-const SignInButton: React.FC<SignInButtonProps> = ({ showPopup, togglePopup }) => {
-  return (
-    <button
-      onClick={togglePopup}
-      className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
-    >
-      {showPopup ? "Close Popup" : "Sign In"}
-    </button>
-  );
-};
+
 
 export default Intro;

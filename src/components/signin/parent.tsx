@@ -1,7 +1,7 @@
 // ParentComponent.tsx
 import React, { useState } from 'react';
-import SignInButton from './signinbutton';
-import Popup from './popup1';
+import SignInButton from '../signinbutton';
+import Popup from './popup';
 
 const ParentComponent: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

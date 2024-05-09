@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RegisterForm from './registerpop'; // Assuming RegisterForm is imported from a separate file
+import RegisterForm from '../signin/registerpop'; // Assuming RegisterForm is imported from a separate file
 
 const LoginRegisterPopup: React.FC = () => {
   const [showPopup, setShowPopup] = useState<boolean>(true);
