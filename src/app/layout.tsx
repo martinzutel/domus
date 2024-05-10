@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import {Providers} from './Providers'
 
 export const metadata: Metadata = {
   title: "",
@@ -25,9 +26,9 @@ export default function RootLayout({
         
       </head>
       <body className="bg-maincolor !scroll-smooth overflow-x-hidden">
-        
-        {children}
-       
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
