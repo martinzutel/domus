@@ -1,15 +1,8 @@
-'use client'
-
-import React, { useState } from 'react';
 import Image from 'next/image';
 import ParentComponent from './signin/parent';
 
 const Intro: React.FC = () => {
-  const [showPopup, setShowPopup] = useState<boolean>(false);
-
-  const togglePopup = () => {
-    setShowPopup(true); 
-  };
+  
 
   return (
     <div className="flex flex-col">

@@ -1,4 +1,6 @@
 // ParentComponent.tsx
+'use client'
+
 import React, { useState } from 'react';
 import SignInButton from './SignInButton';
 import Popup from './popup';

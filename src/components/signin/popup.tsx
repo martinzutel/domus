@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import RegisterForm from './registerpop';
 import { signIn, useSession } from "next-auth/react";
