@@ -7,6 +7,8 @@ import popupCenter from './auth/windowpopup';
 import { RxCross2 } from "react-icons/rx";
 import { FcGoogle } from "react-icons/fc";
 
+
+
 interface PopupProps {
   onClose: () => void;
 }
@@ -25,7 +27,9 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
     // Handle registration logic here
     console.log(formData);
     // For now, let's just close the form
-    closeRegisterForm();
+    closeRegisterForm();   
+    
+    const { data: session } = useSession();
   };
 
   const handleSliderChange = (values: [number, number]) => setPreferredAgeRange(values);
@@ -49,7 +53,10 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
             </button>
         </div>
       </div>
-      {showRegisterForm && (
+
+  
+
+      {showRegisterForm && session && (
         <RegisterForm
           isOpen={showRegisterForm}
           onClose={closeRegisterForm}
