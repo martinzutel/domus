@@ -116,6 +116,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                   checked={formData.gender === 'female'}
                   onChange={handleChange}
                   className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                  required
                 />
                 <span className="ml-2 text-white">Female</span>
               </label>
@@ -128,6 +129,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                   checked={formData.gender === 'other'}
                   onChange={handleChange}
                   className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                  required
                 />
                 <span className="ml-2 text-white">Other</span>
               </label>
