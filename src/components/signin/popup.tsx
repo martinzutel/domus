@@ -28,8 +28,6 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
     console.log(formData);
     // For now, let's just close the form
     closeRegisterForm();   
-    
-    const { data: session } = useSession();
   };
 
   const handleSliderChange = (values: [number, number]) => setPreferredAgeRange(values);

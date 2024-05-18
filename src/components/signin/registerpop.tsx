@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 interface FormData {
   age: number;
   gender: string;
+  about: string;  
 }
 
 interface RegisterFormProps {
@@ -18,6 +19,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
   const [formData, setFormData] = useState<FormData>({
     age: 18,
     gender: '',
+    about: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +138,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
 
             </div>
               
+          </div>
+
+          <div className="mb-8">
+            <label className="block text-left text-white mb-3" >About You:</label>
+            <textarea
+              name="about"
+              value={formData.about}
+              onChange={handleChange}
+              className="border rounded-md p-2 accent-coolred bg-darkgre text-white w-[100%] h-[50px] border-none"
+            />
           </div>
                     
           <button type="submit" className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'>
