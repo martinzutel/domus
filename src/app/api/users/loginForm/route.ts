@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       return NextResponse.json({ message: "User not found." }, {status: 400});
     }
 
-    
+    await prisma.user.
 
     return NextResponse.json({ message: "User details retrieved." }); // Placeholder
   } catch (error) {
