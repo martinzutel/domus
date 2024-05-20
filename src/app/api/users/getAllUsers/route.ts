@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -19,10 +19,4 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json(error.message, { status: 500 });
   }
-}
-
-export async function POST() {
-  return Response.json({
-    hello: "world",
-  });
 }
