@@ -6,7 +6,9 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest, res: NextResponse) {
   // Handle request body parsing and potential errors:
-  try {
+    const login = useSession() 
+
+
     const body = await req.json(); // Attempt to parse JSON body
     if (!body || !body.email) {
       return NextResponse.json({ message: "Missing required fields (email)." }, {status: 400});
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       return NextResponse.json({ message: "User not found." }, {status: 400});
     }
 
-    await prisma.user.
+    prisma.user.create
 
     return NextResponse.json({ message: "User details retrieved." }); // Placeholder
   } catch (error) {
