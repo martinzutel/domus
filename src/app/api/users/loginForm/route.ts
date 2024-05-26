@@ -5,13 +5,12 @@ import { useSession } from "next-auth/react";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  // Handle request body parsing and potential errors:
-    const login = useSession() 
-
+  try {
+    const login = useSession();
 
     const body = await req.json(); // Attempt to parse JSON body
     if (!body || !body.email) {
-      return NextResponse.json({ message: "Missing required fields (email)." }, {status: 400});
+      return NextResponse.json({ message: "Missing required fields (email)." }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({
@@ -19,14 +18,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found." }, {status: 400});
+      return NextResponse.json({ message: "User not found." }, { status: 400 });
     }
 
-    prisma.user.create
+    // TODO: Add your logic here
 
     return NextResponse.json({ message: "User details retrieved." }); // Placeholder
   } catch (error) {
     console.error("Error parsing request body:", error);
-    return NextResponse.json({ message: "Invalid request body." }, {status: 400});
+    return NextResponse.json({ message: "Invalid request body." }, { status: 400 });
   }
 }
