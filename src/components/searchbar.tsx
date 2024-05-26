@@ -6,7 +6,7 @@ const Searchbar = () => {
     return (
     <div className='w-full flex justify-center items-center'>
 
-        <div className='sm:h-[40px] w-[350px] flex justify-center items-center '>
+        <div className='h-[40px] w-[350px] flex justify-center items-center '>
  
         
             <input type="text" placeholder='Search' className='h-full w-full bg-darkgre placeholder-white outline-none rounded-l-full pl-4'/>

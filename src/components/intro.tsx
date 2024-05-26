@@ -8,18 +8,26 @@ const Intro: React.FC = () => {
     <div>
       <div className="flex items-center justify-center">
 
-        <div className="h-[500px] w-[2000px] bg-maincolor flex items-center justify-center px-[155px] self-center">
+        <div className="w-[300px] h-[600px] bg-maincolor flex flex-col items-center justify-center  self-center
+                        sm:h-[500px] sm:w-[2000px] sm:flex-row sm:px-[155px]
+        ">
          
-          <div className="w-[600px] h-full pl-[80px] pt-[40px]">
-            <p className="font-sofia-pro font-thin text-9xl text-white mb-[20px]">
+          <div className="w-[300px] h-full pt-[50px]
+                          sm:w-[600px] sm:pl-[80px] sm:pt-[40px]
+          ">
+            <p className="font-sofia-pro text-7xl mb-[20px] text-center font-bold text-coolred
+                          sm:text-9xl sm:text-left">
               domus
             </p>
-            <p className="font-sofia-pro font-bold text text-5xl text-white ">
+            <p className="font-sofia-pro font-bold text text-5xl text-white text-center
+                          sm:text-left">
               Encontra el mejor host de espacios compartidos, conoce y matchea con la persona ideal. 
             </p>
+
           </div>
 
-          <div className='w-[600px] h-full p-[40px]'>
+          <div className='w-[300px] h-full p-[40px] hidden
+                          sm:-[600px] sm:inline-block'>
 
             <div className='w-full h-full relative p-[100px]'>
               <Image
@@ -32,10 +40,6 @@ const Intro: React.FC = () => {
             </div>
 
           </div>
-
-          
-
-          
 
         </div>
       </div>
