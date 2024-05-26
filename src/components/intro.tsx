@@ -16,7 +16,8 @@ const Intro: React.FC = () => {
                           sm:w-[600px] sm:pl-[80px] sm:pt-[40px]
           ">
             <p className="font-sofia-pro text-7xl mb-[20px] text-center font-bold text-coolred
-                          sm:text-9xl sm:text-left">
+                          sm:text-9xl sm:text-left
+                          :text-4xl">
               domus
             </p>
             <p className="font-sofia-pro font-bold text text-5xl text-white text-center
@@ -27,7 +28,8 @@ const Intro: React.FC = () => {
           </div>
 
           <div className='w-[300px] h-full p-[40px] hidden
-                          sm:-[600px] sm:inline-block'>
+                          sm:w-[600px] sm:inline-block'
+                          >
 
             <div className='w-full h-full relative p-[100px]'>
               <Image
