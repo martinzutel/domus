@@ -61,7 +61,7 @@ const CardGrid = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
+      <div className="sm:flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
         {mockData.map((item, index) => (
           <CardComponent
             key={index}
