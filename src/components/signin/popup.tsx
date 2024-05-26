@@ -8,7 +8,6 @@ import { RxCross2 } from "react-icons/rx";
 import { FcGoogle } from "react-icons/fc";
 
 
-
 interface PopupProps {
   onClose: () => void;
 }
@@ -16,21 +15,8 @@ interface PopupProps {
 const Popup: React.FC<PopupProps> = ({ onClose }) => {
   
   const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
-  const [preferredAgeRange, setPreferredAgeRange] = useState<[number, number]>([18, 35]);
-
   const { data: session, status } = useSession();
-
-  const openRegisterForm = () => setShowRegisterForm(true);
   const closeRegisterForm = () => setShowRegisterForm(false);
-
-  const handleRegisterSubmit = (formData: FormData) => {
-    // Handle registration logic here
-    console.log(formData);
-    // For now, let's just close the form
-    closeRegisterForm();   
-  };
-
-  const handleSliderChange = (values: [number, number]) => setPreferredAgeRange(values);
 
   return (
     <>
@@ -58,9 +44,10 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
         <RegisterForm
           isOpen={showRegisterForm}
           onClose={closeRegisterForm}
-          onSubmit={handleRegisterSubmit}
-          preferredAgeRange={preferredAgeRange}
-          onPreferredAgeRangeChange={handleSliderChange}
+          onSubmit={(formData) => {
+            console.log(formData);
+            closeRegisterForm();
+          }}
         />
       )}
     </>

@@ -22,14 +22,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
     about: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
-
+};
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const age = parseInt(e.target.value);
     setFormData((prevData) => ({
