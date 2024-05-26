@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../../prisma/route.js";
 
 export async function GET() {
   try {
@@ -16,7 +15,7 @@ export async function GET() {
       },
     });
     return NextResponse.json(allUsers);
-  } catch (error : any) {
-    return NextResponse.json(error.message, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({message: error.message }, { status: 500 });
   }
 }
