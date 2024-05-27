@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 const SignInPage = () => {
     const { data: session, status } = useSession();
-    console.log(session)
     
     useEffect(() => {
         if (!(status === "loading") && !session) void signIn("google");
