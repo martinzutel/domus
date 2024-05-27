@@ -12,5 +12,6 @@ Content-Type: application/json
     "email": "pong",
     "age": 99,
     "gender": "male",
-    "about": "ping"
+    "about": "ping",
+    "contact" : "11 1234 5678"
 }
