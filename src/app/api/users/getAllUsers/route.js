@@ -12,6 +12,7 @@ export async function GET() {
         age: true,
         gender: true,
         about: true,
+        contact: true,
       },
     });
     return NextResponse.json(allUsers);

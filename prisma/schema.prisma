@@ -19,6 +19,7 @@ model User {
   about         String?
   age           Int?
   gender        String?
+  contact       String?
   accounts      Account[]
   Authenticator Authenticator[]
   sessions      Session[]

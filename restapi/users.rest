@@ -1,0 +1,16 @@
+//get all needed user data
+GET http://localhost:3000/api/users/getAllUsers
+
+###
+
+//add age, gender and about me to user profile
+
+POST http://localhost:3000/api/users/loginForm
+Content-Type: application/json 
+
+{
+    "email": "pong",
+    "age": 99,
+    "gender": "male",
+    "about": "ping"
+}

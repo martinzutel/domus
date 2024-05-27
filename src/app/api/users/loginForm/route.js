@@ -24,6 +24,7 @@ export async function POST(request) {
         about: data.about,
         age: data.age,
         gender: data.gender,
+        contact: data.contact,
       },
     });
 
