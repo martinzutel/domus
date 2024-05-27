@@ -1,11 +1,31 @@
 import { NextResponse } from "next/server.js";
 import prisma from "@prisma/prisma";
-// import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
+
+//CAMBIAR ESTO A FALSE CUANDO HAGAS EL FETCHEO
+const ENABLE_SESSION_SIMULATION = true;
 
 export async function POST(request) {
   try {
+    let session;
+
+    if (ENABLE_SESSION_SIMULATION) {
+      session = {
+        user: {
+          email: 'pong',
+          name: 'pong',
+          id: '1',
+        },
+      };
+    } else {
+      session = await getSession({ req: request });
+      if (!session) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const data = await request.json();
-    
+
     if (!data.email || !data.about || !data.age || !data.gender) {
       return NextResponse.json({ message: "Missing required fields"}, { status: 400 });
       }
@@ -14,8 +34,8 @@ export async function POST(request) {
       where: { email: data.email },
     });
 
-    if (!user) {
-      return NextResponse.json({ message: "User not found."}, {status: 400});
+    if (!user || user.id !== session.user.id) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     await prisma.user.update({
@@ -31,6 +51,9 @@ export async function POST(request) {
     return NextResponse.json({ message: "User data added." }, { status: 200 });
   } catch (error) {
     console.error("Error parsing request body:", error);
-    return NextResponse.json({ message: "Invalid request body." }, { status: 400});
+    return NextResponse.json(
+      { message: "Invalid request body." },
+      { status: 400 }
+    );
   }
 }
