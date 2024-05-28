@@ -12,17 +12,33 @@ const handler = NextAuth({
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async session({ session, user }) {
+    async session({ session }) {
       if (session.user?.image) {
+        console.log("image is: " + session.user.image);
         // Modify the image URL to request a higher resolution image
         session.user.image = session.user.image.replace("=s96-c", "=s400-c");
+        console.log("replaced with: " + session.user.image);
+        prisma.user.update({
+          where: { email: session.user.email },
+          data: {
+            image: session.user.image.replace("=s96-c", "=s400-c")
+          }
+        })
       }
       return session;
     },
-    async signIn({ profile }) {
-      if (profile?.image) {
+    async signIn({ user }) {
+      if (user?.image) {
+        console.log("image is: " + user.image);
         // Modify the image URL to request a higher resolution image
-        profile.image = profile.image.replace("=s96-c", "=s400-c");
+        user.image = user.image.replace("=s96-c", "=s400-c");
+        console.log("replaced with: " + user.image);
+        prisma.user.update({
+          where: { email: user.email },
+          data: {
+            image: user.image.replace("=s96-c", "=s400-c")
+          }
+        })
       }
       return true;
     }
