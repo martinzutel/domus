@@ -1,77 +1,51 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import CardComponent from "@/components/cardcomponent";
 
 const CardGrid = () => {
-  
-  const mockData = [
-    {
-      title: "nacho vigi",
-      description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", 
-    },
-    {
-      title: "gal gadot",
-      description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg",
-    },
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
-    {
-      title: "nacho vigi",
-      description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", 
-    },
-    {
-      title: "gal gadot",
-      description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", 
-    },
+        useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api/users/getAllUsers');
+            if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const result = await response.json();
+            setData(result);
+          } catch (error) {
+            setError(error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
+    
 
-    {
-      title: "nacho vigi",
-      description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg",
-    },
-    {
-      title: "gal gadot",
-      description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg", 
-    },
-
-    {
-      title: "nacho vigi",
-      description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg", 
-    },
-    {
-      title: "gal gadot",
-      description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg",
-    },
-    {
-      title: "nacho vigi",
-      description: "yo le ensenio a martin todo",
-      image: "/images/puppys.jpg",
-    },
-    {
-      title: "gal gadot",
-      description: "me gusta mucho el pollo",
-      image: "/images/puppys.jpg",
-    },
-   
-  ];
+  if (data.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex justify-center">
       <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
-        {mockData.map((item, index) => (
+        {data.map((item, index) => (
           <CardComponent
             key={index}
-            title={item.title}
-            description={item.description}
+            name={item.name}
+            about={item.about}
             image={item.image}
           />
         ))}
       </div>
-    </div> 
+    </div>
   );
 };
 
