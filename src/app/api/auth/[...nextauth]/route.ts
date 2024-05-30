@@ -21,7 +21,7 @@ const handler = NextAuth({
           await prisma.user.update({
             where: { email: session.user.email },
             data: {
-              image: session.user.image.replace("=s96-c", "=s400-c"),
+              image: session.user.image,
             },
           });
         }

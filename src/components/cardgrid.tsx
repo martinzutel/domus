@@ -4,29 +4,29 @@ import React, { useState, useEffect } from 'react';
 import CardComponent from "@/components/cardcomponent";
 
 const CardGrid = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<any[]>([]);
 
-        useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('/api/users/getAllUsers');
-            if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-            }
-            const result = await response.json();
-            setData(result);
-          } catch (error) {
-            setError(error);
-          }
-        };
-    
-        fetchData();
-      }, []);
-    
-      if (error) {
-        return <div>Error: {error.message}</div>;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/users/getAllUsers');
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error as Error);
       }
+    };
+
+    fetchData();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
     
 
   if (data.length === 0) {
