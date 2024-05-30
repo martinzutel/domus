@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 
 type CardComponentProps = {
-  title: string;
-  description: string;
+  name: string;
+  about: string;
   image: string;
 };
 
-const CardComponent: React.FC<CardComponentProps> = ({ title, description, image }) => {
+const CardComponent: React.FC<CardComponentProps> = ({ name, about, image }) => {
   return (
     
       <div className=" h-[400px] w-[320px]  grid grid-rows-[8rem,1fr]  overflow-hidden rounded-[1rem]   border-secondarycolor">
@@ -17,8 +17,8 @@ const CardComponent: React.FC<CardComponentProps> = ({ title, description, image
         </div>
         <div className="w-full bg-darkgre p-[1.3rem]">
           <div className='h-[200px]'>
-            <p className="text-white font-bold text-[1.5rem] leading-[1.2rem] font-sofia-pro mb-[1rem]">{title}</p>
-            <p className="text-white text-[0.8rem] font-sofia-pro line-clamp-6">{description}</p>
+            <p className="text-white font-bold text-[1.5rem] leading-[1.2rem] font-sofia-pro mb-[1rem]">{name}</p>
+            <p className="text-white text-[0.8rem] font-sofia-pro line-clamp-6">{about}</p>
           </div>
           
 
