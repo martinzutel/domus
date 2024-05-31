@@ -3,7 +3,7 @@ import prisma from "@prisma/prisma";
 import { getSession } from "next-auth/react";
 
 //CAMBIAR ESTO A FALSE CUANDO HAGAS EL FETCHEO
-const ENABLE_SESSION_SIMULATION = true;
+const ENABLE_SESSION_SIMULATION = false;
 
 export async function POST(request) {
   try {
@@ -19,8 +19,9 @@ export async function POST(request) {
       };
     } else {
       session = await getSession({ req: request });
+      console.log(session)
       if (!session) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ message: "Unauthorized: No session" }, { status: 401 });
       }
     }
 
@@ -35,7 +36,7 @@ export async function POST(request) {
     });
 
     if (!user || user.id !== session.user.id) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
     }
 
     await prisma.user.update({
