@@ -18,34 +18,35 @@ export async function POST(request) {
         },
       };
     } else {
-      session = await getSession({ req: request });
-      console.log(session)
-      if (!session) {
-        return NextResponse.json({ message: "Unauthorized: No session" }, { status: 401 });
-      }
+      // const session = await getSession({ req: request });
+      // console.log(session)
+      // if (!session) {
+      //   return NextResponse.json({ message: "Unauthorized: No session" }, { status: 401 });
+      // }
     }
 
     const data = await request.json();
-
-    if (!data.email || !data.about || !data.age || !data.gender) {
+    // console.log(data)
+    if (!data.user.email || !data.user.about || !data.user.age || !data.user.gender) {
       return NextResponse.json({ message: "Missing required fields"}, { status: 400 });
       }
 
     const user = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: { email: data.user.email },
     });
-
-    if (!user || user.id !== session.user.id) {
+    // console.log(user)
+    if (!user) {
       return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
     }
 
     await prisma.user.update({
-      where: { email: data.email },
+      where: { email: data.user.email },
       data: {
-        about: data.about,
-        age: data.age,
-        gender: data.gender,
-        contact: data.contact,
+        about: data.user.about,
+        age: data.user.age,
+        gender: data.user.gender,
+        contact: data.user.contact,
+        isRegisterComplete: true,
       },
     });
 

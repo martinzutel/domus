@@ -30,6 +30,10 @@ const handler = NextAuth({
     
       return true;
     },
+    async session({ session, user }) {
+      session.user = user;
+      return session;
+    },
   },
 });
 

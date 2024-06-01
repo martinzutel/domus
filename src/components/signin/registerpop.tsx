@@ -45,19 +45,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
     try {
       const response = await fetch('/api/users/loginForm', {
         method: 'POST',
-        credentials: "include",
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, email: session?.user?.email }),
+        body: JSON.stringify({ user: {...formData, email: session?.user?.email} }),
       });
-
+  
+      const result = await response.json();
+  
       if (response.ok) {
-        const result = await response.json();
         console.log('Success:', result);
       } else {
-        const errorResponse = await response.json();
-        console.error('Error:', errorResponse);
+        console.error('Error:', result);
       }
     } catch (error) {
       console.error('Error:', error);
