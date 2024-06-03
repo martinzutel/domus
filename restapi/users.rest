@@ -9,9 +9,22 @@ POST http://localhost:3000/api/users/loginForm
 Content-Type: application/json 
 
 {
-    "email": "pong",
-    "age": 99,
-    "gender": "male",
-    "about": "ping",
-    "contact" : "11 1234 5678"
+    "user": {	
+        "email": "pong",
+        "age": 99,
+        "gender": "male",
+        "about": "ping",
+        "contact" : "11 1234 5678"
+    }
+}
+
+###
+
+GET http://localhost:3000/api/users/userTags
+Content-Type: application/json
+
+{
+    "user": {	
+        "email": "pong"
+    }
 }

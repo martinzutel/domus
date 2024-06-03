@@ -2,29 +2,8 @@ import { NextResponse } from "next/server.js";
 import prisma from "@prisma/prisma";
 import { getSession } from "next-auth/react";
 
-//CAMBIAR ESTO A FALSE CUANDO HAGAS EL FETCHEO
-const ENABLE_SESSION_SIMULATION = false;
-
 export async function POST(request) {
   try {
-    let session;
-
-    if (ENABLE_SESSION_SIMULATION) {
-      session = {
-        user: {
-          email: 'pong',
-          name: 'pong',
-          id: '1',
-        },
-      };
-    } else {
-      // const session = await getSession({ req: request });
-      // console.log(session)
-      // if (!session) {
-      //   return NextResponse.json({ message: "Unauthorized: No session" }, { status: 401 });
-      // }
-    }
-
     const data = await request.json();
     // console.log(data)
     if (!data.user.email || !data.user.about || !data.user.age || !data.user.gender) {
