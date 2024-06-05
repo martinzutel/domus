@@ -148,6 +148,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
               className="border rounded-md p-2 accent-coolred bg-darkgre text-white w-[100%] h-[50px] border-none"
             />
           </div>
+
+          <div className="mb-8">
+            <label className="block text-left text-white mb-3" >Your contact *personal choice*</label>
+            <textarea
+              name="about"
+              value={formData.about}
+              onChange={handleChange}
+              className="border rounded-md p-2 accent-coolred bg-darkgre text-white w-[100%] h-[30px] border-none resize-none"
+            />
+          </div>
                     
           <button type="submit" className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'>
             Register
