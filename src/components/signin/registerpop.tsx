@@ -49,17 +49,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user: {...formData, email: session?.user?.email} }),
+        body: JSON.stringify({ user: { ...formData, email: session?.user?.email } }),
       });
-  
+
       const result = await response.json();
-  
-      if (response.ok) {
-        console.log('Success:', result);
-      } else {
+
+      if (!response.ok) {
         console.error('Error:', result);
+        return;
       }
+
+      console.log('Success:', result);
+      onSubmit(result);
     } catch (error) {
+      
       console.error('Error:', error);
     }
   };
@@ -67,7 +70,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submitFormData(formData);
-    onSubmit(formData);
+    onSubmit(formData)
   };
 
   if (!isOpen) return null;

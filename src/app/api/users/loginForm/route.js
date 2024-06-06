@@ -5,6 +5,7 @@ import { getSession } from "next-auth/react";
 export async function POST(request) {
   try {
     const data = await request.json();
+    
     // console.log(data)
     if (!data.user.email || !data.user.about || !data.user.age || !data.user.gender) {
       return NextResponse.json({ message: "Missing required fields"}, { status: 400 });
@@ -33,7 +34,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error parsing request body:", error);
     return NextResponse.json(
-      { message: "Invalid request body." },
+      { message: "Invalid request body.", body },
       { status: 400 }
     );
   }

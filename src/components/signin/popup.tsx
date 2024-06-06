@@ -29,7 +29,7 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
             <h2 className="text-2xl font-bold mb-4 text-white">Login/Register</h2>
             
 
-            <button onClick={() => {popupCenter("google-signin", "Sign In"); if(user?.isRegisterComplete === false){setShowRegisterForm(true)}else{onClose}}} className="bg-black text-white rounded-md px-4 py-2 mb-2 hover:bg-gray-800  flex items-center justify-center">
+            <button onClick={() => {setShowRegisterForm(true); popupCenter("google-signin", "Sign In")}} className="bg-black text-white rounded-md px-4 py-2 mb-2 hover:bg-gray-800  flex items-center justify-center">
               <FcGoogle /> <span className='ml-2 pb-[1px]'>Google</span> 
             </button>
            

@@ -21,8 +21,8 @@ model User {
   gender             String?
   contact            String?
   isRegisterComplete Boolean?        @default(false)
-  ownTags            String[]
   likedTags          String[]
+  ownTags            String[]
   accounts           Account[]
   Authenticator      Authenticator[]
   sessions           Session[]
