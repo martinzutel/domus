@@ -3,7 +3,7 @@ import prisma from "@prisma/prisma";
 import { getSession } from "next-auth";
 import authOptions from "../../auth/[...nextauth]/route.ts";
 
-export async function GET(request) {
+export async function GET(request) { 
     try {
         userData = await getSession({ req: request });
         const data = await request.json();
