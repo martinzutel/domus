@@ -24,7 +24,7 @@ GET http://localhost:3000/api/users/userTags
 Content-Type: application/json
 
 {
-    "user": {	
+    "user": {
         "email": "pong"
     }
 }
