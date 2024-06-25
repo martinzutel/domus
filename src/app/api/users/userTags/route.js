@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server.js";
+import { NextRequest, NextResponse } from "next/server.js";
 import prisma from "@prisma/prisma";
 import { getSession } from "next-auth/react";
 import authOptions from "../../auth/[...nextauth]/route.ts";
 
-export async function GET(request) { 
+export async function GET(request: NextRequest) { 
     try {
-        userData = await getSession({ req: request});
+        const userData = await getSession({ req: request});
         console.log(userData);
         const data = await request.json();
         //console.log(data);

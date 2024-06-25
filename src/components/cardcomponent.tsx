@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 
 type CardComponentProps = {
+  id: string;
   name: string;
   about: string;
   image: string;

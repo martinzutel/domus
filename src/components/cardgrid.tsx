@@ -47,6 +47,7 @@ const CardGrid = () => {
         {data.map((item, index) => (
           <CardComponent
             key={index}
+            id= {item.id}
             name={item.name}
             about={item.about}
             image={item.image}
