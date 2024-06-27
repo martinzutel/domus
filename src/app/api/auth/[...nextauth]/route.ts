@@ -42,6 +42,9 @@ const authOptions: AuthOptions = {
       return token;
     },
   },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
