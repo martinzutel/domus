@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@prisma/prisma";
 
-export async function GET(req) {
+export async function GET() {
   try {
     const allUsers = await prisma.user.findMany({
       select: {
@@ -13,8 +13,6 @@ export async function GET(req) {
         gender: true,
         about: true,
         contact: true,
-        ownTags: true,
-        likedTags: true,
       },
     });
     return NextResponse.json(allUsers);

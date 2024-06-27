@@ -3,7 +3,6 @@ import Link from 'next/link';
 
 
 type CardComponentProps = {
-  id: string;
   name: string;
   about: string;
   image: string;
@@ -14,7 +13,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ name, about, image }) => 
     
       <div className=" h-[400px] w-[320px]  grid grid-rows-[8rem,1fr]  overflow-hidden rounded-[1rem]   border-secondarycolor">
         <div className="top-0 w-full bg-slate-500 relative">
-          <Image src={image} layout="fill" objectFit="cover" objectPosition="center" quality={100} alt="hero" sizes="(max-width: 480px) 100vw, 50vw" />
+          <Image src={image} layout="fill" objectFit="cover" objectPosition="center" quality={100} alt="hero"/>
         </div>
         <div className="w-full bg-darkgre p-[1.3rem]">
           <div className='h-[200px]'>

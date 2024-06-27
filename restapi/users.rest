@@ -3,28 +3,15 @@ GET http://localhost:3000/api/users/getAllUsers
 
 ###
 
-//add age, gender, about me and contact to user profile
+//add age, gender and about me to user profile
 
 POST http://localhost:3000/api/users/loginForm
 Content-Type: application/json 
 
 {
-    "user": {	
-        "email": "pong",
-        "age": 99,
-        "gender": "male",
-        "about": "ping",
-        "contact" : "11 1234 5678"
-    }
-}
-
-###
-
-GET http://localhost:3000/api/users/userTags
-Content-Type: application/json
-
-{
-    "user": {
-        "email": "pong"
-    }
+    "email": "pong",
+    "age": 99,
+    "gender": "male",
+    "about": "ping",
+    "contact" : "11 1234 5678"
 }

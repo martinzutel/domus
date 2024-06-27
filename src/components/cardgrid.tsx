@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import CardComponent from "@/components/cardcomponent";
 
 const CardGrid = () => {
@@ -10,9 +10,9 @@ const CardGrid = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/users/getAllUsers");
+        const response = await fetch('/api/users/getAllUsers');
         if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+          throw new Error('Network response was not ok ' + response.statusText);
         }
         const result = await response.json();
         setData(result);
@@ -27,18 +27,10 @@ const CardGrid = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+    
 
   if (data.length === 0) {
-    return (
-      <div className="flex justify-center items-center">
-      <p
-        className="font-sofia-pro font-bold text text-white text-center
-        sm:text-center"
-      >
-        Loading...
-      </p>
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
@@ -47,7 +39,6 @@ const CardGrid = () => {
         {data.map((item, index) => (
           <CardComponent
             key={index}
-            id= {item.id}
             name={item.name}
             about={item.about}
             image={item.image}

@@ -1,9 +1,9 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@prisma/prisma";
 
-const authOptions: AuthOptions = {
+const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -12,42 +12,46 @@ const authOptions: AuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async signIn({ user }) {
-      if (user?.image) {
-        user.image = user.image.replace("=s96-c", "=s480-c");
-      }
-
-      if (user?.email) {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
-        });
-
-        if (existingUser) {
+    async session({ session }) {
+      if (session.user?.image) {
+        // console.log("image is: " + session.user.image);
+        session.user.image = session.user.image.replace("=s96-c", "=s400-c");
+        // console.log("replaced with: " + session.user.image);
+        if (session.user.email) {
           await prisma.user.update({
-            where: { email: user.email },
-            data: { image: user.image || undefined || null },
+            where: { email: session.user.email },
+            data: {
+              image: session.user.image,
+            },
           });
         }
       }
-      return true;
-    },
-    async session({ session, user }) {
-      session.user = user;
       return session;
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+    async signIn({ user }) {
+      if (user?.image) {
+        // console.log("image is: " + user.image);
+        user.image = user.image.replace("=s96-c", "=s480-c");
+        //console.log("replaced with: " + user.image);
+        if (user.email) {
+          await prisma.user.update({
+            where: { email: user.email },
+            data: {
+              image: user.image,
+            },
+          });
+          // console.log ("updated image:" + JSON.stringify(await prisma.user.findMany({
+          //   where: {email: user.email}
+          // })))
+        }
       }
-      return token;
+      return true;
     },
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST};
+export { handler as GET, handler as POST };
