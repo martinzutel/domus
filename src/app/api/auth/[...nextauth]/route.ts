@@ -1,9 +1,9 @@
-import NextAuth from "next-auth/next";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@prisma/prisma";
 
-const handler = NextAuth({
+const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -12,46 +12,42 @@ const handler = NextAuth({
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async session({ session }) {
-      if (session.user?.image) {
-        // console.log("image is: " + session.user.image);
-        session.user.image = session.user.image.replace("=s96-c", "=s400-c");
-        // console.log("replaced with: " + session.user.image);
-        if (session.user.email) {
-          await prisma.user.update({
-            where: { email: session.user.email },
-            data: {
-              image: session.user.image,
-            },
-          });
-        }
-      }
-      return session;
-    },
     async signIn({ user }) {
       if (user?.image) {
-        // console.log("image is: " + user.image);
         user.image = user.image.replace("=s96-c", "=s480-c");
-        //console.log("replaced with: " + user.image);
-        if (user.email) {
+      }
+
+      if (user?.email) {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+        });
+
+        if (existingUser) {
           await prisma.user.update({
             where: { email: user.email },
-            data: {
-              image: user.image,
-            },
+            data: { image: user.image || undefined || null },
           });
-          // console.log ("updated image:" + JSON.stringify(await prisma.user.findMany({
-          //   where: {email: user.email}
-          // })))
         }
       }
       return true;
+    },
+    async session({ session, user }) {
+      session.user = user;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
     },
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST};

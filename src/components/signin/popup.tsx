@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import popupCenter from './auth/windowpopup';
 import { RxCross2 } from "react-icons/rx";
 import { FcGoogle } from "react-icons/fc";
-
+import type { User } from '@prisma/client'
 
 interface PopupProps {
   onClose: () => void;
@@ -17,6 +17,8 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
   const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
   const { data: session, status } = useSession();
   const closeRegisterForm = () => setShowRegisterForm(false);
+  
+  const user = session?.user as User  
 
   return (
     <>
