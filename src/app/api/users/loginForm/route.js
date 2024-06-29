@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server.js";
 import prisma from "@prisma/prisma";
-import { getSession } from "next-auth/react";
 
 export async function POST(request) {
   try {
