@@ -13,8 +13,8 @@ export async function GET(req) {
         gender: true,
         about: true,
         contact: true,
-        OwnTags: true,
-        LikedTags: true,
+        ownTags: true,
+        likedTags: true,
       },
     });
     return NextResponse.json(allUsers);

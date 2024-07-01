@@ -67,7 +67,7 @@ export async function POST(request) {
     }
 
     const userData = await res.json();
-    console.log(userData);
+    //console.log(userData);
 
     // Find the user in the database
     const user = await prisma.user.findUnique({
@@ -81,11 +81,11 @@ export async function POST(request) {
     // Get the request data
     const data = await request.json();
 
-    // Extract the tag and its current status
-    const tagName = data.tag;
+    // Extract the tags array from the request body
+    const tags = data.tags;
     const userId = user.id;
 
-    // Find the current tag status in the ownTags table
+    // Find the current tag statuses in the ownTags table
     const ownTags = await prisma.ownTags.findUnique({
       where: { userId: userId },
     });
@@ -94,13 +94,18 @@ export async function POST(request) {
       return NextResponse.json({ message: "User tags not found." }, { status: 404 });
     }
 
-    // Toggle the tag status
-    const newTagStatus = !ownTags[tagName];
+    // Prepare the data object to update multiple tags
+    const updatedTagStatuses = {};
+    tags.forEach(tag => {
+      if (ownTags.hasOwnProperty(tag)) {
+        updatedTagStatuses[tag] = !ownTags[tag];
+      }
+    });
 
-    // Update the tag status
+    // Update the tag statuses
     const updatedTags = await prisma.ownTags.update({
       where: { userId: userId },
-      data: { [tagName]: newTagStatus },
+      data: updatedTagStatuses,
     });
 
     return NextResponse.json(updatedTags);

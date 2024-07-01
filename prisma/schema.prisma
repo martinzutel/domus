@@ -21,10 +21,10 @@ model User {
   gender             String?
   contact            String?
   isRegisterComplete Boolean?        @default(false)
-  likedTags          LikedTags[]
-  ownTags            OwnTags[]
   accounts           Account[]
   Authenticator      Authenticator[]
+  likedTags          LikedTags[]
+  ownTags            OwnTags[]
   sessions           Session[]
 }
 
@@ -78,7 +78,7 @@ model Authenticator {
 }
 
 model OwnTags {
-  userId String @unique
+  userId        String  @unique
   fitness       Boolean @default(false)
   football      Boolean @default(false)
   basketball    Boolean @default(false)
@@ -120,7 +120,7 @@ model OwnTags {
 }
 
 model LikedTags {
-  userId String @unique
+  userId        String  @unique
   fitness       Boolean @default(false)
   football      Boolean @default(false)
   basketball    Boolean @default(false)
