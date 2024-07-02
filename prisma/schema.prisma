@@ -23,8 +23,8 @@ model User {
   isRegisterComplete Boolean?        @default(false)
   accounts           Account[]
   Authenticator      Authenticator[]
-  likedTags          LikedTags[]
-  ownTags            OwnTags[]
+  likedTags          LikedTags?
+  ownTags            OwnTags?
   sessions           Session[]
 }
 

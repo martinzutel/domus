@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'No cookies found in the request.' }, { status: 401 });
     }
 
-    // Parse cookies to find the session token
     const parsedCookies = Object.fromEntries(cookies.split('; ').map(cookie => cookie.split('=')));
 
     const sessionToken = parsedCookies['next-auth.session-token'];
@@ -20,13 +19,12 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'Session token not found in cookies.' }, { status: 401 });
     }
 
-    // Query the database to find the user associated with the session token
     const session = await prisma.session.findUnique({
       where: {
         sessionToken: sessionToken,
       },
       include: {
-        user: true, // Include the user associated with this session
+        user: true,
       },
     });
 

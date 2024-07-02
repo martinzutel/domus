@@ -12,20 +12,17 @@ export async function POST(request) {
 
     const filteredUsers = await prisma.user.findMany({
       where: {
-        ownTags: {
-          some: {
-            OR: searchTags.map(tag => ({
-              [tag]: true
-            }))
-          }
-        }
-      },
-      orderBy: {
-        // Sorting by the number of matching tags in descending order
-        _count: {
-          OwnTags: 'desc'
+      ownTags: {
+        is: {
+        AND: searchTags.map(tag => ({
+          [tag]: true
+        }))
         }
       }
+      },
+      include: {
+      ownTags: true,
+      },
     });
 
     return NextResponse.json(filteredUsers);

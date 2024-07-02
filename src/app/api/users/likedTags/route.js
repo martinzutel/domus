@@ -4,52 +4,6 @@ import authOptions from "../../auth/[...nextauth]/route.ts";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-export async function GET(request) { 
-  try {
-      const res = await fetch(`${baseUrl}/api/users/getUser`, {
-          headers: {
-              'cookie': request.headers.get('cookie')
-          },
-      });
-
-      if (!res.ok) {
-          return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
-      }
-
-      const userData = await res.json();
-      // console.log(userData);
-
-      const user = await prisma.user.findUnique({
-          where: { email: userData.email },
-      });
-
-      if (!user) {
-          return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
-      }
-
-      const ownTags = await prisma.ownTags.findMany({
-          where: { userId: user.id },
-      });
-
-      const likedTags = await prisma.likedTags.findMany({
-          where: { userId: user.id },
-      });
-
-      const tags = {
-          ownTags,
-          likedTags
-      };
-
-      return NextResponse.json(tags);
-  } catch (error) {
-      console.error("Error parsing request body:", error);
-      return NextResponse.json(
-          { message: "Invalid request body.", error },
-          { status: 400 }
-      );
-  }
-}
-
 export async function POST(request) {
   try {
     const res = await fetch(`${baseUrl}/api/users/getUser`, {
@@ -65,7 +19,6 @@ export async function POST(request) {
     }
 
     const userData = await res.json();
-    //console.log(userData);
 
     const user = await prisma.user.findUnique({
       where: { email: userData.email },
@@ -80,22 +33,22 @@ export async function POST(request) {
     const tags = data.tags;
     const userId = user.id;
 
-    const ownTags = await prisma.ownTags.findUnique({
+    const likedTags = await prisma.likedTags.findUnique({
       where: { userId: userId },
     });
 
-    if (!ownTags) {
+    if (!likedTags) {
       return NextResponse.json({ message: "User tags not found." }, { status: 404 });
     }
 
     const updatedTagStatuses = {};
     tags.forEach(tag => {
-      if (ownTags.hasOwnProperty(tag)) {
-        updatedTagStatuses[tag] = !ownTags[tag];
+      if (likedTags.hasOwnProperty(tag)) {
+        updatedTagStatuses[tag] = !likedTags[tag];
       }
     });
 
-    const updatedTags = await prisma.ownTags.update({
+    const updatedTags = await prisma.likedTags.update({
       where: { userId: userId },
       data: updatedTagStatuses,
     });

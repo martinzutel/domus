@@ -9,13 +9,13 @@ POST http://localhost:3000/api/users/loginForm
 Content-Type: application/json 
 
 {
-    "user": {	
-        "email": "pong",
-        "age": 99,
-        "gender": "male",
-        "about": "ping",
-        "contact" : "11 1234 5678"
-    }
+  "user": {	
+      "email": "pong",
+      "age": 99,
+      "gender": "male",
+      "about": "ping",
+      "contact" : "11 1234 5678"
+  }
 }
 
 ###
@@ -27,6 +27,16 @@ Cookie: next-auth.callback-url=http://localhost:3000/google-signin; next-auth.cs
 ###
 
 POST http://localhost:3000/api/users/ownUserTags
+Content-Type: application/json
+Cookie: next-auth.callback-url=http://localhost:3000/google-signin; next-auth.csrf-token=f554387842e9444b55d1ed7f70e39480a065792c4e1b39fd5de7d01394348d04|d3c39793addb41c7f3335900816f51083556156a6c237a9d97932247aa74450b; next-auth.session-token=60f2b222-be16-4b09-b5f2-6b28d0fbade4
+
+{
+  "tags": ["anime", "basketball", "movies"]
+}
+
+###
+
+POST http://localhost:3000/api/users/likedTags
 Content-Type: application/json
 Cookie: next-auth.callback-url=http://localhost:3000/google-signin; next-auth.csrf-token=f554387842e9444b55d1ed7f70e39480a065792c4e1b39fd5de7d01394348d04|d3c39793addb41c7f3335900816f51083556156a6c237a9d97932247aa74450b; next-auth.session-token=60f2b222-be16-4b09-b5f2-6b28d0fbade4
 
