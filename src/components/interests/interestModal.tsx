@@ -22,12 +22,12 @@ const InterestModal: React.FC<InterestModalProps> = ({ children }) => {
     return (
         
         <>
-            <div className='fixed h-screen w-screen bg-black opacity-40 z-40 top-0 left-0 backdrop-blur-xl'></div>
-
             <div>
+                
+                <div className='fixed h-screen w-screen bg-black/50 top-0 left-0 '></div>
 
                 <div className='absolute flex items-center justify-center top-72'>
-                    <div className="absolute w-[500px] h-[500px] bg-black p-[20px] rounded-3xl flex flex-col items-center justify-center space-y-4 z-50">
+                    <div className="absolute w-[500px] h-[500px] bg-maincolor p-[20px] rounded-3xl flex flex-col items-center justify-center space-y-4 z-50">
                     {children}
                     </div>
                 </div>

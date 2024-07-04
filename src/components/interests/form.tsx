@@ -25,7 +25,6 @@ const interests = [
     { value: "dancing", label: "Dancing" },
 ];
 
-
 interface InterestsFormProps {
     closeModal: () => void;
 }
@@ -58,8 +57,11 @@ const InterestsForm: React.FC<InterestsFormProps> = ({ closeModal }) => {
     };
 
     return (
-        <div className="flex items-center justify-center">
-            <form className="flex flex-wrap justify-center select-none" onSubmit={handleSubmit}>
+        <form
+            className="flex flex-col max-h-[300px] p-2"
+            onSubmit={handleSubmit}
+        >
+            <div className="flex flex-wrap justify-center select-none mb-4 overflow-y-auto ">
                 {interests.map((interest, index) => (
                     <div
                         key={interest.value}
@@ -89,16 +91,14 @@ const InterestsForm: React.FC<InterestsFormProps> = ({ closeModal }) => {
                         />
                     </div>
                 ))}
-                <div className="w-full flex justify-center mt-4">
-                    <button
-                        type="submit"
-                        className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
-                    >
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <button
+                type="submit"
+                className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto hover:bg-coolredhl active:bg-coolreddrk sticky"
+            >
+                Submit
+            </button>
+        </form>
     );
 };
 
