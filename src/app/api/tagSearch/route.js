@@ -13,7 +13,7 @@ export async function POST(request) {
     const filteredUsers = await prisma.user.findMany({
       where: {
       ownTags: {
-        is: {
+        some: {
         AND: searchTags.map(tag => ({
           [tag]: true
         }))

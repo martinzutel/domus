@@ -51,7 +51,10 @@ const Searchbar = () => {
                         <h1 className='text-4xl text-white font-sofia-pro'
                         >Search through interests:</h1>
                         
-                        <InterestsForm closeModal={toggleModal} />
+                        <InterestsForm 
+                        closeModal={toggleModal} 
+                        modalContext="search" 
+                        />
                        
                     </div>
                 </InterestModal>
