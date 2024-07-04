@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useState } from "react";
 
 const interests = [
@@ -24,8 +25,12 @@ const interests = [
     { value: "dancing", label: "Dancing" },
 ];
 
-export default function InterestsForm() {
-    
+
+interface InterestsFormProps {
+    closeModal: () => void;
+}
+
+const InterestsForm: React.FC<InterestsFormProps> = ({ closeModal }) => {
     const [checkedState, setCheckedState] = useState(
         new Array(interests.length).fill(false)
     );
@@ -39,19 +44,21 @@ export default function InterestsForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const selectedInterests = interests.filter((_, index) => checkedState[index]).map(interest => interest.value);
+        const selectedInterests = interests
+            .filter((_, index) => checkedState[index])
+            .map(interest => interest.value);
 
         // Send the selected interests to the backend
         try {
-           console.log(selectedInterests)
-          
+            console.log(selectedInterests);
+            closeModal(); // Close the modal upon successful form submission
         } catch (error) {
             console.error("Error submitting interests:", error);
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center">
             <form className="flex flex-wrap justify-center select-none" onSubmit={handleSubmit}>
                 {interests.map((interest, index) => (
                     <div
@@ -93,4 +100,6 @@ export default function InterestsForm() {
             </form>
         </div>
     );
-}
+};
+
+export default InterestsForm;
