@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import { BsFillPersonFill } from "react-icons/bs";
+import { IoFilterCircle } from "react-icons/io5";
+
 
 import InterestsForm from './interests/form';
 import InterestModal from './interests/interestModal';
@@ -25,7 +27,7 @@ const Searchbar = () => {
                     onClick={toggleModal}
                     className='h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre'
                 >
-                    <BsFillPersonFill className='m-[10px]' />
+                    <IoFilterCircle className='m-[10px]' />
                 </button>
                 <button className='h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre'>
                     <BsFillPersonFill className='m-[10px]' />

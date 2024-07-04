@@ -3,9 +3,17 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "@/components/cardcomponent";
 
-const CardGrid = () => {
+interface User {
+  id: string;
+  name: string;
+  about: string;
+  image: string;
+  interests: string[];
+}
+
+const CardGrid: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,8 +22,18 @@ const CardGrid = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
         }
-        const result = await response.json();
-        setData(result);
+        const result: User[] = await response.json();
+
+        // Placeholder interests array
+        const interestsArray = ["gaming", "coding", "biking"];
+
+        // Add placeholder interests to each user
+        const updatedResult = result.map((user) => ({
+          ...user,
+          interests: interestsArray,
+        }));
+
+        setData(updatedResult);
       } catch (error) {
         setError(error as Error);
       }
@@ -31,12 +49,9 @@ const CardGrid = () => {
   if (data.length === 0) {
     return (
       <div className="flex justify-center items-center">
-      <p
-        className="font-sofia-pro font-bold text text-white text-center
-        sm:text-center"
-      >
-        Loading...
-      </p>
+        <p className="font-sofia-pro font-bold text text-white text-center sm:text-center">
+          Loading...
+        </p>
       </div>
     );
   }
@@ -44,13 +59,14 @@ const CardGrid = () => {
   return (
     <div className="flex justify-center">
       <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
-        {data.map((item, index) => (
+        {data.map((item) => (
           <CardComponent
-            key={index}
-            id= {item.id}
+            key={item.id}
+            id={item.id}
             name={item.name}
             about={item.about}
             image={item.image}
+            interests={item.interests}
           />
         ))}
       </div>
