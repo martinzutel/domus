@@ -4,6 +4,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 
 import InterestsForm from './interests/form';
 import InterestModal from './interests/interestModal';
+import { RxCross2 } from "react-icons/rx";
 
 const Searchbar = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -37,13 +38,21 @@ const Searchbar = () => {
             {isModalOpen && (
                 <InterestModal>
                     <div className="flex flex-col items-center space-y-4">
+                        <div className='w-full'>
+                            <button
+                                onClick={toggleModal}
+                                className="top-0 left-0 px-4 py-2 text-coolred text-3xl rounded"
+                            >
+                                <RxCross2 />
+                            </button>
+                        </div>
+                       
+
+                        <h1 className='text-4xl text-white font-sofia-pro'
+                        >Search through interests:</h1>
+                        
                         <InterestsForm closeModal={toggleModal} />
-                        <button
-                            onClick={toggleModal}
-                            className="px-4 py-2 bg-red-500 text-white rounded"
-                        >
-                            Close Modal
-                        </button>
+                       
                     </div>
                 </InterestModal>
             )}

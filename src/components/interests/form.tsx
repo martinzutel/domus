@@ -92,7 +92,7 @@ const InterestsForm: React.FC<InterestsFormProps> = ({ closeModal }) => {
                 <div className="w-full flex justify-center mt-4">
                     <button
                         type="submit"
-                        className="bg-red-600 text-white p-2 rounded-lg"
+                        className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
                     >
                         Submit
                     </button>
