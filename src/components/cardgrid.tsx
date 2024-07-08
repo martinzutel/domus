@@ -24,14 +24,19 @@ const CardGrid: React.FC = () => {
         }
         const result: User[] = await response.json();
 
-        // Placeholder interests array
-        const interestsArray = ["gaming", "coding", "biking"];
+        // Function to extract interests from ownTags
+        const extractInterests = (ownTags: { [key: string]: boolean }) => {
+          return Object.keys(ownTags).filter((key) => ownTags[key] === true);
+        };
 
-        // Add placeholder interests to each user
-        const updatedResult = result.map((user) => ({
-          ...user,
-          interests: interestsArray,
-        }));
+        // Update each user with their respective interests
+        const updatedResult = result.map((user) => {
+          const interestsArray = extractInterests(user.ownTags);
+          return {
+            ...user,
+            interests: interestsArray,
+          };
+        });
 
         setData(updatedResult);
       } catch (error) {
