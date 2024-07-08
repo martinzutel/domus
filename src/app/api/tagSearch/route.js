@@ -14,14 +14,16 @@ export async function POST(request) {
       where: {
         ownTags: {
           is: {
-            OR: searchTags.map((tag) => ({ name: tag })),
-          },
+          OR: searchTags.map(tag => ({
+            [tag]: true
+          }))
+          }
+        }
         },
-      },
-      include: {
+        include: {
         ownTags: true,
-      },
-    });
+        },
+      });
 
     return NextResponse.json(filteredUsers);
 
