@@ -8,6 +8,7 @@ interface User {
   name: string;
   about: string;
   image: string;
+  ownTags: { [key: string]: boolean } | null;
   interests: string[];
 }
 
@@ -25,7 +26,8 @@ const CardGrid: React.FC = () => {
         const result: User[] = await response.json();
 
         // Function to extract interests from ownTags
-        const extractInterests = (ownTags: { [key: string]: boolean }) => {
+        const extractInterests = (ownTags: { [key: string]: boolean } | null) => {
+          if (!ownTags) return [];
           return Object.keys(ownTags).filter((key) => ownTags[key] === true);
         };
 
