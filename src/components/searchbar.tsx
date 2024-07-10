@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 
 import CheckboxGroup from './interests/CheckboxGroup';
 import InterestModal from './interests/interestModal';
+import { User } from 'next-auth';
 
 interface Interest {
     value: string;
@@ -54,6 +55,8 @@ const interests: Interest[] = [
 const Searchbar = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+    const [data, setData] = useState<User[]>([]);
+    
 
     const toggleModal = (): void => {
         setIsModalOpen(!isModalOpen);
@@ -74,11 +77,12 @@ const Searchbar = () => {
                 },
                 body: JSON.stringify({ searchTags: selectedInterests }),
             });
-
+            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
+            const result: User[] = await response.json();
+            setData(result);       
             console.log('Successfully submitted interests');
             toggleModal(); // Close the modal upon successful form submission
         } catch (error) {
