@@ -1,18 +1,89 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { BsFillPersonFill } from "react-icons/bs";
 import { IoFilterCircle } from "react-icons/io5";
-
-
-import InterestsForm from './interests/form';
-import InterestModal from './interests/interestModal';
 import { RxCross2 } from "react-icons/rx";
+
+import CheckboxGroup from './interests/CheckboxGroup';
+import InterestModal from './interests/interestModal';
+
+interface Interest {
+    value: string;
+    label: string;
+}
+
+const interests: Interest[] = [
+    { value: "fitness", label: "Fitness" },
+    { value: "football", label: "Football" },
+    { value: "basketball", label: "Basketball" },
+    { value: "tennis", label: "Tennis" },
+    { value: "golf", label: "Golf" },
+    { value: "hockey", label: "Hockey" },
+    { value: "baseball", label: "Baseball" },
+    { value: "rugby", label: "Rugby" },
+    { value: "boxing", label: "Boxing" },
+    { value: "skateboarding", label: "Skateboarding" },
+    { value: "martial_arts", label: "Martial Arts" },
+    { value: "reading", label: "Reading" },
+    { value: "movies", label: "Movies" },
+    { value: "gaming", label: "Gaming" },
+    { value: "anime", label: "Anime" },
+    { value: "photography", label: "Photography" },
+    { value: "music", label: "Music" },
+    { value: "writing", label: "Writing" },
+    { value: "programming", label: "Programming" },
+    { value: "hiking", label: "Hiking" },
+    { value: "cooking", label: "Cooking" },
+    { value: "gardening", label: "Gardening" },
+    { value: "fishing", label: "Fishing" },
+    { value: "eating", label: "Eating" },
+    { value: "politics", label: "Politics" },
+    { value: "musician", label: "Musician" },
+    { value: "music", label: "Music" },
+    { value: "writing", label: "Writing" },
+    { value: "programming", label: "Programming" },
+    { value: "hiking", label: "Hiking" },
+    { value: "cooking", label: "Cooking" },
+    { value: "gardening", label: "Gardening" },
+    { value: "fishing", label: "Fishing" },
+    { value: "eating", label: "Eating" },
+    { value: "politics", label: "Politics" },
+    { value: "musician", label: "Musician" },
+];
 
 const Searchbar = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
     const toggleModal = (): void => {
         setIsModalOpen(!isModalOpen);
+    };
+
+    const handleCheckedChange = (checkedValues: string[]) => {
+        setSelectedInterests(checkedValues);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('/api/tagSearch', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ searchTags: selectedInterests }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            console.log('Successfully submitted interests');
+            toggleModal(); // Close the modal upon successful form submission
+        } catch (error) {
+            console.error("Error submitting interests:", error);
+        }
     };
 
     return (
@@ -38,26 +109,26 @@ const Searchbar = () => {
             </div>
 
             {isModalOpen && (
-                <InterestModal>
+                <InterestModal onClose={toggleModal}>
                     <div className="flex flex-col items-center space-y-4">
-                        <div className='w-full'>
-                            <button
-                                onClick={toggleModal}
-                                className="top-0 left-0 px-4 py-2 text-coolred text-3xl rounded"
-                            >
-                                <RxCross2 />
-                            </button>
-                        </div>
                        
 
-                        <h1 className='text-4xl text-white font-sofia-pro'
-                        >Search through interests:</h1>
-                        
-                        <InterestsForm 
-                        closeModal={toggleModal} 
-                        modalContext="search" 
-                        />
-                       
+                        <h1 className='text-4xl text-white font-sofia-pro'>
+                            Search through interests:
+                        </h1>
+
+                        <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
+                            <div className='max-h-[300px] overflow-y-auto'>
+                                <CheckboxGroup interests={interests} onCheckedChange={handleCheckedChange} />
+                            </div>
+                          
+                            <button
+                                type="submit"
+                                className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto hover:bg-coolredhl active:bg-coolreddrk"
+                            >
+                                Submit
+                            </button>
+                        </form>
                     </div>
                 </InterestModal>
             )}

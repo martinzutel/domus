@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { useSession } from 'next-auth/react';
 import InterestModal from '../interests/interestModal';
-import InterestsForm from '../interests/form';
+import CheckboxGroup from '../interests/CheckboxGroup';
 
 interface FormData {
   age: number;
   gender: string;
   about: string;
   contact: string;
+  interests: string[]; // Added interests field to the form data
 }
 
 interface RegisterFormProps {
@@ -17,7 +18,43 @@ interface RegisterFormProps {
   onSubmit: (formData: FormData) => void;
 }
 
+interface Interest {
+  value: string;
+  label: string;
+}
+
+const interests: Interest[] = [
+  { value: "fitness", label: "Fitness" },
+  { value: "football", label: "Football" },
+  { value: "basketball", label: "Basketball" },
+  { value: "tennis", label: "Tennis" },
+  { value: "golf", label: "Golf" },
+  { value: "hockey", label: "Hockey" },
+  { value: "baseball", label: "Baseball" },
+  { value: "rugby", label: "Rugby" },
+  { value: "boxing", label: "Boxing" },
+  { value: "skateboarding", label: "Skateboarding" },
+  { value: "martial_arts", label: "Martial Arts" },
+  { value: "reading", label: "Reading" },
+  { value: "movies", label: "Movies" },
+  { value: "gaming", label: "Gaming" },
+  { value: "anime", label: "Anime" },
+  { value: "photography", label: "Photography" },
+  { value: "music", label: "Music" },
+  { value: "writing", label: "Writing" },
+  { value: "programming", label: "Programming" },
+  { value: "hiking", label: "Hiking" },
+  { value: "cooking", label: "Cooking" },
+  { value: "gardening", label: "Gardening" },
+  { value: "fishing", label: "Fishing" },
+  { value: "eating", label: "Eating" },
+  { value: "politics", label: "Politics" },
+  { value: "musician", label: "Musician" },
+];
+
 const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }) => {
+
+  
 
   useEffect(() => {
     // Add the class to the body to block scrolling
@@ -27,22 +64,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
     return () => {
         document.body.classList.remove('overflow-hidden');
     };
-}, []);
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const toggleModal = (): void => {
-      setIsModalOpen(!isModalOpen);
-  };
-
-  const { data: session } = useSession();
-
   const [formData, setFormData] = useState<FormData>({
     age: 18,
     gender: '',
     about: '',
     contact: '',
+    interests: [], // Initialize interests in form data
   });
+
+  const { data: session } = useSession();
+
+  const toggleModal = (): void => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,6 +94,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
     setFormData((prevData) => ({
       ...prevData,
       age,
+    }));
+  };
+
+  const handleCheckedChange = (checkedValues: string[]) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      interests: checkedValues,
     }));
   };
 
@@ -81,7 +125,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
       console.log('Success:', result);
       onSubmit(result);
     } catch (error) {
-      
       console.error('Error:', error);
     }
   };
@@ -89,7 +132,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submitFormData(formData);
-    onSubmit(formData)
+    onSubmit(formData);
   };
 
   if (!isOpen) return null;
@@ -149,7 +192,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                   checked={formData.gender === 'female'}
                   onChange={handleChange}
                   className="form-radio h-5 w-5 text-darkgre accent-coolred"
-                  required
                 />
                 <span className="ml-2 text-white">Female</span>
               </label>
@@ -161,7 +203,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                   checked={formData.gender === 'other'}
                   onChange={handleChange}
                   className="form-radio h-5 w-5 text-darkgre accent-coolred"
-                  required
                 />
                 <span className="ml-2 text-white">Other</span>
               </label>
@@ -190,41 +231,36 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
           </div>
 
           <button
+            type="button"
             onClick={toggleModal}
-            className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolred mb-3'
+            className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk mb-3'
           >
-            Select you interests
+            Select Your Interests
           </button>
 
           <div className='w-full flex flex-col justify-center items-center'>
             {isModalOpen && (
-                <InterestModal>
+                <InterestModal onClose={toggleModal}>
                     <div className="flex flex-col items-center space-y-4">
-                        <div className='w-full'>
-                            <button
-                                onClick={toggleModal}
-                                className="top-0 left-0 px-4 py-2 text-coolred text-3xl rounded"
-                            >
-                                <RxCross2 />
-                            </button>
-                        </div>
                        
 
-                        <h1 className='text-4xl text-white font-sofia-pro'
-                        >Search through interests:</h1>
-                        
-                        <InterestsForm 
-                        closeModal={toggleModal} 
-                        modalContext="ownTags" 
-                        />
-                       
+                        <h1 className='text-4xl text-white font-sofia-pro'>
+                          Select Your Interests:
+                        </h1>
+                    
+                        <div className='max-h-[300px] overflow-y-auto flex items-center'>
+                          <CheckboxGroup interests={interests} onCheckedChange={handleCheckedChange} />
+                        </div>
+
                     </div>
                 </InterestModal>
             )}
           </div>
-          
 
-          <button type="submit" className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'>
+          <button
+            type="submit"
+            className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'
+          >
             Register
           </button>
         </form>
