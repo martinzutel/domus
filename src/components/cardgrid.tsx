@@ -15,6 +15,7 @@ interface User {
 const CardGrid: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<User[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,13 +26,11 @@ const CardGrid: React.FC = () => {
         }
         const result: User[] = await response.json();
 
-        // Function to extract interests from ownTags
         const extractInterests = (ownTags: { [key: string]: boolean } | null) => {
           if (!ownTags) return [];
           return Object.keys(ownTags).filter((key) => ownTags[key] === true);
         };
 
-        // Update each user with their respective interests
         const updatedResult = result.map((user) => {
           const interestsArray = extractInterests(user.ownTags);
           return {
@@ -49,6 +48,18 @@ const CardGrid: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = searchTerm
+    ? data.filter((user) =>
+        user.interests.some((interest) =>
+          interest.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
+    : data;
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -64,9 +75,16 @@ const CardGrid: React.FC = () => {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col items-center">
+      <input
+        type="text"
+        placeholder="Search by interests..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="mb-4 p-2 border border-gray-300 rounded"
+      />
       <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
-        {data.map((item) => (
+        {filteredData.map((item) => (
           <CardComponent
             key={item.id}
             id={item.id}
