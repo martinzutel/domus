@@ -23,9 +23,9 @@ model User {
   isRegisterComplete Boolean?        @default(false)
   accounts           Account[]
   Authenticator      Authenticator[]
-  ownTags            Tag[]           @relation("OwnedTags")
-  likedTags          Tag[]           @relation("LikedTags")
   sessions           Session[]
+  likedTags          Tag[]           @relation("LikedTags")
+  ownTags            Tag[]           @relation("OwnedTags")
 }
 
 model Account {
@@ -116,7 +116,6 @@ model OwnTags {
   boats         Boolean @default(false)
   airplanes     Boolean @default(false)
   running       Boolean @default(false)
-  // user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model LikedTags {
@@ -158,12 +157,11 @@ model LikedTags {
   boats         Boolean @default(false)
   airplanes     Boolean @default(false)
   running       Boolean @default(false)
-  // user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
-  tagId     Int  @id @default(autoincrement()) 
-  tagName   String  @unique
-  ownedBy   User[]  @relation("OwnedTags")
-  likedBy   User[]  @relation("LikedTags")
+  tagId   Int    @id @default(autoincrement())
+  tagName String @unique
+  likedBy User[] @relation("LikedTags")
+  ownedBy User[] @relation("OwnedTags")
 }

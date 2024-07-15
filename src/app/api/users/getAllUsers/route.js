@@ -13,12 +13,28 @@ export async function GET(req) {
         gender: true,
         about: true,
         contact: true,
-        ownTags: true,
-        likedTags: true,
+        ownTags: {
+          select: {
+            tagName: true,
+          },
+        },
+        likedTags: {
+          select: {
+            tagName: true,
+          },
+        },
       },
     });
-    return NextResponse.json(allUsers);
+
+    const formattedUsers = allUsers.map((user) => ({
+      ...user,
+      ownTags: user.ownTags.map((tag) => tag.tagName),
+      likedTags: user.likedTags.map((tag) => tag.tagName),
+    }));
+
+    return NextResponse.json(formattedUsers);
+    // return NextResponse.json(allUsers);
   } catch (error) {
-    return NextResponse.json({message: error.message }, { status: 500 });
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

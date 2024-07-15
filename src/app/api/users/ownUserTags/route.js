@@ -27,7 +27,29 @@ export async function GET(request) {
           return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
       }
 
-      const ownTags = await prisma.ownTags.findMany({
+      const tags = await prisma.user.findMany({
+          where: { id: user.id },
+          select: {
+            ownTags: {
+              select: {
+                tagName: true,
+              },
+            },
+            likedTags: {
+              select: {
+                tagName: true,
+              },
+          },
+        },
+      })
+
+      const formattedTags = tags.map((user) => ({
+        ...user,
+        ownTags: user.ownTags.map((tag) => tag.tagName),
+        likedTags: user.likedTags.map((tag) => tag.tagName),
+      }));
+
+ /*      const ownTags = await prisma.tag.findMany({
           where: { userId: user.id },
       });
 
@@ -38,9 +60,9 @@ export async function GET(request) {
       const tags = {
           ownTags,
           likedTags
-      };
+      }; */
 
-      return NextResponse.json(tags);
+      return NextResponse.json(formattedTags);
   } catch (error) {
       console.error("Error parsing request body:", error);
       return NextResponse.json(
