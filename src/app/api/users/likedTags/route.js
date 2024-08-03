@@ -29,31 +29,71 @@ export async function POST(request) {
     }
 
     const data = await request.json();
-
     const tags = data.tags;
     const userId = user.id;
 
-    const likedTags = await prisma.likedTags.findUnique({
-      where: { userId: userId },
+    // Get the existing liked tags
+    const existingTags = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { likedTags: true },
     });
 
-    if (!likedTags) {
-      return NextResponse.json({ message: "User tags not found." }, { status: 404 });
-    }
+    const existingTagNames = existingTags.likedTags.map(tag => tag.tagName);
 
-    const updatedTagStatuses = {};
-    tags.forEach(tag => {
-      if (likedTags.hasOwnProperty(tag)) {
-        updatedTagStatuses[tag] = !likedTags[tag];
-      }
+    // Determine which tags to add and which to remove
+    const tagsToAdd = tags.filter(tag => !existingTagNames.includes(tag));
+    const tagsToRemove = existingTagNames.filter(tag => tags.includes(tag));
+
+    // Handle tags to add
+    const tagsToAddRecords = await Promise.all(
+      tagsToAdd.map(async (tagName) => {
+        let tag = await prisma.tag.findUnique({
+          where: { tagName },
+        });
+
+        if (!tag) {
+          tag = await prisma.tag.create({
+            data: { tagName },
+          });
+        }
+
+        return tag;
+      })
+    );
+
+    const tagIdsToAdd = tagsToAddRecords.map(tag => ({ tagId: tag.tagId }));
+
+    // Handle tags to remove
+    const tagsToRemoveRecords = await prisma.tag.findMany({
+      where: { tagName: { in: tagsToRemove } },
     });
 
-    const updatedTags = await prisma.likedTags.update({
-      where: { userId: userId },
-      data: updatedTagStatuses,
+    const tagIdsToRemove = tagsToRemoveRecords.map(tag => ({ tagId: tag.tagId }));
+
+    // Update user's liked tags
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        likedTags: {
+          connect: tagIdsToAdd,
+          disconnect: tagIdsToRemove,
+        },
+      },
     });
 
-    return NextResponse.json(updatedTags);
+    // Get the updated list of liked tags
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        likedTags: true,
+      },
+    });
+
+    return NextResponse.json({
+      message: "Tags updated successfully",
+      "Added Tags": tagsToAdd,
+      "Removed Tags": tagsToRemove,
+    });
   } catch (error) {
     console.error("Error parsing request body:", error);
     return NextResponse.json(
