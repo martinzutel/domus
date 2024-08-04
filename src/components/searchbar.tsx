@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { BsFillPersonFill } from "react-icons/bs";
 import { IoFilterCircle } from "react-icons/io5";
-import { RxCross2 } from "react-icons/rx";
 
 import CheckboxGroup from './interests/CheckboxGroup';
 import InterestModal from './interests/interestModal';
@@ -14,6 +13,7 @@ interface Interest {
 }
 
 const interests: Interest[] = [
+
     { value: "fitness", label: "Fitness" },
     { value: "football", label: "Football" },
     { value: "basketball", label: "Basketball" },
@@ -39,20 +39,12 @@ const interests: Interest[] = [
     { value: "fishing", label: "Fishing" },
     { value: "eating", label: "Eating" },
     { value: "politics", label: "Politics" },
-    { value: "musician", label: "Musician" },
-    { value: "music", label: "Music" },
-    { value: "writing", label: "Writing" },
-    { value: "programming", label: "Programming" },
-    { value: "hiking", label: "Hiking" },
-    { value: "cooking", label: "Cooking" },
-    { value: "gardening", label: "Gardening" },
-    { value: "fishing", label: "Fishing" },
-    { value: "eating", label: "Eating" },
-    { value: "politics", label: "Politics" },
-    { value: "musician", label: "Musician" },
+    { value: "musician", label: "Musician" }
+    
 ];
 
 const Searchbar = () => {
+
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
     const [data, setData] = useState<User[]>([]);
@@ -70,6 +62,7 @@ const Searchbar = () => {
         e.preventDefault();
         
         try {
+
             const response = await fetch('/api/tagSearch', {
                 method: 'POST',
                 headers: {
@@ -81,47 +74,63 @@ const Searchbar = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
             const result: User[] = await response.json();
+
             setData(result);       
+
             console.log('Successfully submitted interests');
-            toggleModal(); // Close the modal upon successful form submission
+
+            toggleModal(); 
+
         } catch (error) {
+
             console.error("Error submitting interests:", error);
+
         }
     };
 
     return (
+
         <div className='w-full flex flex-col justify-center items-center'>
+
             <div className='h-[40px] w-[350px] flex justify-center items-center '>
+
                 <input
                     type="text"
                     placeholder='Search'
                     className='h-full w-full bg-darkgre placeholder-white outline-none rounded-l-full pl-4'
                 />
+
                 <button
                     onClick={toggleModal}
                     className='h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre'
                 >
                     <IoFilterCircle className='m-[10px]' />
                 </button>
+
                 <button className='h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre'>
                     <BsFillPersonFill className='m-[10px]' />
                 </button>
+
                 <button className='h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre rounded-r-full'>
                     <BsFillPersonFill className='ml-[5px] mr-[10px]' />
                 </button>
+
             </div>
 
             {isModalOpen && (
+
                 <InterestModal onClose={toggleModal}>
+
                     <div className="flex flex-col items-center space-y-4">
                        
-
                         <h1 className='text-4xl text-white font-sofia-pro'>
                             Search through interests:
                         </h1>
 
                         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
+
                             <div className='max-h-[300px] overflow-y-auto'>
                                 <CheckboxGroup interests={interests} onCheckedChange={handleCheckedChange} />
                             </div>
@@ -132,10 +141,15 @@ const Searchbar = () => {
                             >
                                 Submit
                             </button>
+
                         </form>
+
                     </div>
+
                 </InterestModal>
+
             )}
+
         </div>
     );
 };

@@ -160,8 +160,8 @@ model LikedTags {
 }
 
 model Tag {
-  tagId   Int    @id @default(autoincrement())
   tagName String @unique
+  tagId   Int    @id @default(autoincrement())
   likedBy User[] @relation("LikedTags")
   ownedBy User[] @relation("OwnedTags")
 }
