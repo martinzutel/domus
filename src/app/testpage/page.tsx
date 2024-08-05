@@ -1,10 +1,10 @@
+import Profile from '@/components/interests/profile'
 import React from 'react'
-import  Filters from '@/components/filters/filters'
 
 export default function page() {
   return (
     <div>
-      <Filters></Filters>
+      <Profile/>
     </div>
   )
 }
