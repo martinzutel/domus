@@ -1,22 +1,23 @@
 import React from 'react'
 import Image from 'next/image'
 
+
 function Profile() {
   return (
 
     <div className='w-screen h-screen flex justify-center items-center'>
         <div className='h-[500px] w-[1080px] bg-maincolor border-white border-solid border rounded-3xl flex flex-row p-7'>
           
-                <div className='w-96 relative h-full'>
+                <div className='w-96 relative h-full rounded-2xl overflow-hidden mr-10'>
 
                     <Image
-                        src={'/public\images\images.jpg'}
+                        src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmni5ByUlopIBq0AvXN--ItFxamhwhdM5I2A&s'}
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"
                         quality={100}
                         alt="hero"
-                        sizes="(max-width: 480px) 100vw, 50vw"
+                        sizes="(max-width: 430px) 100vw, 50vw"
                     />
 
                 </div>
