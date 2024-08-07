@@ -17,8 +17,6 @@ const Popup: React.FC<PopupProps> = ({ onClose }) => {
   const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
   const { data: session, status } = useSession();
   const closeRegisterForm = () => setShowRegisterForm(false);
-  
-  const user = session?.user as User  
 
   return (
     <>
