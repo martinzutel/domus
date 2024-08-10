@@ -53,3 +53,12 @@ Content-Type: application/json
 {
   "searchTags": ["anime", "basketball", "movies"]
 }
+
+###
+
+POST http://localhost:3000/api/users/getUserProfile
+Content-Type: application/json
+
+{
+  "id": "clzk3sqb70000c0l00on2cqxe"
+}
