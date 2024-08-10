@@ -32,12 +32,12 @@ export async function GET(request) {
           select: {
             ownTags: {
               select: {
-                tagName: true,
+                tagValue: true,
               },
             },
             likedTags: {
               select: {
-                tagName: true,
+                tagValue: true,
               },
           },
         },
@@ -45,8 +45,8 @@ export async function GET(request) {
 
       const formattedTags = tags.map((user) => ({
         ...user,
-        ownTags: user.ownTags.map((tag) => tag.tagName),
-        likedTags: user.likedTags.map((tag) => tag.tagName),
+        ownTags: user.ownTags.map((tag) => tag.tagValue),
+        likedTags: user.likedTags.map((tag) => tag.tagValue),
       }));
 
  /*      const ownTags = await prisma.tag.findMany({
@@ -107,7 +107,7 @@ export async function POST(request) {
       include: { ownTags: true },
     });
 
-    const existingTagNames = existingTags.ownTags.map(tag => tag.tagName);
+    const existingTagNames = existingTags.ownTags.map(tag => tag.tagValue);
 
     // Determine which tags to add and which to remove
     const tagsToAdd = tags.filter(tag => !existingTagNames.includes(tag));
@@ -115,14 +115,14 @@ export async function POST(request) {
 
     // Handle tags to add
     const tagsToAddRecords = await Promise.all(
-      tagsToAdd.map(async (tagName) => {
+      tagsToAdd.map(async (tagValue) => {
         let tag = await prisma.tag.findUnique({
-          where: { tagName },
+          where: { tagValue },
         });
 
         if (!tag) {
           tag = await prisma.tag.create({
-            data: { tagName },
+            data: { tagValue },
           });
         }
 
@@ -134,7 +134,7 @@ export async function POST(request) {
 
     // Handle tags to remove
     const tagsToRemoveRecords = await prisma.tag.findMany({
-      where: { tagName: { in: tagsToRemove } },
+      where: { tagValue: { in: tagsToRemove } },
     });
 
     const tagIdsToRemove = tagsToRemoveRecords.map(tag => ({ tagId: tag.tagId }));

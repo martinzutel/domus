@@ -26,7 +26,7 @@ const CardGrid: React.FC = () => {
 
         const updatedResult = result.map((user) => {
           const interestsArray = user.ownTags.map((tag) => {
-            return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
+            return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase().replace(/_/g, " ");
           });
           return {
             ...user,

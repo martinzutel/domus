@@ -21,7 +21,7 @@ export async function POST(request) {
     const filteredUsers = users
       .map(user => {
         // Count the number of matching tags
-        const matchingTags = user.ownTags.filter(tag => searchTags.includes(tag.tagName));
+        const matchingTags = user.ownTags.filter(tag => searchTags.includes(tag.tagValue));
         return { user, matchCount: matchingTags.length };
       })
       // Filter out users with no matching tags

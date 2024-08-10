@@ -14,21 +14,22 @@ Content-Type: application/json
       "age": 99,
       "gender": "male",
       "about": "ping",
-      "contact" : "11 1234 5678"
+      "contact" : "11 1234 5678",
+      "interests": ["skateboarding", "baseball", "movies", "anime", "basketball", "martial_arts", "gaming", "music", "writing", "programming", "cooking", "gardening", "fishing", "politics"]
   }
 }
 
 ###
 
 GET http://localhost:3000/api/users/ownUserTags
-Cookie: next-auth.csrf-token=d78f359cc529544628b0d136df095a87c1fedda03c97877efda765eb010c74c1%7C03683c8939ad41970e4f418a2f5aefc85832619abd7efe3c853b8cf5aac74f39; next-auth.callback-url=http%3A%2F%2Flocalhost%3A3000%2Fgoogle-signin; next-auth.session-token=b7c00281-4cd4-416a-bc9f-499b4d80deb1
+Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef7550a0673c253|ec2c218d34a404f523d71be0d7093a697d55ffb14d38ae233cc034fda4c7bbad; next-auth.session-token=62fcb508-2c2a-4ad7-9016-7df0a03e2dcd
 
 
 ###
 
 POST http://localhost:3000/api/users/ownUserTags
 Content-Type: application/json
-Cookie: next-auth.csrf-token=d78f359cc529544628b0d136df095a87c1fedda03c97877efda765eb010c74c1%7C03683c8939ad41970e4f418a2f5aefc85832619abd7efe3c853b8cf5aac74f39; next-auth.callback-url=http%3A%2F%2Flocalhost%3A3000%2Fgoogle-signin; next-auth.session-token=b7c00281-4cd4-416a-bc9f-499b4d80deb1
+Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef7550a0673c253|ec2c218d34a404f523d71be0d7093a697d55ffb14d38ae233cc034fda4c7bbad; next-auth.session-token=62fcb508-2c2a-4ad7-9016-7df0a03e2dcd
 
 {
   "tags": ["anime", "basketball", "movies"]
@@ -38,7 +39,7 @@ Cookie: next-auth.csrf-token=d78f359cc529544628b0d136df095a87c1fedda03c97877efda
 
 POST http://localhost:3000/api/users/likedTags
 Content-Type: application/json
-Cookie: next-auth.csrf-token=d78f359cc529544628b0d136df095a87c1fedda03c97877efda765eb010c74c1%7C03683c8939ad41970e4f418a2f5aefc85832619abd7efe3c853b8cf5aac74f39; next-auth.callback-url=http%3A%2F%2Flocalhost%3A3000%2Fgoogle-signin; next-auth.session-token=b7c00281-4cd4-416a-bc9f-499b4d80deb1
+Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef7550a0673c253|ec2c218d34a404f523d71be0d7093a697d55ffb14d38ae233cc034fda4c7bbad; next-auth.session-token=62fcb508-2c2a-4ad7-9016-7df0a03e2dcd
 
 {
   "tags": ["anime", "basketball", "movies"]

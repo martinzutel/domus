@@ -22,7 +22,7 @@ export async function POST(request) {
 
     // Find tags by name (only predefined tags)
     const existingTags = await prisma.tag.findMany({
-      where: { tagName: { in: interests } },
+      where: { tagValue: { in: interests } },
     });
 
     const tagIds = existingTags.map(tag => ({ tagId: tag.tagId }));

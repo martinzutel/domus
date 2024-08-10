@@ -38,7 +38,7 @@ export async function POST(request) {
       include: { likedTags: true },
     });
 
-    const existingTagNames = existingTags.likedTags.map(tag => tag.tagName);
+    const existingTagNames = existingTags.likedTags.map(tag => tag.tagValue);
 
     // Determine which tags to add and which to remove
     const tagsToAdd = tags.filter(tag => !existingTagNames.includes(tag));
@@ -46,14 +46,14 @@ export async function POST(request) {
 
     // Handle tags to add
     const tagsToAddRecords = await Promise.all(
-      tagsToAdd.map(async (tagName) => {
+      tagsToAdd.map(async (tagValue) => {
         let tag = await prisma.tag.findUnique({
-          where: { tagName },
+          where: { tagValue },
         });
 
         if (!tag) {
           tag = await prisma.tag.create({
-            data: { tagName },
+            data: { tagValue },
           });
         }
 
@@ -65,7 +65,7 @@ export async function POST(request) {
 
     // Handle tags to remove
     const tagsToRemoveRecords = await prisma.tag.findMany({
-      where: { tagName: { in: tagsToRemove } },
+      where: { tagValue: { in: tagsToRemove } },
     });
 
     const tagIdsToRemove = tagsToRemoveRecords.map(tag => ({ tagId: tag.tagId }));

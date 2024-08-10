@@ -15,12 +15,12 @@ export async function GET(req) {
         contact: true,
         ownTags: {
           select: {
-            tagName: true,
+            tagValue: true,
           },
         },
         likedTags: {
           select: {
-            tagName: true,
+            tagValue: true,
           },
         },
       },
@@ -28,8 +28,8 @@ export async function GET(req) {
 
     const formattedUsers = allUsers.map((user) => ({
       ...user,
-      ownTags: user.ownTags.map((tag) => tag.tagName),
-      likedTags: user.likedTags.map((tag) => tag.tagName),
+      ownTags: user.ownTags.map((tag) => tag.tagValue),
+      likedTags: user.likedTags.map((tag) => tag.tagValue),
     }));
 
     return NextResponse.json(formattedUsers);
