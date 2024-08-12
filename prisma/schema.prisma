@@ -78,9 +78,9 @@ model Authenticator {
 }
 
 model Tag {
-  tagId   Int    @id @default(autoincrement())
+  tagName  String @unique
+  tagId    Int    @id @default(autoincrement())
   tagValue String @default("")
-  tagName String @unique
-  likedBy User[] @relation("LikedTags")
-  ownedBy User[] @relation("OwnedTags")
+  likedBy  User[] @relation("LikedTags")
+  ownedBy  User[] @relation("OwnedTags")
 }
