@@ -2,18 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import CardComponent from "@/components/cardcomponent";
-
-interface User {
-  id: string;
-  name: string;
-  about: string;
-  image: string;
-  ownTags: string[];
-}
+import { useUserContext } from "@/components/UserContext";
 
 const CardGrid: React.FC = () => {
+  const { users, setUsers } = useUserContext();
   const [error, setError] = useState<Error | null>(null);
-  const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,10 +15,10 @@ const CardGrid: React.FC = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
         }
-        const result: User[] = await response.json();
+        const result = await response.json();
 
-        const updatedResult = result.map((user) => {
-          const interestsArray = user.ownTags.map((tag) => {
+        const updatedResult = result.map((user: any) => {
+          const interestsArray = user.ownTags.map((tag: string) => {
             return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase().replace(/_/g, " ");
           });
           return {
@@ -34,20 +27,20 @@ const CardGrid: React.FC = () => {
           };
         });
 
-        setData(updatedResult);
+        setUsers(updatedResult); // Update global context instead of local state
       } catch (error) {
         setError(error as Error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [setUsers]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  if (data.length === 0) {
+  if (users.length === 0) {
     return (
       <div className="flex justify-center items-center">
         <p className="font-sofia-pro font-bold text text-white text-center sm:text-center">
@@ -60,7 +53,7 @@ const CardGrid: React.FC = () => {
   return (
     <div className="flex justify-center">
       <div className="flex flex-wrap gap-[40px] bg-maincolor w-[1500px] justify-center mt-[120px]">
-        {data.map((item) => (
+        {users.map((item) => (
           <CardComponent
             key={item.id}
             id={item.id}
