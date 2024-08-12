@@ -12,6 +12,10 @@ export async function POST(request) {
       where: {
         id: body.id,
       },
+      include:
+      {
+        ownTags: true,
+      }
     });
 
     if (!userProfile) {
