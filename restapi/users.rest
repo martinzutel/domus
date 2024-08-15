@@ -62,3 +62,7 @@ Content-Type: application/json
 {
   "id": "clzk3sqb70000c0l00on2cqxe"
 }
+
+###
+
+GET http://localhost:5000/flaskapi/main
