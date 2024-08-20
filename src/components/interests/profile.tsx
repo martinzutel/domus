@@ -27,6 +27,8 @@ function Profile() {
     <div className='w-screen h-screen flex justify-center items-center'>
 
         <div className='h-[500px] w-[1080px] bg-maincolor border-white border-solid border rounded-3xl flex flex-row p-10'>
+
+                <div className='left-0 top-0 '>X</div>
           
                 <div className='min-w-80 relative h-full rounded-2xl overflow-hidden mr-10'>
 
@@ -48,13 +50,14 @@ function Profile() {
 
                     <p className='text-white font-semibold min-w-14'>Hi my name is Carmen Winstead. I'm 17 years old. I am very similar to you. Did I mention to you that I'm dead? A few years ago a group of girls pushed me down a sewer hole to try and embarrass me. When I didn't come back up the police came.The girl said that I had fell and everyone believed them. The police found my body in the sewer. I had a broken neck and my face was torn off. Send this message to 15 people after you listened the whole message if you value your life. </p>
 
-
                 </div>
 
                 <div className='flex flex-col w-full h-full'>
 
-                <div>
-                  <div className="flex flex-wrap gap-2">
+                  <h1 className='text-white font-bold mb-2'>Interests:</h1>
+                  <div className="flex flex-wrap gap-2 mb-8">
+
+                   
 
                     {interests.map((interest, index) => (
                       <div
@@ -67,10 +70,23 @@ function Profile() {
                       </div>
                     ))}
                   </div>
+                
+                  <div className='mb-8'>
+                    <h1 className='text-white font-bold'>Contact info:</h1>
+                    <p className='text-white'>number: 11 3378172</p>
+                  </div>
+
+                  <div>
+                    <button
+                      className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
+                    >
+                      request match
+                    </button>
+                  </div>
+
                 </div>
 
-              </div>
-
+               
                  
                
         </div>
