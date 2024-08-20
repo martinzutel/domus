@@ -1,26 +1,15 @@
 import React, { ReactNode } from 'react'
 import Image from 'next/image'
-import CheckboxGroup from './CheckboxGroup';
 
+type ProfileProps = {
+  id: string;
+  name: string;
+  about: string;
+  image: string;
+  interests: string[]; 
+}
 
-
-const interests: string[] = [
-  "fitness",
-  "football",
-  "basketball",
-  "tennis",
-  "golf" ,
-  "hockey",
-  "tennis",
-  "golf" ,
-  "hockey",
-  "hockey",
-
-
-];
-
-
-function Profile() {
+const Profile: React.FC <ProfileProps> = ({name, about, image, interests }) => {
 
   return (
 
@@ -33,7 +22,7 @@ function Profile() {
                 <div className='min-w-80 relative h-full rounded-2xl overflow-hidden mr-10'>
 
                     <Image
-                        src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmni5ByUlopIBq0AvXN--ItFxamhwhdM5I2A&s'}
+                        src={image}
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"
@@ -46,9 +35,9 @@ function Profile() {
 
                 <div className='w-[900px]  mr-10'>
 
-                    <h1 className='text-white font-bold text-3xl pb-1'>Martin Zutelman</h1>
+                    <h1 className='text-white font-bold text-3xl pb-1'>{name}</h1>
 
-                    <p className='text-white font-semibold min-w-14'>Hi my name is Carmen Winstead. I'm 17 years old. I am very similar to you. Did I mention to you that I'm dead? A few years ago a group of girls pushed me down a sewer hole to try and embarrass me. When I didn't come back up the police came.The girl said that I had fell and everyone believed them. The police found my body in the sewer. I had a broken neck and my face was torn off. Send this message to 15 people after you listened the whole message if you value your life. </p>
+                    <p className='text-white font-semibold min-w-14'>{about}</p>
 
                 </div>
 
