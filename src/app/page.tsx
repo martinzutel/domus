@@ -1,5 +1,5 @@
 import CardGrid from "@/components/user-components/cardgrid";
-import Intro from "@/components/intro";
+import Intro from "@/components/sections/intro";
 import Searchbar from "@/components/searchbar";
 import Topbar from "@/components/topbar";
 import { UserProvider } from "@/components/UserContext"; // Import your UserProvider

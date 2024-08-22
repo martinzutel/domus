@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import ParentComponent from './signin/parent';
+import ParentComponent from '../signin/parent';
 
 const Intro: React.FC = () => {
   
