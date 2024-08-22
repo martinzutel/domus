@@ -1,4 +1,4 @@
-import Profile from '@/components/interests/profile';
+import Profile from '@/components/user-components/profile';
 import React from 'react';
 
 export default function Page() {

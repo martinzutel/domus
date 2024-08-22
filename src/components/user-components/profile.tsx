@@ -44,9 +44,8 @@ const Profile: React.FC <ProfileProps> = ({name, about, image, interests }) => {
                 <div className='flex flex-col w-full h-full'>
 
                   <h1 className='text-white font-bold mb-2'>Interests:</h1>
-                  <div className="flex flex-wrap gap-2 mb-8">
 
-                   
+                  <div className="flex flex-wrap gap-2 mb-8">
 
                     {interests.map((interest, index) => (
                       <div
@@ -58,6 +57,7 @@ const Profile: React.FC <ProfileProps> = ({name, about, image, interests }) => {
                         </span>
                       </div>
                     ))}
+
                   </div>
                 
                   <div className='mb-8'>
@@ -74,14 +74,10 @@ const Profile: React.FC <ProfileProps> = ({name, about, image, interests }) => {
                   </div>
 
                 </div>
-
-               
-                 
                
         </div>
         
     </div>
-
    
   )
 }

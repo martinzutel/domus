@@ -1,4 +1,4 @@
-import CardGrid from "@/components/cardgrid";
+import CardGrid from "@/components/user-components/cardgrid";
 import Intro from "@/components/intro";
 import Searchbar from "@/components/searchbar";
 import Topbar from "@/components/topbar";

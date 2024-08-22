@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import CardComponent from "@/components/cardcomponent";
+import CardComponent from "@/components/user-components/cardcomponent";
 import { useUserContext } from "@/components/UserContext";
 
 const CardGrid: React.FC = () => {
