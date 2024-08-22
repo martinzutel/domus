@@ -1,5 +1,6 @@
+'use client'
+import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 type CardComponentProps = {
   id: string;
@@ -7,11 +8,15 @@ type CardComponentProps = {
   about: string;
   image: string;
   interests: string[];
+  onClick: () => void;
 };
 
-const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, interests = [] }) => {
+const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, interests = [], onClick }) => {
   return (
-    <div className="h-[400px] w-[320px] grid grid-rows-[8rem,1fr] overflow-hidden rounded-[1rem] border-secondarycolor">
+    <div
+      className="h-[400px] w-[320px] grid grid-rows-[8rem,1fr] overflow-hidden rounded-[1rem] border-secondarycolor cursor-pointer"
+      onClick={onClick}
+    >
       <div className="top-0 w-full bg-slate-500 relative">
         <Image
           src={image}
@@ -30,28 +35,18 @@ const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, inter
           </p>
           <p className="text-white text-[0.8rem] font-sofia-pro line-clamp-6">{about}</p>
         </div>
-
-        <div>
-          <div className="flex flex-wrap space-x-2">
-            {interests.map((interest, index) => (
-              <div
-                key={index}
-                className="rounded-full bg-coolred text-secondarycolor pb-[4px] pl-[9px] space-x-2 inline-block"
-              >
-                <span className="text-white text-[0.8rem] font-sofia-pro mr-[0.5rem]">
-                  {interest}
-                </span>
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-wrap space-x-2">
+          {interests.map((interest, index) => (
+            <div
+              key={index}
+              className="rounded-full bg-coolred text-secondarycolor pb-[4px] pl-[9px] space-x-2 inline-block"
+            >
+              <span className="text-white text-[0.8rem] font-sofia-pro mr-[0.5rem]">
+                {interest}
+              </span>
+            </div>
+          ))}
         </div>
-
-        {/* <Link
-          href="/login"
-          className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
-        >
-          book
-        </Link> */}
       </div>
     </div>
   );
