@@ -102,7 +102,7 @@ const Searchbar = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="h-[40px] w-[350px] flex justify-center items-center ">
+      <div className="h-[40px] w-[250px] flex justify-center items-center ">
         <input
           type="text"
           placeholder="Search"
@@ -110,16 +110,11 @@ const Searchbar = () => {
         />
         <button
           onClick={toggleModal}
-          className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre"
+          className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre rounded-r-full"
         >
           <IoFilterCircle className="m-[10px]" />
         </button>
-        <button className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre">
-          <BsFillPersonFill className="m-[10px]" />
-        </button>
-        <button className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre rounded-r-full">
-          <BsFillPersonFill className="ml-[5px] mr-[10px]" />
-        </button>
+        
       </div>
       {isModalOpen && (
         <InterestModal onClose={toggleModal}>
