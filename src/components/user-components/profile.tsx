@@ -15,9 +15,9 @@ const Profile: React.FC <ProfileProps> = ({name, about, image, interests }) => {
 
     <div className='w-screen h-screen flex justify-center items-center'>
 
-        <div className='h-[500px] w-[1080px] bg-maincolor border-white border-solid border rounded-3xl flex flex-row p-10'>
+        <div className='h-[500px] w-[1080px] bg-maincolor border-white border-solid border rounded-3xl flex flex-row p-10 relative '>
 
-                <div className='left-0 top-0 '>X</div>
+                <div className='left-0 top-0 text-white absolute mt-4 ml-4'>X</div>
           
                 <div className='min-w-80 relative h-full rounded-2xl overflow-hidden mr-10'>
 
