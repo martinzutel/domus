@@ -1,16 +1,34 @@
-import Profile from '@/components/user-components/profile';
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import RegisterForm from '@/components/signin/registerpop';
 
 export default function Page() {
+  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
+  const { data: session, status } = useSession();
+
+  const closeRegisterForm = () => setShowRegisterForm(false);
+
   return (
-    <div>
-      <Profile
-        id="1"
-        name="John Doe"
-        about="I am a software engineer with over a decade of experience in developing robust web applications. My expertise spans across various technologies, including React, Node.js, and Python. I am passionate about open-source projects, continuously contributing to the community by developing tools and libraries that make developers' lives easier. When I’m not coding, you can find me exploring the latest trends in technology, reading sci-fi novels, or hiking in the mountains."
-        image="https://via.placeholder.com/300" // Example URL; replace with actual image URL
-        interests={['Coding', 'Open-Source', 'Sci-Fi', 'Hiking']}
-      />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+      <button
+        onClick={() => setShowRegisterForm(true)}
+        className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
+      >
+        Open Register Form
+      </button>
+
+      {showRegisterForm && (
+        <RegisterForm
+          isOpen={showRegisterForm}
+          onClose={closeRegisterForm}
+          onSubmit={(formData) => {
+            console.log('Submitted form data:', formData);
+            closeRegisterForm();
+          }}
+        />
+      )}
     </div>
   );
 }

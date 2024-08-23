@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useEffect, ReactNode } from 'react';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { RxCross2 } from 'react-icons/rx';
 
 interface InterestModalProps {
@@ -36,16 +37,20 @@ const InterestModal: React.FC<InterestModalProps> = ({ children, onClose }) => {
                 <div
                     className='absolute flex items-center justify-center top-[400px]'
                 >
-                    <div className="absolute bg-maincolor min-w-[500px] p-[20px] rounded-3xl flex flex-col items-center justify-center space-y-4 z-50">
-                    <button 
-                        onClick={onClose}  // Close modal when clicking the 'X' button
-                        className='absolute top-2 left-2 text-coolred text-3xl'
-                        aria-label="Close Modal"  // Added aria-label for accessibility
-                    >
-                        <RxCross2 />
-                    </button>
+                    <div className="absolute bg-maincolor min-w-[500px] p-7 pt-4 rounded-3xl flex flex-col items-center justify-center space-y-4 z-50">
+
+                        <button 
+                            onClick={onClose}  // Close modal when clicking the 'X' button
+                            className='absolute top-4 left-4 text-coolred text-3xl'
+                            aria-label="Close Modal"  // Added aria-label for accessibility
+                        >
+                            <IoMdArrowRoundBack />
+                        </button>
+
                         {children}
+
                     </div>
+
                 </div>
             
             </div>

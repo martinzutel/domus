@@ -11,8 +11,10 @@ type CardComponentProps = {
   onClick: () => void;
 };
 
+
 const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, interests = [], onClick }) => {
   return (
+   
     <div
       className="h-[400px] w-[320px] grid grid-rows-[8rem,1fr] overflow-hidden rounded-[1rem] border-secondarycolor cursor-pointer"
       onClick={onClick}

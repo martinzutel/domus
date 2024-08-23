@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useSession } from 'next-auth/react';
 import InterestModal from '../interests/interestModal';
 import CheckboxGroup from '../interests/CheckboxGroup';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 interface FormData {
   age: number;
@@ -97,11 +98,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
     }));
   };
 
+  const [isDoneEnabled, setIsDoneEnabled] = useState<boolean>(false);
+
   const handleCheckedChange = (checkedValues: string[]) => {
     setFormData((prevData) => ({
       ...prevData,
       interests: checkedValues,
     }));
+    setIsDoneEnabled(checkedValues.length >= 5);
   };
 
   const submitFormData = async (formData: FormData) => {
@@ -139,75 +143,69 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ">
-      <div className="bg-maincolor rounded-lg p-8 text-center relative">
+      <div className="bg-maincolor rounded-lg p-8 pt-5 text-center relative">
 
-        <button onClick={onClose} className="absolute top-2 left-2 text-coolred">
-          <RxCross2 />
+        <button onClick={onClose} className="absolute top-2 left-2 text-2xl text-coolred">
+          <IoMdArrowRoundBack />
         </button>
 
         <h2 className="text-2xl font-bold mb-4 text-white">Register</h2>
+        
         <form onSubmit={handleSubmit} className="mb-4">
-          <div className="flex-row mb-[16px]">
-            <label className="block text-left text-white mb-2">Age:</label>
-            <div className='flex items-center'>
-              <input
-                type="range"
-                name="age"
-                value={formData.age}
-                onChange={handleAgeChange}
-                min={18}
-                max={99}
-                className="border rounded-md p-2 accent-coolred bg-darkgre active:accent-coolredhl w-[220px]"
-              />
+          <div className="flex-row mb-[16px] flex justify-between">
+            <div className=''>
+              <label className="block text-left text-white mb-2">Age:</label>
               <input
                 type="number"
                 value={formData.age}
                 onChange={handleAgeChange}
                 min={18}
                 max={99}
-                className="text-white ml-2 border rounded-md p-1 w-[40px] text-center bg-transparent text-sm appearance-none"
+                className="text-white  border rounded-md p-1 w-[40px] text-center bg-transparent text-sm appearance-none"
                 maxLength={2}
               />
             </div>
-          </div>
-          <div className="mb-8">
-            <label className="block text-left text-white mb-2">Gender:</label>
-            <div className="flex justify-between gap-2">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={formData.gender === 'male'}
-                  onChange={handleChange}
-                  className="form-radio h-5 w-5 text-darkgre accent-coolred"
-                />
-                <span className="ml-2 text-white">Male</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={formData.gender === 'female'}
-                  onChange={handleChange}
-                  className="form-radio h-5 w-5 text-darkgre accent-coolred"
-                />
-                <span className="ml-2 text-white">Female</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="other"
-                  checked={formData.gender === 'other'}
-                  onChange={handleChange}
-                  className="form-radio h-5 w-5 text-darkgre accent-coolred"
-                />
-                <span className="ml-2 text-white">Other</span>
-              </label>
+            
+            <div className="mb-8">
+              <label className="block text-left text-white mb-2">Gender:</label>
+              <div className="flex justify-between gap-2">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={formData.gender === 'male'}
+                    onChange={handleChange}
+                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                  />
+                  <span className="ml-2 text-white">M</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={formData.gender === 'female'}
+                    onChange={handleChange}
+                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                  />
+                  <span className="ml-2 text-white">F</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    checked={formData.gender === 'other'}
+                    onChange={handleChange}
+                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                  />
+                  <span className="ml-2 text-white">Other</span>
+                </label>
+              </div>
             </div>
           </div>
+          
           <div className="mb-8">
             <label className="block text-left text-white mb-3">About You:</label>
             <textarea
@@ -240,17 +238,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
 
           <div className='w-full flex flex-col justify-center items-center'>
             {isModalOpen && (
-                <InterestModal onClose={toggleModal}>
+                <InterestModal onCloseModal={toggleModal}>
                     <div className="flex flex-col items-center space-y-4">
                        
 
                         <h1 className='text-4xl text-white font-sofia-pro'>
-                          Select Your Interests:
+                          Select at least 5:
                         </h1>
                     
                         <div className='max-h-[300px] overflow-y-auto flex items-center'>
                           <CheckboxGroup interests={interests} onCheckedChange={handleCheckedChange} />
                         </div>
+
+                        <button 
+                          className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-darkgre hover:bg-coolredhl active:bg-coolreddrk'}`}
+                          onClick={toggleModal}
+                          disabled={!isDoneEnabled}
+                        >
+                          done 
+                        </button>
 
                     </div>
                 </InterestModal>
@@ -259,8 +265,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
 
           <button
             type="submit"
-            className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk'
-          >
+            className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-darkgre hover:bg-coolredhl active:bg-coolreddrk'}`}
+            >
             Register
           </button>
         </form>
