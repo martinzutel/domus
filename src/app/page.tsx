@@ -8,7 +8,7 @@ import Profile from "@/components/user-components/profile";
 import { UserProvider } from "@/components/UserContext";
 
 export default function Home() {
-  
+
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,37 +22,32 @@ export default function Home() {
     contact: string;
   } | null>(null);
 
-  const handleCardClick = async (userId: string) => {
+  type User = {
+    id: string;
+    name: string;
+    about: string;
+    image: string;
+    contact: string;
+    ownTags: string[];
+  };
 
-    setSelectedUserId(userId);
+  const handleCardClick = async (user: User) => {
+
+    setSelectedUserId(user.id);
     setIsLoading(true);
     setError(null);
-  
+
     try {
-      const response = await fetch('/api/users/getUserProfile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: userId }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch user profile');
-      }
-  
-      const data = await response.json();
-  
+      
       setUserProfile({
-        id: data.id,
-        name: data.name,
-        about: data.about,
-        image: data.image,
-        ownTags: data.ownTags.map((tag: { tagValue: any; }) => tag.tagValue),
-        contact: data.contact,
+        id: user.id,
+        name: user.name,
+        about: user.about,
+        image: user.image,
+        ownTags: user.ownTags,
+        contact: user.contact,
       });
 
-      console.log(data);
 
     } catch (error) {
 
@@ -72,7 +67,6 @@ export default function Home() {
     setUserProfile(null);
   };
 
-
   return (
     <UserProvider>
       <main>
@@ -82,7 +76,7 @@ export default function Home() {
 
         <Intro />
         
-        <CardGrid onCardClick={(user) => handleCardClick(user.id)} />
+        <CardGrid onCardClick={(user) => handleCardClick(user)} />
 
         {isLoading && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -102,9 +96,6 @@ export default function Home() {
         )}
     
         {userProfile && !isLoading && !error && (
-
-          console.log(userProfile.ownTags),
-          
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <Profile
               id={userProfile.id}

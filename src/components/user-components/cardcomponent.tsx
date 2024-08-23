@@ -8,13 +8,12 @@ type CardComponentProps = {
   about: string;
   image: string;
   interests: string[];
+  contact: string; // Ensure this field is included
   onClick: () => void;
 };
 
-
-const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, interests = [], onClick }) => {
+const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, interests, contact, onClick }) => {
   return (
-   
     <div
       className="h-[400px] w-[320px] grid grid-rows-[8rem,1fr] overflow-hidden rounded-[1rem] border-secondarycolor cursor-pointer"
       onClick={onClick}

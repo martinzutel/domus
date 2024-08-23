@@ -9,13 +9,15 @@ type CardGridProps = {
     name: string;
     about: string;
     image: string;
+    contact: string;// Ensure this field is included
     ownTags: string[];
   }) => void;
 };
 
 const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
   const { users, setUsers } = useUserContext();
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +29,9 @@ const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
         const result = await response.json();
 
         const updatedResult = result.map((user: any) => {
-          const interestsArray = user.ownTags.map((tag: string) => {
-            return tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase().replace(/_/g, ' ');
-          });
+          const interestsArray = user.ownTags.map((tag: string) => 
+            tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase().replace(/_/g, ' ')
+          );
           return {
             ...user,
             ownTags: interestsArray,
@@ -37,23 +39,31 @@ const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
         });
 
         setUsers(updatedResult);
+        setLoading(false);
       } catch (error) {
-        setError(error as Error);
+        setError((error as Error).message);
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [setUsers]);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p className="font-sofia-pro font-bold text-white text-center">
+          Loading...
+        </p>
+      </div>
+    );
   }
 
-  if (users.length === 0) {
+  if (error) {
     return (
-      <div className="flex justify-center items-center">
-        <p className="font-sofia-pro font-bold text text-white text-center sm:text-center">
-          Loading...
+      <div className="flex justify-center items-center h-full">
+        <p className="font-sofia-pro font-bold text-red-500 text-center">
+          Error: {error}
         </p>
       </div>
     );
@@ -70,6 +80,7 @@ const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
             about={user.about}
             image={user.image}
             interests={user.ownTags}
+            contact={user.contact} 
             onClick={() => onCardClick(user)}
           />
         ))}

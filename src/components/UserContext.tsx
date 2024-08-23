@@ -7,6 +7,7 @@ interface User {
   about: string;
   image: string;
   ownTags: string[];
+  contact: string;
 }
 
 interface UserContextType {
