@@ -23,7 +23,7 @@ print("model loaded")
 def funcion_orden(data):
 
     users = [[user["id"]] + user["ownTags"] for user in data]
-    print(users)
+    print("users with tags:", users)
     # Extract tags from each user into list of single space-separated strings
     user_tags = [' '.join(row[1:]) for row in users]
 
@@ -37,14 +37,20 @@ def funcion_orden(data):
     cosine_sim_with_main_user = cosine_similarity(main_user_tfidf, tfidf_matrix).flatten()
 
     # Sort users by cosine similarity with the main user
-    sorted_users = sorted(zip(cosine_sim_with_main_user, users), reverse=True)
+    #sorted_users = sorted(zip(cosine_sim_with_main_user, data), reverse=True)
+
+    # Get indices that would sort the cosine similarity scores in descending order
+    sorted_indices = np.argsort(-cosine_sim_with_main_user)
+
+    # Reorder data based on sorted indices
+    sorted_data = [data[i] for i in sorted_indices]
 
     # Narrow the result to just the ids
-    sorted_user_ids = [((user)[1])[0] for user in sorted_users]
+    #sorted_user_ids = [((user)[1])[0] for user in sorted_users]
 
     # Result is all users sorted by most similar to main user
-    print(sorted_user_ids[0:10])
-    print(sorted_users[0:10])
+    #print("user ids:", sorted_user_ids[0:10])
+    print("sorted users:", sorted_data[0:10])
 
 
 @app.route('/flaskapi/miembroviril', methods=['GET'])
