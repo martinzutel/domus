@@ -3,15 +3,18 @@ import React, { useEffect, useState } from 'react';
 import CardComponent from '@/components/user-components/cardcomponent';
 import { useUserContext } from '@/components/UserContext';
 
+
+type user = {
+  id: string;
+  name: string;
+  about: string;
+  image: string;
+  ownTags: string[];
+  contact: string;
+};
+
 type CardGridProps = {
-  onCardClick: (user: {
-    id: string;
-    name: string;
-    about: string;
-    image: string;
-    contact: string;// Ensure this field is included
-    ownTags: string[];
-  }) => void;
+  onCardClick: (user: user) => void;
 };
 
 const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
