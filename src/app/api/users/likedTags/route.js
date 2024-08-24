@@ -7,15 +7,18 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 export async function POST(request) {
   try {
     const res = await fetch(`${baseUrl}/api/users/getUser`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'Cookie': request.headers.get('cookie') || '',
+        "Content-Type": "application/json",
+        Cookie: request.headers.get("cookie") || "",
       },
     });
 
     if (!res.ok) {
-      return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized: user data not found" },
+        { status: 401 },
+      );
     }
 
     const userData = await res.json();
@@ -25,7 +28,10 @@ export async function POST(request) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized: user data not found" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized: user data not found" },
+        { status: 401 },
+      );
     }
 
     const data = await request.json();
@@ -38,11 +44,11 @@ export async function POST(request) {
       include: { likedTags: true },
     });
 
-    const existingTagNames = existingTags.likedTags.map(tag => tag.tagValue);
+    const existingTagNames = existingTags.likedTags.map((tag) => tag.tagValue);
 
     // Determine which tags to add and which to remove
-    const tagsToAdd = tags.filter(tag => !existingTagNames.includes(tag));
-    const tagsToRemove = existingTagNames.filter(tag => tags.includes(tag));
+    const tagsToAdd = tags.filter((tag) => !existingTagNames.includes(tag));
+    const tagsToRemove = existingTagNames.filter((tag) => tags.includes(tag));
 
     // Handle tags to add
     const tagsToAddRecords = await Promise.all(
@@ -58,17 +64,19 @@ export async function POST(request) {
         }
 
         return tag;
-      })
+      }),
     );
 
-    const tagIdsToAdd = tagsToAddRecords.map(tag => ({ tagId: tag.tagId }));
+    const tagIdsToAdd = tagsToAddRecords.map((tag) => ({ tagId: tag.tagId }));
 
     // Handle tags to remove
     const tagsToRemoveRecords = await prisma.tag.findMany({
       where: { tagValue: { in: tagsToRemove } },
     });
 
-    const tagIdsToRemove = tagsToRemoveRecords.map(tag => ({ tagId: tag.tagId }));
+    const tagIdsToRemove = tagsToRemoveRecords.map((tag) => ({
+      tagId: tag.tagId,
+    }));
 
     // Update user's liked tags
     await prisma.user.update({
@@ -98,7 +106,7 @@ export async function POST(request) {
     console.error("Error parsing request body:", error);
     return NextResponse.json(
       { message: "Invalid request body." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

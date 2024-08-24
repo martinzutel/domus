@@ -36,7 +36,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({ interests, onCheckedChang
                 <div
                     key={interest.value}
                     className={`rounded-lg p-2 inline-block m-[10px] cursor-pointer ${
-                        checkedState[index] ? "bg-orange-400" : "bg-red-500"
+                        checkedState[index] ? "bg-coolredhl" : "bg-coolred"
                     }`}
                     onClick={() => handleCheckboxChange(index)}
                 >

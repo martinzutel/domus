@@ -5,17 +5,19 @@ export async function POST(request) {
   try {
     const body = await request.json();
     if (!body.id) {
-      return NextResponse.json({ message: "Invalid user ID." }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid user ID." },
+        { status: 400 },
+      );
     }
 
     const userProfile = await prisma.user.findUnique({
       where: {
         id: body.id,
       },
-      include:
-      {
+      include: {
         ownTags: true,
-      }
+      },
     });
 
     if (!userProfile) {
