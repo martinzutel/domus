@@ -55,7 +55,7 @@ const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <p className="font-sofia-pro font-bold text-white text-center">
+        <p className="font-sofia-pro font-bold text-secondarycolor text-center">
           Loading...
         </p>
       </div>

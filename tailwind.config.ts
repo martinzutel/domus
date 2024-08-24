@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        maincolor: 'rgb(26, 26, 26)',
-        secondarycolor: 'rgb(246, 244, 244)',
-        darkgre: 'rgb(54, 54, 54)',
+        maincolor: 'rgb(30, 26, 24)',
+        secondarycolor: 'rgb(245, 242, 240)',
+        darkgre: 'rgb(39, 38, 37)',
         coolred: 'rgb(230, 105, 34)',
         coolredhl: 'rgb(244, 137, 77)',
         coolreddrk: 'rgb(185, 75, 13)',

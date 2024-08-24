@@ -149,25 +149,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
           <IoMdArrowRoundBack />
         </button>
 
-        <h2 className="text-2xl font-bold mb-4 text-white">Register</h2>
+        <h2 className="text-2xl font-bold mb-4 text-secondarycolor">Register</h2>
         
         <form onSubmit={handleSubmit} className="mb-4">
           <div className="flex-row mb-[16px] flex justify-between">
             <div className=''>
-              <label className="block text-left text-white mb-2">Age:</label>
+              <label className="block text-left text-secondarycolor mb-2">Age:</label>
               <input
                 type="number"
                 value={formData.age}
                 onChange={handleAgeChange}
                 min={18}
                 max={99}
-                className="text-white  border rounded-md p-1 w-[40px] text-center bg-transparent text-sm appearance-none"
+                className="text-secondarycolor  border rounded-md p-1 w-[40px] text-center bg-transparent text-sm appearance-none"
                 maxLength={2}
               />
             </div>
             
             <div className="mb-8">
-              <label className="block text-left text-white mb-2">Gender:</label>
+              <label className="block text-left text-secondarycolor mb-2">Gender:</label>
               <div className="flex justify-between gap-2">
                 <label className="inline-flex items-center">
                   <input
@@ -176,9 +176,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                     value="male"
                     checked={formData.gender === 'male'}
                     onChange={handleChange}
-                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                    className="form-radio h-5 w-5 text-secondarycolor accent-coolred"
                   />
-                  <span className="ml-2 text-white">M</span>
+                  <span className="ml-2 text-secondarycolor">M</span>
                 </label>
                 <label className="inline-flex items-center">
                   <input
@@ -187,9 +187,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                     value="female"
                     checked={formData.gender === 'female'}
                     onChange={handleChange}
-                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                    className="form-radio h-5 w-5 text-secondarycolor accent-coolred"
                   />
-                  <span className="ml-2 text-white">F</span>
+                  <span className="ml-2 text-secondarycolor">F</span>
                 </label>
                 <label className="inline-flex items-center">
                   <input
@@ -198,32 +198,32 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                     value="other"
                     checked={formData.gender === 'other'}
                     onChange={handleChange}
-                    className="form-radio h-5 w-5 text-darkgre accent-coolred"
+                    className="form-radio h-5 w-5 text-secondarycolor accent-coolred"
                   />
-                  <span className="ml-2 text-white">Other</span>
+                  <span className="ml-2 text-secondarycolor">Other</span>
                 </label>
               </div>
             </div>
           </div>
           
           <div className="mb-8">
-            <label className="block text-left text-white mb-3">About You:</label>
+            <label className="block text-left text-secondarycolor mb-3">About You:</label>
             <textarea
               name="about"
               value={formData.about}
               onChange={handleChange}
-              className="border rounded-md p-2 accent-coolred bg-darkgre text-white w-[100%] h-[50px] border-none"
+              className="border rounded-md p-2 accent-coolred bg-darkgre text-secondarycolor w-[100%] h-[50px] border-none"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-left text-white mb-2">Contact:</label>
+            <label className="block text-left text-secondarycolor mb-2">Contact:</label>
             <input
               type="text"
               name="contact"
               value={formData.contact}
               onChange={handleChange}
-              className="border rounded-md p-2 w-full bg-darkgre text-white"
+              className="border rounded-md p-2 w-full bg-darkgre text-secondarycolor"
               required
             />
           </div>
@@ -231,7 +231,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
           <button
             type="button"
             onClick={toggleModal}
-            className='border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk mb-3'
+            className='border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk mb-3'
           >
             Select Your Interests
           </button>
@@ -242,7 +242,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                     <div className="flex flex-col items-center space-y-4">
                        
 
-                        <h1 className='text-4xl text-white font-sofia-pro'>
+                        <h1 className='text-4xl text-secondarycolor font-sofia-pro'>
                           Select at least 5:
                         </h1>
                     
@@ -251,7 +251,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
                         </div>
 
                         <button 
-                          className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-darkgre hover:bg-coolredhl active:bg-coolreddrk'}`}
+                          className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-secondarycolor hover:bg-coolredhl active:bg-coolreddrk'}`}
                           onClick={toggleModal}
                           disabled={!isDoneEnabled}
                         >
@@ -265,7 +265,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ isOpen, onClose, onSubmit }
 
           <button
             type="submit"
-            className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-darkgre hover:bg-coolredhl active:bg-coolreddrk'}`}
+            className={`border-solid text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto font-black ${!isDoneEnabled ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-coolred text-secondarycolor hover:bg-coolredhl active:bg-coolreddrk'}`}
             >
             Register
           </button>

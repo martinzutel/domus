@@ -80,7 +80,7 @@ export default function Home() {
 
         {isLoading && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-4 rounded-lg">
+            <div className="bg-secondarycolor p-4 rounded-lg">
               <p>Loading...</p>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function Home() {
 
         {error && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-4 rounded-lg">
+            <div className="bg-secondarycolor p-4 rounded-lg">
               <p>{error}</p>
               <button onClick={() => setError(null)}>Close</button>
             </div>

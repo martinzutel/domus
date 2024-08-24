@@ -14,7 +14,7 @@ export default function Page() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
       <button
         onClick={() => setShowRegisterForm(true)}
-        className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
+        className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
       >
         Open Register Form
       </button>

@@ -16,7 +16,7 @@ type ProfileProps = {
 const Profile: React.FC<ProfileProps> = ({ name, about, image, interests, contact, onClose }) => {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0 backdrop-blur-sm ">
-      <div className="h-[500px] w-[1080px] bg-maincolor border-white  rounded-3xl flex flex-row p-10 relative">
+      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor  rounded-3xl flex flex-row p-10 relative">
         <button className="left-0 top-0 text-coolred text-3xl absolute mt-4 ml-4" onClick={onClose}>
           <IoMdArrowRoundBack />
         </button>
@@ -32,29 +32,29 @@ const Profile: React.FC<ProfileProps> = ({ name, about, image, interests, contac
           />
         </div>
         <div className="w-[900px] mr-10">
-          <h1 className="text-white font-bold text-3xl pb-1">{name}</h1>
-          <p className="text-white font-semibold min-w-14">{about}</p>
+          <h1 className="text-secondarycolor font-bold text-3xl pb-1">{name}</h1>
+          <p className="text-secondarycolor font-semibold min-w-14">{about}</p>
         </div>
         <div className="flex flex-col w-full h-full">
-          <h1 className="text-white font-bold mb-2">Interests:</h1>
+          <h1 className="text-secondarycolor font-bold mb-2">Interests:</h1>
           <div className="flex flex-wrap gap-2 mb-8">
             {interests.map((interest, index) => (
               <div
                 key={index}
                 className="rounded-full bg-coolred text-secondarycolor h-7 px-2 flex items-center"
               >
-                <span className="text-white text-[0.8rem] font-sofia-pro">
+                <span className="text-secondarycolor text-[0.8rem] font-sofia-pro">
                   {interest}
                 </span>
               </div>
             ))}
           </div>
           <div className="mb-8">
-            <h1 className="text-white font-bold">Contact info:</h1>
-            <p className="text-white">{contact}</p>
+            <h1 className="text-secondarycolor font-bold">Contact info:</h1>
+            <p className="text-secondarycolor">{contact}</p>
           </div>
           <div>
-            <button className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk">
+            <button className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk">
               request match
             </button>
           </div>

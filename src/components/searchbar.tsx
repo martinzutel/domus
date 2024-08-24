@@ -106,11 +106,11 @@ const Searchbar = () => {
         <input
           type="text"
           placeholder="Search"
-          className="h-full w-full bg-darkgre placeholder-white outline-none rounded-l-full pl-4"
+          className="h-full w-full bg-darkgre placeholder-secondarycolor outline-none rounded-l-full pl-4"
         />
         <button
           onClick={toggleModal}
-          className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-darkgre rounded-r-full"
+          className="h-full bg-darkgre text-4xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-r-full"
         >
           <IoFilterCircle className="m-[10px]" />
         </button>
@@ -119,7 +119,7 @@ const Searchbar = () => {
       {isModalOpen && (
         <InterestModal onClose={toggleModal}>
           <div className="flex flex-col items-center space-y-4">
-            <h1 className="text-4xl text-white font-sofia-pro">
+            <h1 className="text-4xl text-secondarycolor font-sofia-pro">
               Search through interests:
             </h1>
             <form
@@ -134,7 +134,7 @@ const Searchbar = () => {
               </div>
               <button
                 type="submit"
-                className="border-solid text-darkgre font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto hover:bg-coolredhl active:bg-coolreddrk"
+                className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mt-auto mx-auto hover:bg-coolredhl active:bg-coolreddrk"
               >
                 Submit
               </button>

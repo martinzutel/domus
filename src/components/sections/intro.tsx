@@ -20,7 +20,7 @@ const Intro: React.FC = () => {
                           :text-4xl">
               domus
             </p>
-            <p className="font-sofia-pro font-bold text text-5xl text-white text-center
+            <p className="font-sofia-pro font-bold text text-5xl text-secondarycolor text-center
                           sm:text-left">
               Encontra el mejor host de espacios compartidos, conoce y matchea con la persona ideal. 
             </p>

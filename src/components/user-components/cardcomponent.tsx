@@ -32,10 +32,10 @@ const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, inter
       <div className="w-full bg-darkgre p-[1.3rem]">
 
         <div className="h-[204px]">
-          <p className="text-white font-bold text-[1.5rem] leading-[1.2rem] font-sofia-pro mb-[1rem]">
+          <p className="text-secondarycolor font-bold text-[1.5rem] leading-[1.2rem] font-sofia-pro mb-[1rem]">
             {name}
           </p>
-          <p className="text-white text-[0.8rem] font-sofia-pro line-clamp-6">{about}</p>
+          <p className="text-secondarycolor text-[0.8rem] font-sofia-pro line-clamp-6">{about}</p>
         </div>
 
         <div className="flex flex-nowrap space-x-2 overflow-x-auto">
@@ -44,7 +44,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ name, about, image, inter
               key={index}
               className="rounded-full bg-coolred text-secondarycolor pb-[4px] pl-[9px] space-x-2 inline-block"
             >
-              <span className="text-white text-[0.8rem] font-sofia-pro mr-[0.5rem] overflow-hidden whitespace-nowrap">
+              <span className="text-secondarycolor text-[0.8rem] font-sofia-pro mr-[0.5rem] overflow-hidden whitespace-nowrap">
                 {interest}
               </span>
             </div>
