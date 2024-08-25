@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import CardGrid from "@/components/user-components/cardgrid";
 import Intro from "@/components/sections/intro";
-import Searchbar from "@/components/searchbar";
-import Topbar from "@/components/topbar";
+import Searchbar from "@/components/browse/searchbar";
+import Topbar from "@/components/browse/topbar";
 import Profile from "@/components/user-components/profile";
-import { UserProvider } from "@/components/UserContext";
+import { UserProvider } from "@/components/user-components/UserContext";
 
 export default function Home() {
 

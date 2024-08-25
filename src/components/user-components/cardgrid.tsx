@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import CardComponent from '@/components/user-components/cardcomponent';
-import { useUserContext } from '@/components/UserContext';
+import { useUserContext } from '@/components/user-components/UserContext';
 
 
 type user = {

@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { IoFilterCircle } from "react-icons/io5";
 
-import { useUserContext } from "@/components/UserContext";
-import CheckboxGroup from "./interests/CheckboxGroup";
-import InterestModal from "./interests/interestModal";
+import { useUserContext } from "@/components/user-components/UserContext";
+import CheckboxGroup from "../interests/CheckboxGroup";
+import InterestModal from "../interests/interestModal";
 
 interface Interest {
   value: string;
