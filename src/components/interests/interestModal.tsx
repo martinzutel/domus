@@ -35,7 +35,7 @@ const InterestModal: React.FC<InterestModalProps> = ({ children, onClose }) => {
                 </div>
 
                 <div
-                    className='absolute flex items-center justify-center top-[400px]'
+                    className='absolute flex items-center justify-center top-[300px]'
                 >
                     <div className="absolute bg-maincolor min-w-[500px] p-7 pt-4 rounded-3xl flex flex-col items-center justify-center space-y-4 z-50">
 
