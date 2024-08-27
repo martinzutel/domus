@@ -26,6 +26,8 @@ model User {
   sessions           Session[]
   likedTags          Tag[]           @relation("LikedTags")
   ownTags            Tag[]           @relation("OwnedTags")
+  sentMatches  MatchRequest[]  @relation("MatchRequester")
+  receivedMatches MatchRequest[] @relation("MatchReceiver")
 }
 
 model Account {
@@ -83,4 +85,17 @@ model Tag {
   tagValue String @default("")
   likedBy  User[] @relation("LikedTags")
   ownedBy  User[] @relation("OwnedTags")
+}
+
+model MatchRequest {
+  id         String   @id @default(cuid())
+  requester  User     @relation("MatchRequester", fields: [requesterId], references: [id])
+  requesterId String
+  receiver   User     @relation("MatchReceiver", fields: [receiverId], references: [id])
+  receiverId String
+  status     String @default("pending")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([requesterId, receiverId])
 }

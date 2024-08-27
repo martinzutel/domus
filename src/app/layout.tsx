@@ -3,7 +3,7 @@ import "./globals.css";
 import {Providers} from './Providers'
 
 export const metadata: Metadata = {
-  title: "",
+  title: "Domus",
   description: "",
 };
 

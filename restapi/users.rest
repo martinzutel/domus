@@ -62,3 +62,13 @@ Content-Type: application/json
 {
   "id": "clzk3sqb70000c0l00on2cqxe"
 }
+
+###
+
+POST http://localhost:3000/api/match/create
+Content-Type: application/json
+
+{
+  "requesterId": "userA@example.com",
+  "receiverId": "userB@example.com"
+}
