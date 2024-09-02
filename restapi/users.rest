@@ -60,7 +60,7 @@ POST http://localhost:3000/api/users/getUserProfile
 Content-Type: application/json
 
 {
-  "id": "clzk3sqb70000c0l00on2cqxe"
+  "id": "clw08wg880000wb4z3eibd3ir"
 }
 
 ###
@@ -69,6 +69,26 @@ POST http://localhost:3000/api/match/create
 Content-Type: application/json
 
 {
-  "requesterId": "userA@example.com",
-  "receiverId": "userB@example.com"
+  "requesterId": "clw08wg880000wb4z3eibd3ir",
+  "receiverId": "clx8vwas10000ch77tqvmd9kz"
+}
+
+###
+
+POST http://localhost:3000/api/match/response
+Content-Type: application/json
+
+{
+  "matchRequestId": "cm0lcmayo0001tvto1sz5jrmh",
+  "action": "accept"
+}
+
+###
+
+POST http://localhost:3000/api/match/response
+Content-Type: application/json
+
+{
+  "matchRequestId": "cm0lcmayo0001tvto1sz5jrmh",
+  "action": "deny"
 }
