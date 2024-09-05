@@ -3,26 +3,40 @@ import prisma from "@prisma/prisma";
 
 export async function POST(request) {
   try {
-    const data = await request.json();
-    const { matchRequestId, action } = data;
+    const { matchRequestId, action } = await request.json(); 
 
-    // Ensure that action is either 'accept' or 'deny'
-    if (!["accept", "deny"].includes(action)) {
-      return NextResponse.json({ message: "Invalid action" }, { status: 400 });
+    if (!matchRequestId || (action !== "accept" && action !== "deny")) {
+      return NextResponse.json({ message: "Invalid request data." }, { status: 400 });
     }
 
-    // Update the match request status
+    const matchRequest = await prisma.matchRequest.findUnique({
+      where: { id: matchRequestId },
+    });
+
+    if (!matchRequest) {
+      return NextResponse.json({ message: "Match request not found." }, { status: 404 });
+    }
+
+    if (matchRequest.status !== "pending") {
+      return NextResponse.json({ message: `Match request has already been ${matchRequest.status}.` }, { status: 400 });
+    }
+
     const updatedMatchRequest = await prisma.matchRequest.update({
       where: { id: matchRequestId },
-      data: { status: action === "accept" ? "accepted" : "denied" },
+      data: {
+        status: action === "accept" ? "accepted" : "denied",
+      },
     });
 
     return NextResponse.json({
-      message: `Match request ${action}ed successfully`,
+      message: `Match request ${action === "accept" ? "accepted" : "denied"} successfully.`,
       matchRequest: updatedMatchRequest,
     });
   } catch (error) {
     console.error("Error updating match request:", error);
-    return NextResponse.json({ message: "Failed to update match request" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error." },
+      { status: 500 }
+    );
   }
 }
