@@ -1,22 +1,43 @@
 import { NextResponse } from "next/server";
 import prisma from "@prisma/prisma";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
 export async function POST(request) {
   try {
-    const { requesterId, receiverId } = await request.json();
+    
+    const res = await fetch(`${baseUrl}/api/users/getUser`, {
+      headers: {
+        cookie: request.headers.get("cookie"),
+      },
+    });
 
-    if (!requesterId || !receiverId) {
+    if (!res.ok) {
       return NextResponse.json(
-        { message: "Missing user IDs." },
-        { status: 400 }
+        { message: "Unauthorized: user data not found" },
+        { status: 401 },
       );
     }
 
-    if (requesterId === receiverId) {
+    const userData = await res.json();
+    const loggedInUserId = userData.id;
+
+    const { requesterId, receiverId } = await request.json();
+
+    // Validate that the requester is the logged-in user
+    if (loggedInUserId !== requesterId) {
       return NextResponse.json(
-        { message: "Cannot request a match with yourself." },
-        { status: 400 }
+        { message: "Unauthorized: requester does not match logged-in user." },
+        { status: 403 },
       );
+    }
+
+    if (!requesterId || !receiverId) {
+      return NextResponse.json({ message: "Missing user IDs." }, { status: 400 });
+    }
+
+    if (requesterId === receiverId) {
+      return NextResponse.json({ message: "Cannot request a match with yourself." }, { status: 400 });
     }
 
     const existingRequest = await prisma.matchRequest.findUnique({
@@ -24,10 +45,7 @@ export async function POST(request) {
     });
 
     if (existingRequest) {
-      return NextResponse.json(
-        { message: "Match request already exists." },
-        { status: 409 }
-      );
+      return NextResponse.json({ message: "Match request already exists." }, { status: 409 });
     }
 
     const matchRequest = await prisma.matchRequest.create({
