@@ -18,6 +18,7 @@ type CardGridProps = {
 };
 
 const CardGrid: React.FC<CardGridProps> = ({ onCardClick }) => {
+  
   const { users, setUsers } = useUserContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

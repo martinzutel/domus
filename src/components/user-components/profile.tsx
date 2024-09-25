@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -14,9 +14,16 @@ type ProfileProps = {
 };
 
 const Profile: React.FC<ProfileProps> = ({ name, about, image, interests, contact, onClose }) => {
+  
+
+  const handleRequest = () => {
+    console.log(`Match request sent to ${name}`);
+    
+  };
+
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0 backdrop-blur-sm ">
-      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor  rounded-3xl flex flex-row p-10 relative">
+      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-10 relative">
         <button className="left-0 top-0 text-coolred text-3xl absolute mt-4 ml-4" onClick={onClose}>
           <IoMdArrowRoundBack />
         </button>
@@ -54,8 +61,11 @@ const Profile: React.FC<ProfileProps> = ({ name, about, image, interests, contac
             <p className="text-secondarycolor">{contact}</p>
           </div>
           <div>
-            <button className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk">
-              request match
+            <button
+              className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
+              onClick={handleRequest} 
+            >
+              Request Match
             </button>
           </div>
         </div>

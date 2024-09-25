@@ -23,11 +23,11 @@ model User {
   isRegisterComplete Boolean?        @default(false)
   accounts           Account[]
   Authenticator      Authenticator[]
+  receivedMatches    MatchRequest[]  @relation("MatchReceiver")
+  sentMatches        MatchRequest[]  @relation("MatchRequester")
   sessions           Session[]
   likedTags          Tag[]           @relation("LikedTags")
   ownTags            Tag[]           @relation("OwnedTags")
-  sentMatches  MatchRequest[]  @relation("MatchRequester")
-  receivedMatches MatchRequest[] @relation("MatchReceiver")
 }
 
 model Account {
@@ -88,14 +88,14 @@ model Tag {
 }
 
 model MatchRequest {
-  id         String   @id @default(cuid())
-  requester  User     @relation("MatchRequester", fields: [requesterId], references: [id])
+  id          String   @id @default(cuid())
   requesterId String
-  receiver   User     @relation("MatchReceiver", fields: [receiverId], references: [id])
-  receiverId String
-  status     String @default("pending")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  receiverId  String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  receiver    User     @relation("MatchReceiver", fields: [receiverId], references: [id])
+  requester   User     @relation("MatchRequester", fields: [requesterId], references: [id])
 
   @@unique([requesterId, receiverId])
 }

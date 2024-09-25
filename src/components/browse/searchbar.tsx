@@ -1,11 +1,9 @@
-"use client";
 import React, { useState } from "react";
-import { BsFillPersonFill } from "react-icons/bs";
+import { FaBell } from "react-icons/fa";
 import { IoFilterCircle } from "react-icons/io5";
-
-import { useUserContext } from "@/components/user-components/UserContext";
-import CheckboxGroup from "../interests/CheckboxGroup";
-import InterestModal from "../interests/interestModal";
+import NotificationModal from "@/components/user-components/notificationmodal"; 
+import InterestModal from "@/components/interests/interestModal";
+import CheckboxGroup from "@/components/interests/CheckboxGroup";
 
 interface Interest {
   value: string;
@@ -41,68 +39,34 @@ const interests: Interest[] = [
   { value: "musician", label: "Musician" },
 ];
 
-const Searchbar = () => {
+const Searchbar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState<boolean>(false);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const { setUsers } = useUserContext(); // Use the context
 
-  const toggleModal = (): void => {
-    setIsModalOpen(!isModalOpen);
-  };
+  const toggleModal = (): void => setIsModalOpen(!isModalOpen);
+  const toggleNotificationModal = (): void => setIsNotificationModalOpen(!isNotificationModalOpen);
 
-  const handleCheckedChange = (checkedValues: string[]) => {
+  const handleCheckedChange = (checkedValues: string[]): void => {
     setSelectedInterests(checkedValues);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-  
-    try {
-      const response = await fetch("/api/tagSearch", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ searchTags: selectedInterests }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-  
-      const result = await response.json();
-  
-      // Validate and process the result
-      const updatedResult = result.map((user: any) => {
-        const interestsArray = user.ownTags.map((tag: any) => {
-          // Check if tag has the tagValue property and is a string
-          if (tag && typeof tag.tagValue === "string") {
-            return tag.tagValue.charAt(0).toUpperCase() + tag.tagValue.slice(1).toLowerCase().replace(/_/g, " ");
-          }
-          // Handle or transform non-string tags as needed
-          console.warn("Unexpected tag format:", tag);
-          return ""; // Default value or transformation
-        });
-        return {
-          ...user,
-          ownTags: interestsArray,
-        };
-      });
-  
-      setUsers(updatedResult); // Update the global context
-  
-      console.log("Successfully submitted interests");
-  
-      toggleModal();
-    } catch (error) {
-      console.error("Error submitting interests:", error);
-    }
+    console.log("Submitted interests: ", selectedInterests);
+    toggleModal();
   };
-  
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <div className="h-[40px] w-[250px] flex justify-center items-center ">
+    <div className="w-full flex justify-center">
+      <button
+        onClick={toggleNotificationModal}
+        className="h-[40px] bg-darkgre text-2xl mr-40 flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full z"
+      >
+        <FaBell className="m-[16px]" />
+      </button>
+
+      <div className="h-[40px] w-[250px] flex justify-center items-center mr-40">
         <input
           type="text"
           placeholder="Search"
@@ -114,23 +78,23 @@ const Searchbar = () => {
         >
           <IoFilterCircle className="m-[10px]" />
         </button>
-        
       </div>
+
+      {isNotificationModalOpen && (
+        <NotificationModal onClose={toggleNotificationModal}>
+          <p>This is a notification modal content.</p>
+        </NotificationModal>
+      )}
+
       {isModalOpen && (
         <InterestModal onClose={toggleModal}>
           <div className="flex flex-col items-center space-y-4">
             <h1 className="text-4xl text-secondarycolor font-sofia-pro">
               Search through interests:
             </h1>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col items-center space-y-4"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
               <div className="max-h-[300px] overflow-y-auto">
-                <CheckboxGroup
-                  interests={interests}
-                  onCheckedChange={handleCheckedChange}
-                />
+                <CheckboxGroup interests={interests} onCheckedChange={handleCheckedChange} />
               </div>
               <button
                 type="submit"
