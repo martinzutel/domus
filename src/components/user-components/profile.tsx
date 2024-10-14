@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { profile } from 'console';
 
 type ProfileProps = {
   id: string;
@@ -13,13 +14,50 @@ type ProfileProps = {
   onClose: () => void;
 };
 
-const Profile: React.FC<ProfileProps> = ({ name, about, image, interests, contact, onClose }) => {
-  
+const Profile: React.FC<ProfileProps> = ({ id, name, about, image, interests, contact, onClose }) => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const handleRequest = () => {
-    console.log(`Match request sent to ${name}`);
-    
+  const handleRequest = async () => {
+    try {
+      const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
+        headers: {
+          cookie: document.cookie, // Access the cookie from the document
+        },
+      });
+  
+      if (!userRes.ok) {
+        throw new Error(`Error: ${userRes.status} ${userRes.statusText}`);
+      }
+  
+      const userData = await userRes.json();
+      const requesterId = userData.id;
+      const receiverId = id; // The user you want to match with
+  
+      console.log(`Match request sent to ${name}`, requesterId, receiverId);
+  
+      // Now make the POST request to create the match
+      const matchRes = await fetch(`${baseUrl}/api/match/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          cookie: document.cookie, // Include the cookies needed for authentication
+        },
+        body: JSON.stringify({
+          requesterId: requesterId,
+          receiverId: receiverId,
+        }),
+      });
+  
+      if (!matchRes.ok) {
+        throw new Error(`Error: ${matchRes.status} ${matchRes.statusText}`);
+      }
+  
+      console.log("Match created successfully");
+    } catch (error) {
+      console.error("Failed to create match:", error);
+    }
   };
+  
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0 backdrop-blur-sm ">

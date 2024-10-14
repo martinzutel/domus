@@ -1,71 +1,96 @@
 'use client';
 import React, { useEffect } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import MatchRequest from '@/components/user-components/matchrequest'; 
+import MatchRequest from '@/components/user-components/matchrequest';
+
+type MatchRequestType = {
+  id: string;
+  receiverId: string;
+  username: string;
+  profileImage: string;
+};
 
 type NotificationModalProps = {
   onClose: () => void;
 };
 
-
-const matchRequests = [
-  {
-    id: 1,
-    username: 'User1',
-    profileImage: '/images/images.jpg', 
-  },
-  {
-    id: 2,
-    username: 'User2',
-    profileImage: '/images/images.jpg',
-  },
-  {
-    id: 3,
-    username: 'User3',
-    profileImage: '/images/images.jpg', 
-  },
-  {
-    id: 4,
-    username: 'User4',
-    profileImage: '/images/images.jpg',
-  },
-  {
-    id: 5,
-    username: 'User5',
-    profileImage: '/images/images.jpg', 
-  },
-  {
-    id: 6,
-    username: 'User6',
-    profileImage: '/images/images.jpg',
-  },
-];
-
 const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
-
+  const [matchRequests, setMatchRequests] = React.useState<MatchRequestType[]>([]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
     };
   }, []);
 
- 
-  const handleAccept = (id: number, username: string) => {
-    console.log(`Accepted match request from ${username} (ID: ${id})`);
-    
+  useEffect(() => {
+    const fetchMatchRequests = async () => {
+      try {
+        const response = await fetch('/api/match/getNotifs');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const { pending } = data;
+
+        if (!Array.isArray(pending)) {
+          throw new Error('Expected an array of pending requests.');
+        }
+
+        // Extract necessary information from the pending requests
+        const updatedRequests = pending.map((request) => ({
+          id: request.id,
+          receiverId: request.receiverId,
+          username: request.requester.name,
+          profileImage: request.requester.image,
+        }));
+
+        setMatchRequests(updatedRequests); // Update the state with user info
+      } catch (error) {
+        console.error('Failed to fetch match requests or user profiles:', error);
+      }
+    };
+
+    fetchMatchRequests();
+  }, []);
+
+  const respondToMatch = async (id: string, action: string) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/match/response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          cookie: document.cookie,
+        },
+        body: JSON.stringify({
+          matchRequestId: id,
+          action: action,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      console.log(`${action.charAt(0).toUpperCase() + action.slice(1)}ed match request with ID: ${id}`);
+    } catch (error) {
+      console.error(`Failed to ${action} match request:`, error);
+    }
   };
 
+  const handleAccept = (id: string) => {
+    respondToMatch(id, 'accept');
+  };
 
-  const handleDeny = (id: number, username: string) => {
-    console.log(`Denied match request from ${username} (ID: ${id})`);
-    
+  const handleDeny = (id: string) => {
+    respondToMatch(id, 'deny');
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0  fixed z-40">
-      <div className="absolute  h-[500px] max-h-[500px] w-[500px] bg-darkgre border-secondarycolor rounded-3xl p-6 overflow-hidden">
+    <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0 fixed z-40">
+      <div className="absolute h-[500px] max-h-[500px] w-[500px] bg-darkgre border-secondarycolor rounded-3xl p-6 overflow-hidden">
         <button className="absolute top-4 left-4 text-2xl text-secondarycolor" onClick={onClose}>
           <IoMdArrowRoundBack />
         </button>
@@ -73,7 +98,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
         <div className="text-secondarycolor">
           <h1 className="text-2xl font-bold mb-4 text-secondarycolor mt-5">Notifications</h1>
 
-        
           <div className="max-h-[400px] overflow-y-auto">
             {matchRequests.length > 0 ? (
               matchRequests.map((request) => (
@@ -81,8 +105,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
                   <MatchRequest
                     username={request.username}
                     profileImage={request.profileImage}
-                    onAccept={() => handleAccept(request.id, request.username)} 
-                    onDeny={() => handleDeny(request.id, request.username)}     
+                    onAccept={() => handleAccept(request.id)}
+                    onDeny={() => handleDeny(request.id)}
                   />
                 </div>
               ))

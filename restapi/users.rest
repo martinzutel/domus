@@ -71,7 +71,7 @@ Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef
 
 {
   "requesterId": "clw08wg880000wb4z3eibd3ir",
-  "receiverId": "clx3iix840003x7tph6gc752y"
+  "receiverId": "cm23j71hm0000zhy396fc4rv9"
 }
 
 ###
