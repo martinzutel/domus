@@ -101,3 +101,9 @@ Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef
 GET http://localhost:3000/api/match/getNotifs
 Content-Type: application/json
 Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef7550a0673c253|ec2c218d34a404f523d71be0d7093a697d55ffb14d38ae233cc034fda4c7bbad; next-auth.session-token=62fcb508-2c2a-4ad7-9016-7df0a03e2dcd
+
+###
+
+GET http://localhost:3000/api/match/history
+Content-Type: application/json
+Cookie: next-auth.csrf-token=e271d0db91609a1b4ee50b1c1aed809574cae76d83a14041eef7550a0673c253|ec2c218d34a404f523d71be0d7093a697d55ffb14d38ae233cc034fda4c7bbad; next-auth.session-token=62fcb508-2c2a-4ad7-9016-7df0a03e2dcd
