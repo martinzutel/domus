@@ -34,8 +34,8 @@ export async function GET(request) {
         ],
       },
       include: {
-        requester: true,  // Includes requester details
-        receiver: true,   // Includes receiver details
+        requester: true,
+        receiver: true,
       },
     });
 
