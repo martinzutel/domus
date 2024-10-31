@@ -28,13 +28,14 @@ export async function GET(request) {
     
     const acceptedDeniedRequests = await prisma.matchRequest.findMany({
       where: {
-        receiverId: userId,
-        status: {
-          in: ["accepted", "denied"],
-        },
+        OR: [
+          { receiverId: userId, status: { in: ["accepted", "denied"] } },
+          { requesterId: userId, status: { in: ["accepted", "denied"] } },
+        ],
       },
       include: {
-        requester: true,  // Optionally include requester details
+        requester: true,  // Includes requester details
+        receiver: true,   // Includes receiver details
       },
     });
 
