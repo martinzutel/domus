@@ -6,7 +6,7 @@ import Searchbar from "@/components/browse/searchbar";
 import Topbar from "@/components/browse/topbar";
 import Profile from "@/components/user-components/profile";
 import MatchHistoryModal from "@/components/user-components/matchhistorymodal";
-import InterestModal from "@/components/interests/interestModal"; // Import InterestModal
+import InterestModal from "@/components/interests/interestModal";
 import { UserProvider } from "@/components/user-components/UserContext";
 import CheckboxGroup from "@/components/interests/CheckboxGroup";
 
@@ -145,9 +145,36 @@ export default function Home() {
             isOpen={isMatchHistoryModalOpen}
             onClose={() => setIsMatchHistoryModalOpen(false)}
             matchData={[
-              { id: 1, username: "Alice", matchDate: "2024-10-25" },
-              { id: 2, username: "Bob", matchDate: "2024-10-27" },
-              { id: 3, username: "Charlie", matchDate: "2024-10-30" },
+              {
+                id: 1,
+                username: "Alice",
+                profileImage: "/images/images.jpg", // Placeholder image for Alice
+                matchDate: "2024-10-25",
+              },
+              {
+                id: 2,
+                username: "Bob",
+                profileImage: "/images/images.jpg", // Placeholder image for Bob
+                matchDate: "2024-10-27",
+              },
+              {
+                id: 3,
+                username: "Charlie",
+                profileImage: "/images/images.jpg", // Placeholder image for Charlie
+                matchDate: "2024-10-30",
+              },
+              {
+                id: 3,
+                username: "Charlie",
+                profileImage: "/images/images.jpg", // Placeholder image for Charlie
+                matchDate: "2024-10-30",
+              },
+              {
+                id: 4,
+                username: "Charlie",
+                profileImage: "/images/images.jpg", // Placeholder image for Charlie
+                matchDate: "2024-10-30",
+              },
             ]}
           />
         )}
