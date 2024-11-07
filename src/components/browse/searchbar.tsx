@@ -1,16 +1,16 @@
+'use client';
 import React, { useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { IoFilterCircle } from "react-icons/io5";
-import NotificationModal from "@/components/user-components/notificationmodal"; 
+import NotificationModal from "@/components/user-components/notificationmodal";
 import InterestModal from "@/components/interests/interestModal";
 import CheckboxGroup from "@/components/interests/CheckboxGroup";
 
-interface Interest {
-  value: string;
-  label: string;
+interface SearchbarProps {
+  onToggleMatchHistory: () => void;
 }
 
-const interests: Interest[] = [
+const interests = [
   { value: "fitness", label: "Fitness" },
   { value: "football", label: "Football" },
   { value: "basketball", label: "Basketball" },
@@ -39,7 +39,7 @@ const interests: Interest[] = [
   { value: "musician", label: "Musician" },
 ];
 
-const Searchbar: React.FC = () => {
+const Searchbar: React.FC<SearchbarProps> = ({ onToggleMatchHistory }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState<boolean>(false);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -61,7 +61,7 @@ const Searchbar: React.FC = () => {
     <div className="w-full flex justify-center">
       <button
         onClick={toggleNotificationModal}
-        className="h-[40px] bg-darkgre text-2xl mr-40 flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full z"
+        className="h-[40px] bg-darkgre text-2xl mr-40 flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
       >
         <FaBell className="m-[16px]" />
       </button>
@@ -79,6 +79,13 @@ const Searchbar: React.FC = () => {
           <IoFilterCircle className="m-[10px]" />
         </button>
       </div>
+
+      <button
+        onClick={onToggleMatchHistory}
+        className="h-[40px] bg-darkgre text-2xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
+      >
+        Match History
+      </button>
 
       {isNotificationModalOpen && (
         <NotificationModal onClose={toggleNotificationModal}>
