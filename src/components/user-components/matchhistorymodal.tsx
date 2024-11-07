@@ -2,22 +2,30 @@
 
 import React, { useEffect } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import Image from 'next/image';
 
 interface MatchData {
-  id: number;
-  username: string;
-  profileImage: string; // Add profileImage field
+  id: string;
+  username: string; // Equivalent to "name"
+  profileImage: string; // Equivalent to "image"
   matchDate: string;
+  about: string; // New properties to match the user's profile structure
+  contact: string;
+  ownTags: string[];
 }
 
 interface MatchHistoryModalProps {
   isOpen: boolean;
   onClose: () => void;
   matchData: MatchData[];
+  onMatchClick: (user: MatchData) => void;
 }
 
-const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({ isOpen, onClose, matchData }) => {
+const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
+  isOpen,
+  onClose,
+  matchData,
+  onMatchClick,
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -33,43 +41,26 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({ isOpen, onClose, 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-[50px]">
-      {/* Background overlay */}
-      <div
-        className="absolute inset-0"
-        onClick={onClose}
-        aria-label="Close Modal"
-      ></div>
-
-      {/* Modal content */}
-      <div className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4 mb-2">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-39">
+      <div className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4">
         <button
           onClick={onClose}
           className="absolute top-4 left-4 text-coolred text-3xl"
-          aria-label="Close Modal"
         >
           <IoMdArrowRoundBack />
         </button>
 
-        <h2 className="text-2xl font-semibold text-secondarycolor mt-[50px]">Match History</h2>
+        <h2 className="text-2xl font-semibold text-secondarycolor">Match History</h2>
 
-        {/* Scrollable Match List */}
         <div className="w-full max-h-[300px] overflow-y-auto space-y-3">
           {matchData.map((match) => (
             <div
               key={match.id}
-              className="flex items-center justify-between p-3 bg-darkgre text-secondarycolor rounded-lg"
+              className="flex justify-between items-center p-3 bg-darkgre text-secondarycolor rounded-lg cursor-pointer"
+              onClick={() => onMatchClick(match)} // Use entire match object
             >
-              <div className="flex items-center space-x-3">
-                <Image
-                  src={match.profileImage}
-                  alt={`${match.username}'s profile`}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-                <span className="font-medium">{match.username}</span>
-              </div>
+              <img src={match.profileImage} alt={match.username} className="h-10 w-10 rounded-full" />
+              <span className="font-medium">{match.username}</span>
               <span className="text-sm text-gray-400">{match.matchDate}</span>
             </div>
           ))}

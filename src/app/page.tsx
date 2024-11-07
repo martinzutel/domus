@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import CardGrid from "@/components/user-components/cardgrid";
 import Intro from "@/components/sections/intro";
@@ -146,36 +147,61 @@ export default function Home() {
             onClose={() => setIsMatchHistoryModalOpen(false)}
             matchData={[
               {
-                id: 1,
-                username: "Alice",
-                profileImage: "/images/images.jpg", // Placeholder image for Alice
-                matchDate: "2024-10-25",
+                id: '1',
+                username: 'Alice',
+                profileImage: '/images/placeholder1.jpg',
+                about: 'Loves reading and gaming',
+                contact: 'alice@example.com',
+                ownTags: ['Reading', 'Gaming'],
+                matchDate: '2024-10-25',
               },
               {
-                id: 2,
-                username: "Bob",
-                profileImage: "/images/images.jpg", // Placeholder image for Bob
-                matchDate: "2024-10-27",
+                id: '2',
+                username: 'Bob',
+                profileImage: '/images/placeholder2.jpg',
+                about: 'Enjoys hiking and photography',
+                contact: 'bob@example.com',
+                ownTags: ['Hiking', 'Photography'],
+                matchDate: '2024-10-27',
               },
               {
-                id: 3,
-                username: "Charlie",
-                profileImage: "/images/images.jpg", // Placeholder image for Charlie
-                matchDate: "2024-10-30",
+                id: '3',
+                username: 'Alice',
+                profileImage: '/images/placeholder1.jpg',
+                about: 'Loves reading and gaming',
+                contact: 'alice@example.com',
+                ownTags: ['Reading', 'Gaming'],
+                matchDate: '2024-10-25',
               },
               {
-                id: 3,
-                username: "Charlie",
-                profileImage: "/images/images.jpg", // Placeholder image for Charlie
-                matchDate: "2024-10-30",
+                id: '4',
+                username: 'Bob',
+                profileImage: '/images/placeholder2.jpg',
+                about: 'Enjoys hiking and photography',
+                contact: 'bob@example.com',
+                ownTags: ['Hiking', 'Photography'],
+                matchDate: '2024-10-27',
               },
               {
-                id: 4,
-                username: "Charlie",
-                profileImage: "/images/images.jpg", // Placeholder image for Charlie
-                matchDate: "2024-10-30",
+                id: '5',
+                username: 'Bob',
+                profileImage: '/images/placeholder2.jpg',
+                about: 'Enjoys hiking and photography',
+                contact: 'bob@example.com',
+                ownTags: ['Hiking', 'Photography'],
+                matchDate: '2024-10-27',
               },
             ]}
+            onMatchClick={(match) =>
+              handleCardClick({
+                id: match.id,
+                name: match.username,
+                about: match.about,
+                image: match.profileImage,
+                contact: match.contact,
+                ownTags: match.ownTags,
+              })
+            }
           />
         )}
 
