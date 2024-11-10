@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -73,7 +74,7 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-black bg-opacity-30 top-0 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-10 relative">
         <button
           className="left-0 top-0 text-coolred text-3xl absolute mt-4 ml-4"

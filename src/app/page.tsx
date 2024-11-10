@@ -11,6 +11,7 @@ import NotificationModal from "@/components/user-components/notificationmodal";
 import InterestModal from "@/components/interests/interestModal";
 import { UserProvider, useUserContext } from "@/components/user-components/UserContext";
 import { ModalProvider, useModalContext } from "@/components/contexts/ModalContext";
+import CheckboxGroup from '@/components/interests/CheckboxGroup';
 
 const HomeContent: React.FC = () => {
   const { activeModal, openModal, closeModal } = useModalContext();
@@ -23,6 +24,7 @@ const HomeContent: React.FC = () => {
     ownTags: string[];
     contact: string;
   }>(null);
+  const [matchHistoryData, setMatchHistoryData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,6 +33,7 @@ const HomeContent: React.FC = () => {
         if (!response.ok) throw new Error('Failed to fetch users');
         const data = await response.json();
         setUsers(data);
+        setMatchHistoryData(data.slice(0, 5)); // Load some users for match history
       } catch (err) {
         console.error(err);
       }
@@ -60,6 +63,7 @@ const HomeContent: React.FC = () => {
           interests={selectedProfile.ownTags}
           contact={selectedProfile.contact}
           onClose={() => setSelectedProfile(null)}
+          onViewMatchHistory={() => openModal("matchHistory")}
         />
       )}
 
@@ -71,11 +75,38 @@ const HomeContent: React.FC = () => {
         <MatchHistoryModal
           isOpen={true}
           onClose={closeModal}
+          onMatchClick={(user) => console.log("Selected match:", user)}
+          matchData={matchHistoryData}
         />
       )}
 
       {activeModal === "interest" && (
-        <InterestModal onClose={closeModal} />
+        <InterestModal onClose={closeModal}>
+          <form className="flex flex-col items-center space-y-4">
+            <h1 className="text-4xl text-secondarycolor font-sofia-pro">
+              Search through interests:
+            </h1>
+            <div className="max-h-[300px] overflow-y-auto">
+              {/* Assume CheckboxGroup is properly implemented */}
+              <CheckboxGroup
+                interests={[
+                  { value: "fitness", label: "Fitness" },
+                  { value: "football", label: "Football" },
+                  { value: "basketball", label: "Basketball" },
+                  { value: "tennis", label: "Tennis" },
+                  { value: "golf", label: "Golf" },
+                ]}
+                onCheckedChange={() => {}} // Placeholder function
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-coolred text-white py-2 px-6 rounded-full hover:bg-coolredhl"
+            >
+              Submit
+            </button>
+          </form>
+        </InterestModal>
       )}
     </>
   );
