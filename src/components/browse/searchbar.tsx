@@ -6,26 +6,26 @@ import { IoFilterCircle } from 'react-icons/io5';
 import { GoClockFill } from 'react-icons/go';
 
 interface SearchbarProps {
+  onToggleNotificationModal: () => void;
   onToggleMatchHistory: () => void;
   onToggleInterestModal: () => void;
-  onToggleNotificationModal: () => void;
 }
 
 const Searchbar: React.FC<SearchbarProps> = ({
+  onToggleNotificationModal,
   onToggleMatchHistory,
   onToggleInterestModal,
-  onToggleNotificationModal,
 }) => {
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center items-center">
       <button
         onClick={onToggleNotificationModal}
-        className="h-[40px] bg-darkgre text-2xl mr-40 flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
+        className="h-[40px] bg-darkgre text-2xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
       >
         <FaBell className="m-[16px]" />
       </button>
 
-      <div className="h-[40px] w-[250px] flex justify-center items-center mr-40">
+      <div className="h-[40px] w-[250px] flex justify-center items-center relative mx-[40px]">
         <input
           type="text"
           placeholder="Search"
@@ -41,7 +41,7 @@ const Searchbar: React.FC<SearchbarProps> = ({
 
       <button
         onClick={onToggleMatchHistory}
-        className="h-[40px] bg-darkgre text-2xl mr-40 flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
+        className="h-[40px] bg-darkgre text-2xl flex justify-center items-center text-coolred hover:bg-coolred hover:text-secondarycolor rounded-full"
       >
         <GoClockFill className="m-[16px]" />
       </button>

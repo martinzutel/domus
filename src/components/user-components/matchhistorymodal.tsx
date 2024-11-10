@@ -6,10 +6,10 @@ import { useUserContext } from '@/components/user-components/UserContext';
 
 interface MatchData {
   id: string;
-  username: string; // Equivalent to "name"
-  profileImage: string; // Equivalent to "image"
+  username: string;
+  profileImage: string;
   matchDate: string;
-  about: string; // New properties to match the user's profile structure
+  about: string;
   contact: string;
   ownTags: string[];
 }
@@ -59,8 +59,14 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-39">
-      <div className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4">
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-39"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
           className="absolute top-4 left-4 text-coolred text-3xl"
@@ -77,7 +83,11 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
               className="flex justify-between items-center p-3 bg-darkgre text-secondarycolor rounded-lg cursor-pointer"
               onClick={() => onMatchClick(match)}
             >
-              <img src={match.profileImage} alt={match.username} className="h-10 w-10 rounded-full" />
+              <img
+                src={match.profileImage}
+                alt={match.username}
+                className="h-10 w-10 rounded-full"
+              />
               <span className="font-medium">{match.username}</span>
               <span className="text-sm text-gray-400">{match.matchDate}</span>
             </div>
