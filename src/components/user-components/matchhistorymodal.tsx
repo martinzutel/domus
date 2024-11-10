@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { useUserContext } from '@/components/user-components/UserContext';
 
 interface MatchData {
   id: string;
@@ -16,16 +17,33 @@ interface MatchData {
 interface MatchHistoryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  matchData: MatchData[];
   onMatchClick: (user: MatchData) => void;
 }
 
 const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
   isOpen,
   onClose,
-  matchData,
   onMatchClick,
 }) => {
+  const { users } = useUserContext();
+  const [matchData, setMatchData] = useState<MatchData[]>([]);
+
+  useEffect(() => {
+    if (users.length) {
+      const matches = users.slice(0, 5).map((user) => ({
+        id: user.id,
+        username: user.name,
+        profileImage: user.image,
+        matchDate: new Date().toLocaleDateString(),
+        about: user.about,
+        contact: user.contact,
+        ownTags: user.ownTags,
+      }));
+
+      setMatchData(matches);
+    }
+  }, [users]);
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -57,7 +75,7 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
             <div
               key={match.id}
               className="flex justify-between items-center p-3 bg-darkgre text-secondarycolor rounded-lg cursor-pointer"
-              onClick={() => onMatchClick(match)} // Use entire match object
+              onClick={() => onMatchClick(match)}
             >
               <img src={match.profileImage} alt={match.username} className="h-10 w-10 rounded-full" />
               <span className="font-medium">{match.username}</span>

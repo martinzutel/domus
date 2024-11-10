@@ -4,11 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import MatchRequest from '@/components/user-components/matchrequest';
 
-type MatchRequestType = {
-  id: string;
-  receiverId: string;
+type MatchData = {
+  id: number;
   username: string;
   profileImage: string;
+  matchDate: string;
+  about: string;
+  contact: string;
+  ownTags: string[];
 };
 
 type NotificationModalProps = {
@@ -16,7 +19,7 @@ type NotificationModalProps = {
 };
 
 const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
-  const [matchRequests, setMatchRequests] = useState<MatchRequestType[]>([]);
+  const [matchRequests, setMatchRequests] = useState<MatchData[]>([]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -42,9 +45,12 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
 
         const updatedRequests = pending.map((request) => ({
           id: request.id,
-          receiverId: request.receiverId,
           username: request.requester.name,
           profileImage: request.requester.image,
+          matchDate: request.matchDate || new Date().toLocaleDateString(), // Mock or fallback date
+          about: request.requester.about || "No about info",
+          contact: request.requester.contact || "No contact info",
+          ownTags: request.requester.ownTags || [],
         }));
 
         setMatchRequests(updatedRequests);
