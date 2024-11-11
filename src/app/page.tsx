@@ -23,6 +23,8 @@ const HomeContent: React.FC = () => {
     ownTags: string[];
     contact: string;
   }>(null);
+  const [filters, setFilters] = useState<string[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,12 +33,25 @@ const HomeContent: React.FC = () => {
         if (!response.ok) throw new Error('Failed to fetch users');
         const data = await response.json();
         setUsers(data);
+        setFilteredUsers(data); // Initially show all users
       } catch (err) {
         console.error(err);
       }
     };
     fetchUsers();
   }, [setUsers]);
+
+  useEffect(() => {
+    if (filters.length === 0) {
+      setFilteredUsers(users);
+    } else {
+      setFilteredUsers(
+        users.filter((user) =>
+          filters.some((filter) => user.ownTags.includes(filter))
+        )
+      );
+    }
+  }, [filters, users]);
 
   const handleMatchClick = (user: {
     id: string;
@@ -71,7 +86,7 @@ const HomeContent: React.FC = () => {
       </Topbar>
 
       <Intro />
-      <CardGrid onCardClick={(user) => setSelectedProfile(user)} />
+      <CardGrid onCardClick={(user) => setSelectedProfile(user)} users={filteredUsers} />
 
       {selectedProfile && (
         <Profile
@@ -98,7 +113,13 @@ const HomeContent: React.FC = () => {
       )}
 
       {activeModal === "interest" && (
-        <InterestModal onClose={closeModal} />
+        <InterestModal
+          onClose={closeModal}
+          onApplyFilters={(selectedFilters) => {
+            setFilters(selectedFilters);
+            closeModal();
+          }}
+        />
       )}
     </>
   );

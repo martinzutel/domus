@@ -30,6 +30,12 @@ const config: Config = {
         'poppins': ['Poppins'],
         'sofia-pro': ['sofia-pro'],
       },
+      safelist: [
+        'bg-coolred',
+        'bg-coolredhl',
+        'text-white',
+        'text-black',
+      ],
     },
   },
   plugins: [],
