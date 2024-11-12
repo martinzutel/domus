@@ -1,34 +1,18 @@
 'use client'
+import ModalCard from "@/components/assets/ModalCard";
 
-import React, { useState } from 'react';
-import { useSession } from 'next-auth/react';
-import RegisterForm from '@/components/signin/registerpop';
+const TestPage: React.FC = () => {
+  return(
+    <div className="h-screen w-screen flex items-center justify-center bg-maincolor">
 
-export default function Page() {
-  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
-  const { data: session, status } = useSession();
-
-  const closeRegisterForm = () => setShowRegisterForm(false);
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
-      <button
-        onClick={() => setShowRegisterForm(true)}
-        className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full mr-[0.7rem] font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
-      >
-        Open Register Form
-      </button>
-
-      {showRegisterForm && (
-        <RegisterForm
-          isOpen={showRegisterForm}
-          onClose={closeRegisterForm}
-          onSubmit={(formData) => {
-            console.log('Submitted form data:', formData);
-            closeRegisterForm();
-          }}
-        />
-      )}
+     <ModalCard
+      title="hello siblings"
+     >
+      <div>hello</div>
+     </ModalCard>
+      
     </div>
-  );
+  )
 }
+
+export default TestPage; 
