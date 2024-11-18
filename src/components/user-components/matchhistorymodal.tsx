@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useUserContext } from '@/components/user-components/UserContext';
+import ModalCard from '@/components/assets/ModalCard';
 
 interface MatchData {
   id: string;
@@ -63,20 +63,8 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-39"
       onClick={onClose}
     >
-      <div
-        className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 left-4 text-coolred text-3xl"
-        >
-          <IoMdArrowRoundBack />
-        </button>
-
-        <h2 className="text-2xl font-semibold text-secondarycolor">Match History</h2>
-
-        <div className="w-full max-h-[300px] overflow-y-auto space-y-3">
+      <ModalCard title="Match History" onClose={onClose}>
+        <div className="w-full max-h-[300px] overflow-y-auto space-y-3 mt-5">
           {matchData.map((match) => (
             <div
               key={match.id}
@@ -93,7 +81,7 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
             </div>
           ))}
         </div>
-      </div>
+      </ModalCard>
     </div>
   );
 };

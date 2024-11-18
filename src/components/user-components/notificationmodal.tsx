@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import MatchRequest from '@/components/user-components/matchrequest';
+import ModalCard from '@/components/assets/ModalCard';
 
 type MatchData = {
   id: number;
@@ -64,17 +64,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
-      <div className="relative h-[500px] w-[500px] bg-darkgre rounded-3xl p-6 overflow-hidden">
-        <button
-          onClick={onClose}
-          className="absolute top-4 left-4 text-secondarycolor text-3xl"
-        >
-          <IoMdArrowRoundBack />
-        </button>
+      <ModalCard title="Notifications" onClose={onClose}>
 
-        <h2 className="text-2xl font-bold mb-4 text-secondarycolor mt-5">Notifications</h2>
-
-        <div className="max-h-[400px] overflow-y-auto">
+        <div className="max-h-[300px] overflow-y-auto mt-5">
           {matchRequests.length > 0 ? (
             matchRequests.map((request) => (
               <MatchRequest
@@ -86,10 +78,12 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
               />
             ))
           ) : (
-            <p className="text-lg text-secondarycolor">You have no new notifications.</p>
+            <p className="text-lg text-secondarycolor">
+              You have no new notifications.
+            </p>
           )}
         </div>
-      </div>
+      </ModalCard>
     </div>
   );
 };
