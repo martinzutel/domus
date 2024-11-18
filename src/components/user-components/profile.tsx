@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import MatchHistoryModal from "@/components/user-components/matchhistorymodal"; // Import MatchHistoryModal component
+import { RiCloseCircleFill } from 'react-icons/ri';
 
 type ProfileProps = {
   id: string;
@@ -75,13 +76,14 @@ const Profile: React.FC<ProfileProps> = ({
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-10 relative">
-        <button
-          className="left-0 top-0 text-coolred text-3xl absolute mt-4 ml-4"
-          onClick={onClose}
-        >
-          <IoMdArrowRoundBack />
-        </button>
+      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-6 relative">
+      <button
+        className="absolute top-4 right-4 text-coolred text-3xl"
+        onClick={onClose}
+        aria-label="Close Modal"
+      >
+        <RiCloseCircleFill />
+      </button>
         <div className="min-w-80 relative h-full rounded-2xl overflow-hidden mr-10">
           <Image
             src={image}
