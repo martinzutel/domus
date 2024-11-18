@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { IoMdArrowRoundBack } from "react-icons/io";
-import MatchHistoryModal from "@/components/user-components/matchhistorymodal"; // Import MatchHistoryModal component
+import MatchHistoryModal from "@/components/user-components/matchhistorymodal";
 import { RiCloseCircleFill } from 'react-icons/ri';
 
 type ProfileProps = {
@@ -31,10 +30,17 @@ const Profile: React.FC<ProfileProps> = ({
   onClose,
 }) => {
   const [isMatchHistoryOpen, setIsMatchHistoryOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   const handleRequest = async () => {
+    setIsLoading(true);
+    setErrorMessage("");
+    setIsRequestSuccessful(false);
+
     try {
       const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
         headers: {
@@ -68,22 +74,26 @@ const Profile: React.FC<ProfileProps> = ({
         throw new Error(`Error: ${matchRes.status} ${matchRes.statusText}`);
       }
 
+      setIsRequestSuccessful(true);
       console.log("Match created successfully");
     } catch (error) {
+      setErrorMessage("Failed to send match request. Please try again.");
       console.error("Failed to create match:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-6 relative">
-      <button
-        className="absolute top-4 right-4 text-coolred text-3xl"
-        onClick={onClose}
-        aria-label="Close Modal"
-      >
-        <RiCloseCircleFill />
-      </button>
+        <button
+          className="absolute top-4 right-4 text-coolred text-3xl"
+          onClick={onClose}
+          aria-label="Close Modal"
+        >
+          <RiCloseCircleFill />
+        </button>
         <div className="min-w-80 relative h-full rounded-2xl overflow-hidden mr-10">
           <Image
             src={image}
@@ -127,9 +137,13 @@ const Profile: React.FC<ProfileProps> = ({
             <button
               className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
               onClick={handleRequest}
+              disabled={isLoading || isRequestSuccessful}
             >
-              Request Match
+              {isLoading ? "Sending..." : isRequestSuccessful ? "Request Sent" : "Request Match"}
             </button>
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+            )}
           </div>
         </div>
       </div>
