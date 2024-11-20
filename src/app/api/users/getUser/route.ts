@@ -13,11 +13,18 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Parse cookies into an object
     const parsedCookies = Object.fromEntries(
       cookies.split("; ").map((cookie) => cookie.split("=")),
     );
 
-    const sessionToken = parsedCookies["next-auth.session-token"];
+    // Try to get the session token
+    let sessionToken = parsedCookies["next-auth.session-token"];
+
+    // Fallback to the secure session token if the regular token is not found
+    if (!sessionToken) {
+      sessionToken = parsedCookies["__Secure-next-auth.session-token"];
+    }
 
     if (!sessionToken) {
       console.error("Session token not found in cookies.");
@@ -27,6 +34,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Retrieve the session and user from Prisma
     const session = await prisma.session.findUnique({
       where: {
         sessionToken: sessionToken,
