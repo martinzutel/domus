@@ -1,150 +1,101 @@
-'use client';
+generator client {
+  provider = "prisma-client-js"
+}
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { IoMdArrowRoundBack } from "react-icons/io";
-import MatchHistoryModal from "@/components/user-components/matchhistorymodal"; 
-import { RiCloseCircleFill } from 'react-icons/ri';
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
 
-type ProfileProps = {
-  id: string;
-  name: string;
-  about: string;
-  image: string;
-  interests: string[];
-  contact: string;
-  onClose: () => void;
-};
+model User {
+  id                 String          @id @default(cuid())
+  name               String?
+  email              String          @unique
+  emailVerified      DateTime?
+  image              String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  about              String?
+  age                Int?
+  gender             String?
+  contact            String?
+  isRegisterComplete Boolean?        @default(false)
+  accounts           Account[]
+  Authenticator      Authenticator[]
+  receivedMatches    MatchRequest[]  @relation("MatchReceiver")
+  sentMatches        MatchRequest[]  @relation("MatchRequester")
+  sessions           Session[]
+  likedTags          Tag[]           @relation("LikedTags")
+  ownTags            Tag[]           @relation("OwnedTags")
+}
 
-const mockProfileMatches = [
-  { id: 1, username: "User1", matchDate: "2024-10-28" },
-  { id: 2, username: "User2", matchDate: "2024-10-30" },
-];
+model Account {
+  userId            String
+  providerAccountId String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  access_token      String?
+  expires_at        Int?
+  id_token          String?
+  provider          String
+  refresh_token     String?
+  scope             String?
+  session_state     String?
+  token_type        String?
+  type              String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-const Profile: React.FC<ProfileProps> = ({
-  id,
-  name,
-  about,
-  image,
-  interests,
-  contact,
-  onClose,
-}) => {
-  const [isMatchHistoryOpen, setIsMatchHistoryOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRequestSent, setIsRequestSent] = useState(false);
+  @@id([provider, providerAccountId])
+}
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  const handleRequest = async () => {
-    setIsLoading(true);
-    setIsRequestSent(false);
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
 
-    try {
-      const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
-        headers: {
-          cookie: document.cookie,
-        },
-      });
+  @@id([identifier, token])
+}
 
-      if (!userRes.ok) {
-        throw new Error(`User Fetch Error: ${userRes.status}`);
-      }
+model Authenticator {
+  id                   String  @id @default(cuid())
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-      const userData = await userRes.json();
-      const requesterId = userData.id;
-      const receiverId = id;
+model Tag {
+  tagName  String @unique
+  tagId    Int    @id @default(autoincrement())
+  tagValue String @default("")
+  likedBy  User[] @relation("LikedTags")
+  ownedBy  User[] @relation("OwnedTags")
+}
 
-      const matchRes = await fetch(`${baseUrl}/api/match/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ requesterId, receiverId }),
-      });
+model MatchRequest {
+  id          String   @id @default(cuid())
+  requesterId String
+  receiverId  String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  receiver    User     @relation("MatchReceiver", fields: [receiverId], references: [id])
+  requester   User     @relation("MatchRequester", fields: [requesterId], references: [id])
 
-      if (!matchRes.ok) {
-        throw new Error(`Match Create Error: ${matchRes.status}`);
-      }
-
-      setIsRequestSent(true);
-    } catch (error) {
-      console.error("Match request failed:", error);
-      alert(`Failed to request match: ${error.message}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-      <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-6 relative">
-        <button
-          className="absolute top-4 right-4 text-coolred text-3xl"
-          onClick={onClose}
-          aria-label="Close Modal"
-        >
-          <RiCloseCircleFill />
-        </button>
-        <div className="min-w-80 relative h-full rounded-2xl overflow-hidden mr-10">
-          <Image
-            src={image}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-            quality={100}
-            alt="profile image"
-          />
-        </div>
-        <div className="w-[900px] mr-10">
-          <h1 className="text-secondarycolor font-bold text-3xl pb-1">{name}</h1>
-          <p className="text-secondarycolor font-semibold">{about}</p>
-        </div>
-        <div className="flex flex-col w-full h-full">
-          <h1 className="text-secondarycolor font-bold mb-2">Interests:</h1>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {interests.map((interest, index) => (
-              <div
-                key={index}
-                className="rounded-full bg-coolred text-secondarycolor h-7 px-2 flex items-center"
-              >
-                {interest}
-              </div>
-            ))}
-          </div>
-          <div className="mb-8">
-            <h1 className="text-secondarycolor font-bold">Contact:</h1>
-            <p>{contact}</p>
-          </div>
-          <div className="flex flex-col space-y-4">
-            <button
-              className="border-solid bg-coolred font-black hover:bg-coolredhl"
-              onClick={() => setIsMatchHistoryOpen(true)}
-            >
-              View Match History
-            </button>
-            <button
-              className={`bg-coolred ${
-                isLoading || isRequestSent ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              onClick={handleRequest}
-              disabled={isLoading || isRequestSent}
-            >
-              {isLoading ? "Sending..." : isRequestSent ? "Request Sent" : "Request Match"}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {isMatchHistoryOpen && (
-        <MatchHistoryModal
-          isOpen={isMatchHistoryOpen}
-          onClose={() => setIsMatchHistoryOpen(false)}
-          matchData={mockProfileMatches}
-        />
-      )}
-    </div>
-  );
-};
-
-export default Profile;
+  @@unique([requesterId, receiverId])
+}

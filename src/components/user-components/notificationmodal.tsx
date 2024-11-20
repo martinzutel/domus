@@ -5,7 +5,7 @@ import MatchRequest from '@/components/user-components/matchrequest';
 import ModalCard from '@/components/assets/ModalCard';
 
 type MatchData = {
-  id: number;
+  id: string; // Ensure this matches the backend type (likely string, not number)
   username: string;
   profileImage: string;
   matchDate: string;
@@ -48,8 +48,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
           username: request.requester.name,
           profileImage: request.requester.image,
           matchDate: request.matchDate || new Date().toLocaleDateString(), // Mock or fallback date
-          about: request.requester.about || "No about info",
-          contact: request.requester.contact || "No contact info",
+          about: request.requester.about || 'No about info',
+          contact: request.requester.contact || 'No contact info',
           ownTags: request.requester.ownTags || [],
         }));
 
@@ -62,10 +62,31 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
     fetchMatchRequests();
   }, []);
 
+  const handleMatchAction = async (matchRequestId: string, action: 'accept' | 'deny') => {
+    try {
+      const response = await fetch('/api/match/response', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ matchRequestId, action }),
+      });
+
+      if (response.ok) {
+        console.log(`Request ${matchRequestId} ${action}ed successfully.`);
+        setMatchRequests((prevRequests) =>
+          prevRequests.filter((request) => request.id !== matchRequestId)
+        );
+      } else {
+        const error = await response.json();
+        console.error(`Failed to ${action} request ${matchRequestId}:`, error);
+      }
+    } catch (error) {
+      console.error(`Error ${action}ing request ${matchRequestId}:`, error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
       <ModalCard title="Notifications" onClose={onClose}>
-
         <div className="max-h-[300px] overflow-y-auto mt-5">
           {matchRequests.length > 0 ? (
             matchRequests.map((request) => (
@@ -73,8 +94,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
                 key={request.id}
                 username={request.username}
                 profileImage={request.profileImage}
-                onAccept={() => {}}
-                onDeny={() => {}}
+                onAccept={() => handleMatchAction(request.id, 'accept')}
+                onDeny={() => handleMatchAction(request.id, 'deny')}
               />
             ))
           ) : (

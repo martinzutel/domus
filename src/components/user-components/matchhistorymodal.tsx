@@ -33,38 +33,36 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
         try {
           const response = await fetch('/api/match/getNotifs');
           console.log('Raw API Response:', response);
-  
+
           if (!response.ok) {
             throw new Error(`Failed to fetch accepted matches: ${response.statusText}`);
           }
-  
+
           const data = await response.json();
           console.log('Parsed API Data:', data);
-  
-          const acceptedMatches = data.acceptedDenied.filter(
-            (match: any) => match.status === 'accepted'
-          );
-          console.log('Filtered Accepted Matches:', acceptedMatches);
-  
-          const formattedMatches = acceptedMatches.map((match: any) => ({
-            id: match.id,
-            username: match.requester.name,
-            profileImage: match.requester.image,
-            matchDate: new Date(match.updatedAt).toLocaleDateString(),
-            about: match.requester.about,
-            contact: match.requester.contact,
-          }));
-  
-          setMatchData(formattedMatches);
-          console.log('Formatted Match Data:', formattedMatches);
+
+          // Filter and map accepted matches
+          const acceptedMatches = data.acceptedDenied
+            .filter((match: any) => match.status === 'accepted')
+            .map((match: any) => ({
+              id: match.id,
+              username: match.requester.name,
+              profileImage: match.requester.image,
+              matchDate: new Date(match.updatedAt).toLocaleDateString(),
+              about: match.requester.about || "No about information",
+              contact: match.requester.contact || "No contact info",
+            }));
+
+          console.log('Formatted Match Data:', acceptedMatches);
+          setMatchData(acceptedMatches);
         } catch (error) {
           console.error('Error fetching accepted matches:', error);
         }
       };
-  
+
       fetchAcceptedMatches();
     }
-  }, [isOpen]);  
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

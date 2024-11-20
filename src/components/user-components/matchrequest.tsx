@@ -11,11 +11,10 @@ type MatchRequestProps = {
 const MatchRequest: React.FC<MatchRequestProps> = ({ username, profileImage, onAccept, onDeny }) => {
   const [isDenyPressed, setIsDenyPressed] = useState(false);
 
- 
   const handleDenyMouseDown = () => setIsDenyPressed(true);
   const handleDenyMouseUp = () => {
     setIsDenyPressed(false);
-    onDeny(); 
+    onDeny();
   };
 
   return (
@@ -34,7 +33,7 @@ const MatchRequest: React.FC<MatchRequestProps> = ({ username, profileImage, onA
         <button
           onMouseDown={handleDenyMouseDown}
           onMouseUp={handleDenyMouseUp}
-          onMouseLeave={() => setIsDenyPressed(false)} 
+          onMouseLeave={() => setIsDenyPressed(false)}
           className={`bg-gray-500 text-white px-4 py-2 rounded-lg transition duration-150 ease-in-out hover:bg-gray-600 active:bg-gray-700 focus:outline-none`}
         >
           Deny
