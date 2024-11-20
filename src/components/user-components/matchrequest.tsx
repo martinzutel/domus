@@ -21,7 +21,7 @@ const MatchRequest: React.FC<MatchRequestProps> = ({ username, profileImage, onA
     <div className="flex items-center justify-between p-4 bg-darkgray rounded-lg">
       <div className="flex items-center">
         <img src={profileImage} alt={`${username}'s profile`} className="w-10 h-10 rounded-full mr-3" />
-        <span className="text-lg">{`Match request by ${username}`}</span>
+        <span className="text-white">{`Match request by ${username}`}</span>
       </div>
       <div className="flex space-x-2">
         <button

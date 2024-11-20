@@ -25,7 +25,7 @@ export async function GET(request) {
     if (!userId) {
       return NextResponse.json({ message: "User ID is required." }, { status: 400 });
     }
-    
+
     const acceptedDeniedRequests = await prisma.matchRequest.findMany({
       where: {
         OR: [
@@ -34,8 +34,16 @@ export async function GET(request) {
         ],
       },
       include: {
-        requester: true,
-        receiver: true,
+        requester: {
+          include: {
+            ownTags: true, // Include requester's ownTags
+          },
+        },
+        receiver: {
+          include: {
+            ownTags: true, // Include receiver's ownTags
+          },
+        },
       },
     });
 

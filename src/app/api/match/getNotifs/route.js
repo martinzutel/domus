@@ -5,10 +5,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export async function GET(request) {
   try {
-    // Log incoming request details for debugging
     console.log("Incoming request headers:", request.headers);
 
-    // Fetch the logged user's data
     let userData;
     try {
       const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
@@ -18,7 +16,6 @@ export async function GET(request) {
       });
 
       if (!userRes.ok) {
-        // Log failure and response content for debugging
         console.error(
           "Failed to fetch user data:",
           userRes.status,
@@ -33,7 +30,6 @@ export async function GET(request) {
       userData = await userRes.json();
       console.log("Fetched user data:", userData);
     } catch (fetchError) {
-      // Catch and log fetch-specific errors
       console.error("Error during fetch for user data:", fetchError.message, fetchError.stack);
       return NextResponse.json(
         { message: "Error retrieving user data", error: fetchError.message },
@@ -57,12 +53,15 @@ export async function GET(request) {
           status: "pending",
         },
         include: {
-          requester: true, // Optionally include requester details
+          requester: {
+            include: {
+              ownTags: true, // Include requester's ownTags
+            },
+          },
         },
       });
       console.log("Pending requests:", pendingRequests);
     } catch (prismaError) {
-      // Catch and log Prisma-related errors
       console.error("Error fetching pending match requests:", prismaError.message, prismaError.stack);
       return NextResponse.json(
         { message: "Error fetching pending match requests", error: prismaError.message },
@@ -75,18 +74,22 @@ export async function GET(request) {
     try {
       acceptedDeniedRequests = await prisma.matchRequest.findMany({
         where: {
-          receiverId: userId,
-          status: {
-            in: ["accepted", "denied"],
-          },
+          OR: [
+            { receiverId: userId, status: { in: ["accepted", "denied"] } },
+            { requesterId: userId, status: { in: ["accepted", "denied"] } },
+          ],
         },
         include: {
-          requester: true, // Optionally include requester details
+          requester: {
+            include: {
+              ownTags: true, // Include requester's ownTags
+            },
+          },
+          receiver: true, // Optionally include receiver details
         },
       });
       console.log("Accepted/Denied requests:", acceptedDeniedRequests);
     } catch (prismaError) {
-      // Catch and log Prisma-related errors
       console.error("Error fetching accepted/denied match requests:", prismaError.message, prismaError.stack);
       return NextResponse.json(
         { message: "Error fetching accepted/denied match requests", error: prismaError.message },
@@ -100,7 +103,6 @@ export async function GET(request) {
       acceptedDenied: acceptedDeniedRequests,
     });
   } catch (error) {
-    // Catch any unexpected errors and log them
     console.error("Unexpected error in GET request:", error.message, error.stack);
     return NextResponse.json(
       { message: "Internal server error.", error: error.message },

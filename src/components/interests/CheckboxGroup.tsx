@@ -55,7 +55,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({ interests, onCheckedChang
           />
           <label
             htmlFor={interest.value}
-            className="cursor-pointer flex items-center justify-center w-full h-full"
+            className="text-white cursor-pointer flex items-center justify-center w-full h-full"
           >
             {interest.label}
           </label>
