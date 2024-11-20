@@ -5,6 +5,9 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export async function GET(request) {
   try {
+    // Log incoming request details
+    console.log("Incoming request headers:", request.headers);
+
     // Fetch the logged user's data
     const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
       headers: {
@@ -13,6 +16,11 @@ export async function GET(request) {
     });
 
     if (!userRes.ok) {
+      console.error(
+        "Failed to fetch user data:",
+        userRes.status,
+        await userRes.text()
+      );
       return NextResponse.json(
         { message: "Unauthorized: user data not found" },
         { status: 401 }
@@ -20,6 +28,8 @@ export async function GET(request) {
     }
 
     const userData = await userRes.json();
+    console.log("Fetched user data:", userData);
+
     const userId = userData.id;
 
     if (!userId) {
@@ -33,9 +43,11 @@ export async function GET(request) {
         status: "pending",
       },
       include: {
-        requester: true,  // Optionally include requester details
+        requester: true, // Optionally include requester details
       },
     });
+
+    console.log("Pending requests:", pendingRequests);
 
     // Fetch accepted and denied match requests where the user is the receiver
     const acceptedDeniedRequests = await prisma.matchRequest.findMany({
@@ -46,18 +58,20 @@ export async function GET(request) {
         },
       },
       include: {
-        requester: true,  // Optionally include requester details
+        requester: true, // Optionally include requester details
       },
     });
+
+    console.log("Accepted/Denied requests:", acceptedDeniedRequests);
 
     return NextResponse.json({
       pending: pendingRequests,
       acceptedDenied: acceptedDeniedRequests,
     });
   } catch (error) {
-    console.error("Error fetching match requests:", error);
+    console.error("Error in GET request:", error.message, error.stack);
     return NextResponse.json(
-      { message: "Internal server error." },
+      { message: "Internal server error.", error: error.message },
       { status: 500 }
     );
   }
