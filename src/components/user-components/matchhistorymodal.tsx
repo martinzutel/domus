@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import ModalCard from '@/components/assets/ModalCard';
+import UserItem from '@/components/user-components/useritem';
+import Profile from '@/components/user-components/profile'; // Import Profile component
 
 interface MatchData {
   id: string;
@@ -10,38 +12,31 @@ interface MatchData {
   matchDate: string;
   about: string;
   contact: string;
-  ownTags?: string[]; // Optional since it wasn't in the example response
+  ownTags: { tagName: string; tagId: string; tagValue: string }[]; // Ensure ownTags has a default structure
 }
 
 interface MatchHistoryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onMatchClick: (user: MatchData) => void;
 }
 
 const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
   isOpen,
   onClose,
-  onMatchClick,
 }) => {
   const [matchData, setMatchData] = useState<MatchData[]>([]);
+  const [selectedProfile, setSelectedProfile] = useState<MatchData | null>(null); // Track selected profile
 
   useEffect(() => {
     if (isOpen) {
-      console.log('Modal is open, fetching accepted matches...');
       const fetchAcceptedMatches = async () => {
         try {
           const response = await fetch('/api/match/getNotifs');
-          console.log('Raw API Response:', response);
-
           if (!response.ok) {
             throw new Error(`Failed to fetch accepted matches: ${response.statusText}`);
           }
 
           const data = await response.json();
-          console.log('Parsed API Data:', data);
-
-          // Filter and map accepted matches
           const acceptedMatches = data.acceptedDenied
             .filter((match: any) => match.status === 'accepted')
             .map((match: any) => ({
@@ -49,11 +44,11 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
               username: match.requester.name,
               profileImage: match.requester.image,
               matchDate: new Date(match.updatedAt).toLocaleDateString(),
-              about: match.requester.about || "No about information",
-              contact: match.requester.contact || "No contact info",
+              about: match.requester.about || 'No about information',
+              contact: match.requester.contact || 'No contact info',
+              ownTags: match.requester.ownTags || [], // Default to an empty array
             }));
 
-          console.log('Formatted Match Data:', acceptedMatches);
           setMatchData(acceptedMatches);
         } catch (error) {
           console.error('Error fetching accepted matches:', error);
@@ -64,49 +59,51 @@ const MatchHistoryModal: React.FC<MatchHistoryModalProps> = ({
     }
   }, [isOpen]);
 
+  const handleOpenProfile = (match: MatchData) => {
+    setSelectedProfile(match); // Open the profile modal with the selected user's data
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedProfile(null); // Close the profile modal
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-39"
-      onClick={onClose}
-    >
-      <div
-        className="relative bg-maincolor w-[90%] max-w-[500px] p-7 pt-4 rounded-3xl flex flex-col space-y-4"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 left-4 text-coolred text-3xl"
-        >
-          <IoMdArrowRoundBack />
-        </button>
-
-        <h2 className="text-2xl font-semibold text-secondarycolor">Match History</h2>
-
-        <div className="w-full max-h-[300px] overflow-y-auto space-y-3">
-          {matchData.length > 0 ? (
-            matchData.map((match) => (
-              <div
-                key={match.id}
-                className="flex justify-between items-center p-3 bg-darkgre text-secondarycolor rounded-lg cursor-pointer"
-                onClick={() => onMatchClick(match)}
-              >
-                <img
-                  src={match.profileImage}
-                  alt={match.username}
-                  className="h-10 w-10 rounded-full"
+    <>
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
+        <ModalCard title="Match History" onClose={onClose}>
+          <div className="w-full max-h-[300px] overflow-y-auto space-y-3">
+            {matchData.length > 0 ? (
+              matchData.map((match) => (
+                <UserItem
+                  key={match.id}
+                  profileImage={match.profileImage}
+                  username={match.username}
+                  rightContent={<span className="text-sm text-gray-400">{match.matchDate}</span>}
+                  onClick={() => handleOpenProfile(match)} // Open profile when clicking the card
                 />
-                <span className="font-medium">{match.username}</span>
-                <span className="text-sm text-gray-400">{match.matchDate}</span>
-              </div>
-            ))
-          ) : (
-            <p className="text-secondarycolor">No matches found.</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p className="text-secondarycolor">No matches found.</p>
+            )}
+          </div>
+        </ModalCard>
       </div>
-    </div>
+
+      {/* Profile Modal */}
+      {selectedProfile && (
+        <Profile
+          id={selectedProfile.id}
+          name={selectedProfile.username}
+          about={selectedProfile.about}
+          image={selectedProfile.profileImage}
+          interests={selectedProfile.ownTags.map((tag) => tag.tagName)} // Safely map interests
+          contact={selectedProfile.contact}
+          onClose={handleCloseProfile} // Close the profile modal
+        />
+      )}
+    </>
   );
 };
 
