@@ -1,21 +1,21 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-type ModalType = "notification" | "matchHistory" | "interest" | null;
+type ModalType = 'notification' | 'matchHistory' | 'interest' | null;
 
 interface ModalContextType {
   activeModal: ModalType;
-  openModal: (type: ModalType) => void;
+  openModal: (modalType: ModalType) => void;
   closeModal: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
 
-  const openModal = (type: ModalType) => setActiveModal(type);
+  const openModal = (modalType: ModalType) => setActiveModal(modalType);
   const closeModal = () => setActiveModal(null);
 
   return (
@@ -27,6 +27,8 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
 export const useModalContext = () => {
   const context = useContext(ModalContext);
-  if (!context) throw new Error('useModalContext must be used within a ModalProvider');
+  if (!context) {
+    throw new Error('useModalContext must be used within a ModalProvider');
+  }
   return context;
 };

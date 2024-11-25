@@ -53,24 +53,6 @@ const HomeContent: React.FC = () => {
     }
   }, [filters, users]);
 
-  const handleMatchClick = (user: {
-    id: string;
-    username: string;
-    profileImage: string;
-    about: string;
-    contact: string;
-    ownTags: string[];
-  }) => {
-    setSelectedProfile({
-      id: user.id,
-      name: user.username,
-      about: user.about,
-      image: user.profileImage,
-      ownTags: user.ownTags,
-      contact: user.contact,
-    });
-  };
-
   const handleProfileClose = () => {
     setSelectedProfile(null);
   };
@@ -97,6 +79,7 @@ const HomeContent: React.FC = () => {
           interests={selectedProfile.ownTags}
           contact={selectedProfile.contact}
           onClose={handleProfileClose}
+          onOpenMatchHistory={openModal} // Pass openModal directly
         />
       )}
 
@@ -108,7 +91,6 @@ const HomeContent: React.FC = () => {
         <MatchHistoryModal
           isOpen={true}
           onClose={closeModal}
-          onMatchClick={handleMatchClick}
         />
       )}
 

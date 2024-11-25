@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import MatchHistoryModal from "@/components/user-components/matchhistorymodal";
 import { RiCloseCircleFill } from 'react-icons/ri';
 
 type ProfileProps = {
@@ -13,12 +12,8 @@ type ProfileProps = {
   interests: string[];
   contact: string;
   onClose: () => void;
+  onOpenMatchHistory: (modalName: string) => void; // Accepts openModal directly
 };
-
-const mockProfileMatches = [
-  { id: 1, username: "User1", matchDate: "2024-10-28" },
-  { id: 2, username: "User2", matchDate: "2024-10-30" },
-];
 
 const Profile: React.FC<ProfileProps> = ({
   id,
@@ -28,8 +23,8 @@ const Profile: React.FC<ProfileProps> = ({
   interests,
   contact,
   onClose,
+  onOpenMatchHistory,
 }) => {
-  const [isMatchHistoryOpen, setIsMatchHistoryOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,9 +38,7 @@ const Profile: React.FC<ProfileProps> = ({
 
     try {
       const userRes = await fetch(`${baseUrl}/api/users/getUser`, {
-        headers: {
-          cookie: document.cookie,
-        },
+        headers: { cookie: document.cookie },
       });
 
       if (!userRes.ok) {
@@ -54,9 +47,6 @@ const Profile: React.FC<ProfileProps> = ({
 
       const userData = await userRes.json();
       const requesterId = userData.id;
-      const receiverId = id;
-
-      console.log(`Match request sent to ${name}`, requesterId, receiverId);
 
       const matchRes = await fetch(`${baseUrl}/api/match/create`, {
         method: "POST",
@@ -64,10 +54,7 @@ const Profile: React.FC<ProfileProps> = ({
           "Content-Type": "application/json",
           cookie: document.cookie,
         },
-        body: JSON.stringify({
-          requesterId,
-          receiverId,
-        }),
+        body: JSON.stringify({ requesterId, receiverId: id }),
       });
 
       if (!matchRes.ok) {
@@ -75,7 +62,6 @@ const Profile: React.FC<ProfileProps> = ({
       }
 
       setIsRequestSuccessful(true);
-      console.log("Match created successfully");
     } catch (error) {
       setErrorMessage("Failed to send match request. Please try again.");
       console.error("Failed to create match:", error);
@@ -85,7 +71,7 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[10] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="h-[500px] w-[1080px] bg-maincolor border-secondarycolor rounded-3xl flex flex-row p-6 relative">
         <button
           className="absolute top-4 right-4 text-coolred text-3xl"
@@ -101,7 +87,7 @@ const Profile: React.FC<ProfileProps> = ({
             objectFit="cover"
             objectPosition="center"
             quality={100}
-            alt="hero"
+            alt="profile image"
             sizes="(max-width: 430px) 100vw, 50vw"
           />
         </div>
@@ -130,7 +116,7 @@ const Profile: React.FC<ProfileProps> = ({
           <div className="flex flex-col space-y-4">
             <button
               className="border-solid text-secondarycolor font-black bg-coolred text-lg pt-[0.28rem] pb-[0.47rem] px-[2rem] rounded-full font-sofia-pro hover:bg-coolredhl active:bg-coolreddrk"
-              onClick={() => setIsMatchHistoryOpen(true)}
+              onClick={() => onOpenMatchHistory("matchHistory")} // Call openModal directly
             >
               View Match History
             </button>
@@ -147,14 +133,6 @@ const Profile: React.FC<ProfileProps> = ({
           </div>
         </div>
       </div>
-
-      {isMatchHistoryOpen && (
-        <MatchHistoryModal
-          isOpen={isMatchHistoryOpen}
-          onClose={() => setIsMatchHistoryOpen(false)}
-          matchData={mockProfileMatches}
-        />
-      )}
     </div>
   );
 };
