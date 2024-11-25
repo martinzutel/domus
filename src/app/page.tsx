@@ -23,6 +23,7 @@ const HomeContent: React.FC = () => {
     ownTags: string[];
     contact: string;
   }>(null);
+  const [selectedMatchHistoryUserId, setSelectedMatchHistoryUserId] = useState<string | null>(null);
   const [filters, setFilters] = useState<string[]>([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
 
@@ -57,6 +58,11 @@ const HomeContent: React.FC = () => {
     setSelectedProfile(null);
   };
 
+  const handleOpenMatchHistory = (userId: string) => {
+    setSelectedMatchHistoryUserId(userId); // Store the user ID
+    openModal("matchHistory"); // Open the modal
+  };
+
   return (
     <>
       <Topbar>
@@ -79,7 +85,7 @@ const HomeContent: React.FC = () => {
           interests={selectedProfile.ownTags}
           contact={selectedProfile.contact}
           onClose={handleProfileClose}
-          onOpenMatchHistory={openModal} // Pass openModal directly
+          onOpenMatchHistory={() => handleOpenMatchHistory(selectedProfile.id)} // Pass function reference correctly
         />
       )}
 
@@ -91,6 +97,7 @@ const HomeContent: React.FC = () => {
         <MatchHistoryModal
           isOpen={true}
           onClose={closeModal}
+          userId={selectedMatchHistoryUserId} // Pass the user ID
         />
       )}
 
