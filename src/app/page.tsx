@@ -63,12 +63,20 @@ const HomeContent: React.FC = () => {
     openModal("matchHistory"); // Open the modal
   };
 
+  const handleCloseMatchHistoryModal = () => {
+    setSelectedMatchHistoryUserId(null); // Reset the user ID
+    closeModal(); // Close the modal
+  };
+
   return (
     <>
       <Topbar>
         <Searchbar
           onToggleNotificationModal={() => openModal("notification")}
-          onToggleMatchHistory={() => openModal("matchHistory")}
+          onToggleMatchHistory={() => {
+            setSelectedMatchHistoryUserId(null); // Clear ID when accessed globally
+            openModal("matchHistory");
+          }}
           onToggleInterestModal={() => openModal("interest")}
         />
       </Topbar>
@@ -85,7 +93,7 @@ const HomeContent: React.FC = () => {
           interests={selectedProfile.ownTags}
           contact={selectedProfile.contact}
           onClose={handleProfileClose}
-          onOpenMatchHistory={() => handleOpenMatchHistory(selectedProfile.id)} // Pass function reference correctly
+          onOpenMatchHistory={() => handleOpenMatchHistory(selectedProfile.id)}
         />
       )}
 
@@ -96,7 +104,7 @@ const HomeContent: React.FC = () => {
       {activeModal === "matchHistory" && (
         <MatchHistoryModal
           isOpen={true}
-          onClose={closeModal}
+          onClose={handleCloseMatchHistoryModal} // Use the modified close handler
           userId={selectedMatchHistoryUserId} // Pass the user ID
         />
       )}
